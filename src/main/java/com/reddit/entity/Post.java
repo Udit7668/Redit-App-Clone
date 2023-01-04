@@ -39,4 +39,5 @@ public class Post {
     @UpdateTimestamp
     private Timestamp updatedDate;
 
+
 }
