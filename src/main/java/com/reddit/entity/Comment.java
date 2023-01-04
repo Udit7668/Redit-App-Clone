@@ -27,4 +27,7 @@ public class Comment {
     @UpdateTimestamp
     @Column(name="updated_at", nullable = false)
     private Timestamp updatedAt;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 }

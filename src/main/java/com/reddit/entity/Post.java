@@ -11,6 +11,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -34,10 +35,11 @@ public class Post {
     @Column(name="created_at",nullable = false,updatable = false)
     @CreationTimestamp
     private Timestamp createdDate;
-
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Timestamp updatedDate;
+    @OneToMany(mappedBy = "post")
+    List<Comment> comments;
 
 
 }
