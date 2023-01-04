@@ -8,10 +8,10 @@
 		<version>2.7.7</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.udit</groupId>
+	<groupId>com.reddit</groupId>
 	<artifactId>Reddit-App</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Credit-App</name>
+	<name>Reddit-App</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
