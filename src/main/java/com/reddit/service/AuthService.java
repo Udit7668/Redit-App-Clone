@@ -11,6 +11,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -44,5 +46,19 @@ public class AuthService {
         verificationTokenRepository.save(verificationToken);
         return token;
 
+    }
+
+    public void verifyAccount(String token) {
+           Optional<VerificationToken> verificationToken=verificationTokenRepository.findByToken(token);
+           fetchUserAndEnable(verificationToken.get());
+    }
+
+    @Transactional
+    public void fetchUserAndEnable(VerificationToken verificationToken){
+        String username=verificationToken.getUser().getUsername();
+        Optional<User> userOptional=userRepository.findByUsername(username);
+        User user=userOptional.get();
+        user.setEnabled(true);
+        userRepository.save(user);
     }
 }

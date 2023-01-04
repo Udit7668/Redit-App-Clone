@@ -18,8 +18,9 @@ public class AuthController {
       return new ResponseEntity<>("User Registration Successfull", HttpStatus.OK);
     }
 
-    @GetMapping("/home")
-    public String test(){
-        return "Testing............";
+    @GetMapping("accountVerification/{token}")
+    public ResponseEntity<String> verifyAccount(@PathVariable String token){
+     authService.verifyAccount(token);
+     return new ResponseEntity<>("Account activated Successfully",HttpStatus.OK);
     }
 }
