@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Service
 public class AuthService {
@@ -21,6 +22,11 @@ public class AuthService {
         user.setUsername(registerRequest.getUsername());
         user.setEmail(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setEnabled(false);
         userRepository.save(user);
+    }
+
+    private void generateVerificationToken(User user){
+       String token= UUID.randomUUID().toString();
     }
 }
