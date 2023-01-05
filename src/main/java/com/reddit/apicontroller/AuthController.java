@@ -1,4 +1,4 @@
-package com.reddit.controller;
+package com.reddit.apicontroller;
 
 import com.reddit.dto.RegisterRequest;
 import com.reddit.service.AuthService;
