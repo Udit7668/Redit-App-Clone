@@ -17,6 +17,8 @@ import com.reddit.entity.Subreddit;
 import com.reddit.service.PostService;
 import com.reddit.service.SubredditService;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 
 @Controller
 @RequestMapping("/posts")
@@ -54,7 +56,7 @@ public class PostController {
 
 
   @GetMapping("/view/{viewId}")
-    public String getPostById(@PathVariable("postId") Long postId,Model model){
+    public String getPostById(@PathVariable("viewId") Long postId,Model model){
         Post post=this.postService.getPostById(postId);
         Comment comment=new Comment();
         model.addAttribute("comment", comment);
