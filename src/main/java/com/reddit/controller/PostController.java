@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -40,12 +39,13 @@ public class PostController {
     @RequestParam("subreddit") String subreddit
     ){
         this.postService.addPost(title,content,subreddit);
-        return "";
+        return "redirect:/";
     }
 
-    @GetMapping("")
-    public String viewPost(@PathVariable("id") int postId, Model model){
-        Post post  = postService.getPostById((long)postId);
-        return "view-post";
+    @GetMapping("/")
+    public String showAllPost(Model model){
+    List<Post> posts=this.postService.getAllPost();
+    model.addAttribute("posts",posts);
+        return "home";
     }
 }
