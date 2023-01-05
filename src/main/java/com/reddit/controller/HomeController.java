@@ -38,6 +38,12 @@ public class HomeController {
         return "redirect:/form/register";
     }
 
+    @GetMapping("/topPosts")
+    public String filterPostByTopPosts(Model model){
+   List<Post> posts=this.postService.sortPostByDate(); 
+   model.addAttribute("posts", posts);
+   return "home";
+    }
     
 
 

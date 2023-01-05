@@ -1,15 +1,14 @@
 package com.reddit.service;
 
-import com.reddit.entity.Post;
-import com.reddit.repository.PostRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import java.util.List;
 
 import javax.transaction.Transactional;
-import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.reddit.entity.Post;
+import com.reddit.repository.PostRepository;
 
 @Service
 public class PostService {
@@ -29,6 +28,12 @@ public class PostService {
     public List<Post> getAllPosts(){
         List<Post> posts=this.postRepository.findAll();
         return posts;
+    }
+
+
+    public List<Post> sortPostByDate(){
+      List<Post> posts=  this.postRepository.sortPostByCreatedDate();
+    return posts;
     }
 
 }
