@@ -15,8 +15,8 @@ import java.util.List;
 public class HomeController {
     @Autowired
     private PostService postService;
+    
     @RequestMapping("/")
-
     public String getAllPosts(Model model){
         List<Post> posts=this.postService.getAllPosts();
         model.addAttribute("posts",posts);
