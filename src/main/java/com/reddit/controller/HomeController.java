@@ -17,4 +17,13 @@ public class HomeController {
     {
   return null;
     }
+    @GetMapping("/login")
+    public String login(){
+        return "redirect:/form/login";
+    }
+
+    @GetMapping("/register")
+    public String register(){
+        return "redirect:/form/register";
+    }
 }
