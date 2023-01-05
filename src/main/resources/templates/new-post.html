@@ -1,25 +1,29 @@
 <!DOCTYPE html>
-<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="www.thymeleaf.com">
+<html lang="en" xmlns:th="www.thymeleaf.com">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-<form>
-    <div id="new-post-form">
+    <form th:action="@{/posts/savepost}" th:object="${post}">
 
-        <h1>Create A Post</h1>
-        <select name="subreddit" th:if = ${post.id != "0"}>
-            <option th:each="subreddit : ${subreddits}" th:value="${subreddit.id}" th:text="${subreddit.name}" placeholder ="Choose Community"></option>
-        </select><br><br>
 
-        <form th:action="@{/savePost}" th:object="${post}" method="post">
-            <input type="hidden"  th:field="*{id}">
-            <input type="text"    th:field="*{title}"      placeholder="Title"/><br><br>
-            <textarea th:field="*{content}" placeholder="Write Blog" rows="10"> </textarea><br><br>
-            <input type="submit" value="Post"/>
-        </form>
-    </div>
+   <h2>Enter the Title of Post</h2>     
+   <input type="text" name="title" placeholder="Enter title" th:value="${post.title}">
+   <br>
+   <br>
+   <h2>Enter the Subreddit name</h2>
+   <form >
+    <select name="subreddit">
+        <option th:each="subreddit : ${subreddits}" th:value="${subreddit.id}" th:text="${subreddit.name}" placeholder ="Choose Community"></option>
+    </select>
+   <br><br>
+   <h2>Enter the Content of Post</h2>
+   <textarea type="text" name="content" placeholder="Enter your Content" th:value="${post.content}" rows="15", cols="30"> </textarea><br><br>
+   <input type="submit" value="Submit">
 </form>
+    </form>
 </body>
 </html>
