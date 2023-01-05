@@ -21,4 +21,8 @@ public class SubredditService {
     public List<Subreddit> findAll() {
        return subredditRepository.findAll();
     }
+
+    public Subreddit getSubredditById(long parseLong) {
+        return null;
+    }
 }
