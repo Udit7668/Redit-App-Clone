@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form>
+    <div id="new-post-form">
+
+        <h1>Create A Post</h1>
+        <select name="subreddit" th:if = ${post.id != "0"}>
+            <option th:each="subreddit : ${subreddits}" th:value="${subreddit.id}" th:text="${subreddit.name}" placeholder ="Choose Community"></option>
+        </select><br><br>
+
+        <form th:action="@{/savePost}" th:object="${post}" method="post">
+            <input type="hidden"  th:field="*{id}">
+            <input type="text"    th:field="*{title}"      placeholder="Title"/><br><br>
+            <textarea th:field="*{content}" placeholder="Write Blog" rows="10"> </textarea><br><br>
+            <input type="submit" value="Post"/>
+        </form>
+    </div>
+</form>
+</body>
+</html>
