@@ -44,7 +44,7 @@ public class PostController {
     @RequestParam("subreddit") String subreddit
     ){
         this.postService.addPost(title,content,subreddit);
-        return "redirect:/";
+        return "redirect:/posts/";
     }
 
     @GetMapping("/")

@@ -27,17 +27,26 @@
    #filter{
    display:flex;
    justify-content:center;
+   margin-bottom: 20px;
    }
 
    .float-child {
-  margin: 20px;
-    width: 40%;
-    border: 2px solid black;;
+    width: 60%;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+   margin-top: 20px;
     float: left;
     height: 300px;;
     padding: 20px;
+    text-align: center;
     
-}  
+} .float-container{
+    margin-left: 500px;
+}
+
+
 
       </style>
       <link rel="stylesheet"
@@ -89,8 +98,8 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
 
 
 <div class="float-container">
-   
     <div class="float-child green" th:each=" post: ${posts}">
+
         
       <h3 th:text="${post.title}"></h3>
        <h4 th:text="${post.content}"></h4>
@@ -99,8 +108,7 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
              <td>
               <a th:href="@{/posts/view/{viewId}(viewId=${post.id})}" id="view" >View Post</a>
                  </td>
-        
-    </div>
+</div>
 
 </div>
 
