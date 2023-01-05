@@ -20,6 +20,7 @@ public class PostService {
         this.postRepository.save(post);
     }
 
+    
     public Post getPostById(Long id){
       Post post= this.postRepository.findPostById(id);
       return post;
