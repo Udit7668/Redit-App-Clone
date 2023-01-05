@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -25,5 +26,9 @@ public class User {
     @Column(name="created_at",nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
+    @OneToMany(mappedBy = "user")
+    List<Comment> comments;
+
+    private boolean enabled;
 
 }
