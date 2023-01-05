@@ -28,7 +28,22 @@
    display:flex;
    justify-content:center;
    }
-    </style>
+
+   .float-child {
+  margin: 20px;
+    width: 40%;
+    border: 2px solid black;;
+    float: left;
+    height: 300px;;
+    padding: 20px;
+    
+}  
+
+      </style>
+      <link rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous">
 </head>
 <body>
 <nav class="container">
@@ -58,5 +73,23 @@
 Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-left: 20px; text-decoration: none;" >Top Post</a>
     <a th:href="@{/home/newPosts}" style="text-decoration: none;">New Post</a>
 </div>
+
+
+<div class="float-container">
+   
+    <div class="float-child green" th:each=" post: ${posts}">
+        
+      <h3 th:text="${post.title}"></h3>
+       <h4 th:text="${post.content}"></h4>
+       <h5 th:text="${post.createdDate}"></h5>  
+           <br>
+             <td>
+              <a th:href="@{/view/{viewId}(viewId=${post.id})}" id="view" >View Post</a>
+                 </td>
+        
+    </div>
+
+</div>
+
 </body>
 </html>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.reddit.entity.Comment;
 import com.reddit.entity.Post;
 import com.reddit.entity.Subreddit;
 import com.reddit.service.PostService;
@@ -48,4 +49,20 @@ public class PostController {
     model.addAttribute("posts",posts);
         return "home";
     }
+
+
+  @GetMapping("/postById")
+    public String getPostById(@RequestParam("postId") Long postId,Model model){
+        Post post=this.postService.getPostById(postId);
+        Comment comment=new Comment();
+        model.addAttribute("comment", comment);
+        model.addAttribute("post",post);
+        return "view-post";
+    }
+
+
+    
+
+
+
 }
