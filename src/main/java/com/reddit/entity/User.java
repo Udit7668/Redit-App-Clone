@@ -30,4 +30,5 @@ public class User {
     List<Comment> comments;
 
     private boolean enabled;
+
 }
