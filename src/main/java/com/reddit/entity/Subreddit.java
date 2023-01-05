@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
 @Data
@@ -17,16 +19,16 @@ public class Subreddit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Nullable
+    @NotBlank(message="Community name is required")
     private String name;
-    @Nullable
+    @NotBlank(message = "Desciption is required")
     private String description;
 
-    private Instant createdDate;
+    private Timestamp createdDate;
 
-//    @OneToMany(fetch = FetchType.LAZY)
-//    private List<Post> posts;
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Post> posts;
 
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 }

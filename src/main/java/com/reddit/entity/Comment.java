@@ -27,7 +27,11 @@ public class Comment {
     @UpdateTimestamp
     @Column(name="updated_at", nullable = false)
     private Timestamp updatedAt;
-    @ManyToOne
-    @JoinColumn(name = "post_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "postId")
     private Post post;
+
+    @ManyToOne
+    @JoinColumn(name="userId")
+    private User user;
 }

@@ -25,4 +25,5 @@ public class User {
     @Column(name="created_at",nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
+
 }
