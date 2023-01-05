@@ -24,7 +24,7 @@ public class User {
     private String email;
     private String password;
 
-    private String role;
+    private String role="ROLE_USER";
     @Column(name="created_at",nullable = false)
     @CreationTimestamp
     private Timestamp createdAt;
