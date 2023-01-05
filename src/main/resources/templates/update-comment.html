@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Update comment</title>
+</head>
+<body>
+  <form th:action = "processUpdateComment" th:method="post" th:object="${comment}">
+    <input type="hidden" th:value="${comment.post.id}" name="postId"/>
+    <input type="hidden" th:field="*{id}"/>
+    Comment:<input type="text" th:field="*{comment}"/><br>
+    <input type=submit>
+  </form>
+</body>
+</html>
