@@ -31,7 +31,7 @@ public class CommentController {
         return "update-comment";
     }
     @PostMapping("/processUpdateComment")//To Do - Get the logged in user id or Username and get the user object and add it to the comment while saving
-    public String processUpdateComment(@ModelAttribute(name="postId") String postId,
+    public String processUpdateComment(@RequestParam(name="postId") String postId,
                                        @ModelAttribute("comment") Comment comment,
                                        Model model){
         commentService.addComment(postId,comment);
