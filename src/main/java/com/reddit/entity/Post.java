@@ -29,7 +29,7 @@ public class Post {
     @NotBlank(message = "Title cannot be empty or Null")
     private String title;
     @Nullable
-    
+    @Lob
     private String content;
     private Integer voteCount = 0;
     @Column(name="created_at",nullable = false,updatable = false)
