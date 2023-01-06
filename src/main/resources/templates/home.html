@@ -44,7 +44,7 @@
     
 } 
 .float-child #votecount{
-margin-top: 80px;
+margin-top: 10px;
 display: flex;
 justify-content: space-between;
 
@@ -116,6 +116,8 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
 
         
       <h3 th:text="${post.title}"></h3>
+      <h3 th:text="u+'/  '+${post.user.username}"></h3>
+      <h3 th:text="r+'/  '+${post.subreddit.name}"></h3>
        <h4 th:text="${post.content}"></h4>
        <h5 th:text="${post.createdDate}"></h5>  
            <br>
