@@ -14,32 +14,33 @@ import com.reddit.service.CommentService;
 public class CommentController {
     @Autowired
     private CommentService commentService;
-
     @PostMapping("/addComment")
     public String addComment(@RequestParam(name="postId") String postId,
-                                    @ModelAttribute("comment") Comment comment,
-                                    Model model){
-        commentService.addComment(postId,comment);
-        return "test";//To Do - redirect to the reddit post
+                             @RequestParam(name="username") String username,
+                             @ModelAttribute("Comment") Comment comment,
+                             Model model){
+        commentService.addComment(postId,comment,username);
+        return "redirect:/posts/view/"+postId;
     }
     @PostMapping("/updateComment")
     public String updateComment(@RequestParam(name="commentId") String commentId,Model model){
         Comment comment = commentService.getComment(commentId);
-        model.addAttribute("comment", comment);
+        model.addAttribute("Comment", comment);
         return "update-comment";
     }
-    @PostMapping("/processUpdateComment")//To Do - Get the logged in user id or Username and get the user object and add it to the comment while saving
-    public String processUpdateComment(@RequestParam(name="postId") String postId,
-                                       @ModelAttribute("comment") Comment comment,
+    @PostMapping("/processUpdateComment")
+    public String processUpdateComment(@RequestParam(name="username") String username,
+                                       @RequestParam(name="postId") String postId,
+                                       @ModelAttribute("Comment") Comment comment,
                                        Model model){
-        commentService.addComment(postId,comment);
-        return "test";//redirect to the reddit post
+        commentService.addComment(postId,comment,username);
+        return "redirect:/posts/view/"+postId;
     }
     @PostMapping("/deleteComment")
-    public String deleteComment(@RequestParam(name="commentId") String commentId,
+    public String deleteComment(@RequestParam(name="postId") String postId,
+                                @RequestParam(name="commentId") String commentId,
                                 Model model) {
         commentService.deleteComment(commentId);
-
-        return "test";//To Do - redirect to the reddit post
+        return "redirect:/posts/view/"+postId;
     }
 }
