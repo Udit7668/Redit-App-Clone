@@ -3,13 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <title>User Profile</title>
+    <style>
+   .container ul{
+    overflow: auto;
+    display: flex;
+    justify-content: space-between;
+   }
+
+   ul li{
+ list-style-type:none;
+ margin: 20px;
+    float: left;
+    color:red;
+
+   }
+
+   img{
+    height:40px;
+   }
+
+   #filter{
+   display:flex;
+   justify-content:center;
+   margin-bottom: 20px;
+   }
+
+   .float-child {
+    width: 60%;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+   margin-top: 20px;
+    float: left;
+    height: 300px;;
+    padding: 20px;
+    text-align: center;
+
+}
+.float-child #votecount{
+margin-top: 80px;
+display: flex;
+justify-content: space-between;
+
+}
+
+.float-container{
+    margin-left: 500px;
+}
+      </style>
 </head>
 <body>
-Posts:
-<div th:each="post : ${posts}">
-    <span th:text="${post.subreddit.name}"></span>
-    <span th:text="${post.content}"></span>
+<div class="float-container">
+    Posts:
+    <div class="float-child green" th:each="post: ${posts}">
+        <h3 th:text="${post.title}"></h3>
+        <h5> posted by u/<span th:text="${post.user.username}"></span> on r/<span th:text="${post.subreddit.name}"></span></h5>
+        <h4 th:text="${post.content}"></h4>
+        <h5 th:text="${post.createdDate}"></h5>
+        <br>
+        <td>
+            <a th:href="@{/posts/view/{viewId}(viewId=${post.id})}" id="view" >View Post</a>
+        </td>
+        <div id="votecount">
+            <a th:href="@{/posts/upvote/{viewId}(viewId=${post.id})}">Upvote</a>
+            <span th:text="score+'  '+${post.voteCount}"></span>
+            <a th:href="@{/posts/downvote/{viewId}(viewId=${post.id})}">Downvote</a>
+        </div>
+    </div>
 </div>
+<br>
 Comments:
 <div th:each="Comment : ${comments}">
     <span th:text="${Comment.comment}"></span>

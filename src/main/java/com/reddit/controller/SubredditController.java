@@ -10,35 +10,36 @@ import org.springframework.web.bind.annotation.*;
 import com.reddit.entity.Subreddit;
 import com.reddit.service.SubredditService;
 @Controller
+@RequestMapping("subreddit")
 public class SubredditController {
     @Autowired
     private SubredditService subredditService;
 
-    @GetMapping("/home/add")
+    @GetMapping("/add")
     public String create(Model model){
         model.addAttribute("subreddit",new Subreddit());
         return "saveSubreddit";
     }
-    @PostMapping("/home/addSubreddit")
+    @PostMapping("/addSubreddit")
     public String createSubreddit(@ModelAttribute("subreddit")Subreddit subreddit,
                                   @RequestParam(name="username") String username){
         subredditService.createSubreddit(subreddit,username);
         return "redirect:/home/";
     }
     @CrossOrigin
-    @GetMapping("/home/showSubreddit")
+    @GetMapping("/showSubreddit")
     public String showSubreddit(Model model){
         List<Subreddit> subredditList= subredditService.findAll();
         System.out.println(subredditList);
         model.addAttribute("allSubreddit",subredditList);
         return "showsubreddit";
     }
-    @GetMapping("/home/deleteSubreddit")
+    @GetMapping("/deleteSubreddit")
     public String deleteSubreddit(@RequestParam("subredditId") Long subredditId){
         subredditService.deleteSubredditById(subredditId);
         return "showsubreddit";
     }
-    @GetMapping("/home/showSubredditId")
+    @GetMapping("/showSubredditId")
     public Subreddit showSubredditById(@RequestParam("subredditId")Long subredditId){
         Subreddit subreddit =subredditService.findById(subredditId);
         return  subreddit;
