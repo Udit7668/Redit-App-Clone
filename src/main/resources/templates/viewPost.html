@@ -8,7 +8,7 @@
     <div id="post-container">
       <h1><span th:text="${post.title}"></span></h1><br>
       <h4><span th:text="${post.content}"></span></h4><br><br>
-      <input type="button" value="Homepage" onclick="window.location.href='/reddit-clone-app/'; return false; "/><br><br>
+      <input type="button" value="Homepage" onclick="window.location.href='/home/'; return false; "/><br><br>
     </div>
     <form th:action = "@{/addComment}" th:method="post" th:object="${Comment}">
       <input type="hidden" th:value="${#authentication.name}" name="username"/>
