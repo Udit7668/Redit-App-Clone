@@ -21,6 +21,9 @@ public class SubredditService {
     @Autowired
     private UserRepository userRespository;
 
+    @Autowired
+    private PostRepository postRepository;
+
     public void createSubreddit(Subreddit subreddit, String username) {
         User user = userRespository.findByUsername(username).get();
         subreddit.getAdmins().add(user);
@@ -46,7 +49,8 @@ public class SubredditService {
         Optional<Subreddit> subredditOptional=this.subredditRepository.findById(subredditId);
         Subreddit subreddit=subredditOptional.get();
         String subredditName=subreddit.getName();
-       List<Post> posts=this.subredditRepository.findPostBySubredditName(subredditName); 
+        System.out.println(subredditName+"****************************************");
+       List<Post> posts=this.postRepository.findPostBySubredditName(subredditName); 
 
         return posts;
     } 

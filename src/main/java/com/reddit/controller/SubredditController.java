@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.reddit.entity.Post;
 import com.reddit.entity.Subreddit;
 import com.reddit.service.SubredditService;
 @Controller
@@ -43,6 +44,16 @@ public class SubredditController {
     public Subreddit showSubredditById(@RequestParam("subredditId")Long subredditId){
         Subreddit subreddit =subredditService.findById(subredditId);
         return  subreddit;
+    }
+
+
+    @GetMapping("view/{viewId}")
+    public String viewAllPostBySubreddit(@PathVariable("viewId") Long subredditId,Model model){
+        List<Post> posts=this.subredditService.getAllPostBySubredditName(subredditId);
+        model.addAttribute("posts", posts);
+        List<Subreddit> subreddits=this.subredditService.findAll();
+        model.addAttribute("subreddits", subreddits);
+        return "subreddit-post";
     }
 
 }
