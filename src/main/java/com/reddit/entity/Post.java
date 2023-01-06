@@ -27,8 +27,7 @@ public class Post {
     private Long id;
     @NotBlank(message = "Title cannot be empty or Null")
     private String title;
-    @Nullable
-    @Lob
+    
     private String content;
     @Column(name="vote_count")
     private Integer voteCount = 0;

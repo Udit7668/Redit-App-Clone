@@ -34,7 +34,7 @@ public class PostService {
       post.setTitle(title);
       post.setContent(content);
       post.setUser(userService.getUserByUsername(username));
-      Subreddit subreddit=this.subredditRepository.findSubredditByName(subredditName);
+      Subreddit subreddit=this.subredditRepository.findById((long)Integer.parseInt(subredditName)).get();
       post.setSubreddit(subreddit);
       this.postRepository.save(post);
       
