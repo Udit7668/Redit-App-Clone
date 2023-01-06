@@ -42,7 +42,15 @@
     padding: 20px;
     text-align: center;
     
-} .float-container{
+} 
+.float-child #votecount{
+margin-top: 80px;
+display: flex;
+justify-content: space-between;
+
+}
+
+.float-container{
     margin-left: 500px;
 }
 
@@ -115,6 +123,11 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
               <a th:href="@{/posts/view/{viewId}(viewId=${post.id})}" id="view" >View Post</a>
                  </td>
 
+ <div id="votecount">
+    
+<a th:href="@{/posts/upvote/{viewId}(viewId=${post.id})}">Upvote</a>
+<span th:text="score+'  '+${post.voteCount}"></span>
+<a th:href="@{/posts/downvote/{viewId}(viewId=${post.id})}">Downvote</a>
 
 </div>
 
