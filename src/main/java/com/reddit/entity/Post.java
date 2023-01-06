@@ -43,6 +43,6 @@ public class Post {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "subreddit_id")
     private Subreddit subreddit;
-    @OneToMany(fetch = LAZY,mappedBy = "post")
+    @OneToMany(fetch = LAZY,mappedBy = "post",cascade = CascadeType.ALL)
     private List<Comment> comments;
 }

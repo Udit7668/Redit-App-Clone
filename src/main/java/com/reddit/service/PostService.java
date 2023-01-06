@@ -84,4 +84,11 @@ public class PostService {
       List<Post> posts=this.postRepository.sortPostByVoteCount();
       return posts;
     }
+
+
+    @Transactional
+    public void deletePost(Long postId){
+    Post post=this.postRepository.findPostById(postId);
+    this.postRepository.delete(post);
+    }
 }

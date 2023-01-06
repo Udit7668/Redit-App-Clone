@@ -82,4 +82,11 @@ public class PostController {
      return "redirect:/posts/";
     }
   
+
+    @GetMapping("/deletePost")
+   public String deletePost(@RequestParam("postId") Long postId){
+   this.postService.deletePost(postId);
+    return "redirect:/home/";
+   }
+
 }
