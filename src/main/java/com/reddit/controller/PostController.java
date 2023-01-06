@@ -31,8 +31,10 @@ public class PostController {
     private PostService postService;
 
     @GetMapping("/newPost")
-    public String createNewPost(Model model){
+    public String createNewPost(Model model,Authentication authentication){
         Post post = new Post();
+        String username=authentication.getName();
+        model.addAttribute("username", username);
        List<Subreddit> subreddits = subredditService.findAll();
         model.addAttribute("post", post);
        model.addAttribute("subreddits", subreddits);
@@ -41,9 +43,10 @@ public class PostController {
 
     @RequestMapping("/savepost")
     public String saveOrUpdatePost(@RequestParam("title") String title,@RequestParam("content") String content,
-    @RequestParam("subreddit") String subreddit
+    @RequestParam("subreddit") String subreddit,@RequestParam("username") String username
     ){
-        this.postService.addPost(title,content,subreddit);
+         
+        this.postService.addPost(title,content,subreddit,username);
         return "redirect:/posts/";
     }
 

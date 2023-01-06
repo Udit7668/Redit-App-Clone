@@ -11,6 +11,7 @@ import com.reddit.entity.Post;
 import com.reddit.entity.Subreddit;
 import com.reddit.repository.PostRepository;
 import com.reddit.repository.SubredditRepository;
+import com.reddit.repository.UserRepository;
 
 @Service
 public class PostService {
@@ -20,16 +21,19 @@ public class PostService {
     @Autowired
     private SubredditRepository subredditRepository;
 
+@Autowired
+     private UserService userService;
+
     public void addPost(Post post){
       this.postRepository.save(post);
     }
 
     @Transactional
-    public void addPost(String title,String content,String subredditName){
+    public void addPost(String title,String content,String subredditName,String username){
       Post post=new Post();
       post.setTitle(title);
       post.setContent(content);
-
+      post.setUser(userService.getUserByUsername(username));
       Subreddit subreddit=this.subredditRepository.findSubredditByName(subredditName);
       post.setSubreddit(subreddit);
       this.postRepository.save(post);
