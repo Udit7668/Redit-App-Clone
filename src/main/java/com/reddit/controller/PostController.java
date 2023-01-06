@@ -74,5 +74,11 @@ public class PostController {
         this.postService.upVote(id);
      return "redirect:/posts/";
     }
+
+    @GetMapping("/downvote/{viewId}")
+    public String downVote(@PathVariable("viewId") Long id){
+        this.postService.downVote(id);
+     return "redirect:/posts/";
+    }
   
 }
