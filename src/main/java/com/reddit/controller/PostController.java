@@ -89,4 +89,34 @@ public class PostController {
     return "redirect:/home/";
    }
 
+
+   @GetMapping("/updatePost")
+   public String updatePost(@RequestParam("postId") Long postId,Authentication authentication,Model model){
+    Post post = this.postService.getPostById(postId);
+    String username=authentication.getName();
+    model.addAttribute("username", username);
+    List<Subreddit> subreddits = subredditService.findAll();
+    model.addAttribute("post", post);
+    model.addAttribute("subreddits", subreddits);
+    return "update-post";
+   }
+
+
+
+   @GetMapping("/updatepost")
+public String updatePost(@RequestParam("id") Long postId,
+@RequestParam("title") String title,
+@RequestParam("content") String content,
+@RequestParam("subreddit") String subreddit,
+@RequestParam("username") String username,Model model
+){
+   this.postService.updatePost(postId, title, content, subreddit, username);
+   Post post=this.postService.getPostById((long)postId);
+   Comment comment=new Comment();
+   model.addAttribute("Comment", comment);
+   model.addAttribute("post",post);
+   return "viewPost";
+}
+   
+
 }

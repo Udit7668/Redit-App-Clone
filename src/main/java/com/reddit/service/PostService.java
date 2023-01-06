@@ -91,4 +91,20 @@ public class PostService {
     Post post=this.postRepository.findPostById(postId);
     this.postRepository.delete(post);
     }
+
+
+    @Transactional
+    public void updatePost(Long postId,String title,String content,String subredditName,String username){
+     Post post=this.postRepository.findPostById(postId);
+     post.setTitle(title);
+     post.setContent(content);
+
+     Subreddit subreddit=this.subredditRepository.findById((long)Integer.parseInt(subredditName)).get();
+     post.setSubreddit(subreddit);
+
+     post.setUser(this.userService.getUserByUsername(username));
+
+     this.postRepository.save(post);
+
+    }
 }

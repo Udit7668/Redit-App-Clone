@@ -32,4 +32,10 @@ public class SubredditService {
     }
     public Subreddit findById(Long subredditId) {
         return subredditRepository.findById(subredditId).get();
-    }}
+    }
+    
+    public Subreddit findByName(String subredditName){
+        Subreddit subreddit=this.subredditRepository.findSubredditByName(subredditName);
+        return subreddit;
+    }
+}
