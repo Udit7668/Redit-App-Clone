@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subreddit</title>
+</head>
+<body>
+<label>Create Subreddit</label>
+<form th:action="@{/home/addSubreddit}" th:object="${subreddit}" method="post">
+    <input type="hidden"  th:field="*{id}">
+    <input type="text"    th:field="*{name}"      placeholder="Name"/><br><br>
+    <textarea th:field="*{description}" placeholder="Description" rows="5"> </textarea><br><br>
+    <input type="submit" value="Create"/>
+</form>
+
+
+
+</body>
+</html>
