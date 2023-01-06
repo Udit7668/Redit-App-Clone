@@ -61,6 +61,8 @@
         </form>
       </div>
 
+
+      
     <div th:each="comment: ${post.comments}" id="comment-preview">
       <h6><span th:text="${comment.user.username}"></span> | <span th:text="${comment.createdAt}"></span></h6>
       <h4><span th:text="${comment.comment}"></span></h4>
