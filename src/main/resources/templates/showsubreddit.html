@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Subreddit</title>
+</head>
+<body>
+<label>Subreddit</label>
+<div>
+<table border="black">
+    <tr>
+    <th>Name</th>
+    <th>Description </th>
+    <th> Date </th>
+    </tr>
+<tr th:each="subreddit:${allSubreddit}">
+    <td th:text="${subreddit.name}" ></td>
+   <td th:text="${subreddit.description}" ></td>
+  <td th:text="${subreddit.createdDate}" ></td>
+    <td><form th:action="@{/home/deleteSubreddit}">
+        <input type="hidden" th:value="${subreddit.id}" name="subredditId"/>
+        <input type="submit" value="Delete"/>
+    </form></td>
+</tr>
+</table>
+</div>
+
+</body>
+</html>
