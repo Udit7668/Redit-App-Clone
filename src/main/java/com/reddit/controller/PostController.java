@@ -57,6 +57,8 @@ public class PostController {
     public String showAllPost(Model model){
     List<Post> posts=this.postService.getAllPost();
     model.addAttribute("posts",posts);
+    List<Subreddit> subreddits=this.subredditService.findAll();
+    model.addAttribute("subreddits", subreddits);
         return "home";
     }
 

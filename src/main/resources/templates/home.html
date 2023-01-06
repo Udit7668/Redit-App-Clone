@@ -51,8 +51,22 @@ justify-content: space-between;
 }
 
 .float-container{
-    margin-left: 500px;
+    margin-left: 600px;
+
 }
+
+#subreddit{
+width: 200%;
+}
+
+#udit{
+width: 20%;
+padding: 30px;
+float: left;
+margin-left: 20px;
+border: 2px solid black;
+}
+
 
 
 
@@ -108,10 +122,36 @@ justify-content: space-between;
 
 Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-left: 20px; text-decoration: none;" >Top Post</a>
     <a th:href="@{/home/newPosts}" style="text-decoration: none;">New Post</a>
+</div >
+
+
+<div id="udit">
+
+    <li style="list-style-type: none;">
+        <form th:action="@{/subreddit/add}" method="get">
+            <input type="submit" value="Create Subreddit">
+        </form>
+    </li>
+    <br>
+    <li style="list-style-type: none;">
+        <form th:action="@{/posts/newPost}">
+            <input type="submit" value="New Post">
+        </form>
+    </li>
+    <br>
+
+    All subreddit
+<br>
+<br>
+<div th:each=" subreddit: ${subreddits}" id="subreddit">
+    <a th:href="@{/subreddit/view/{subredditId}(subredditId=${subreddit.id})}"><span th:text="${subreddit.name}"></span></a>
+    </div>
+
+  
 </div>
 
-
 <div class="float-container">
+   
     <div class="float-child green" th:each=" post: ${posts}">
 
         
@@ -135,5 +175,6 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
 
 </div>
 
+</div>
 </body>
 </html>
