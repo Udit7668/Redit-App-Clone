@@ -1,5 +1,6 @@
 package com.reddit.service;
 
+import com.reddit.entity.Post;
 import com.reddit.entity.Subreddit;
 import com.reddit.entity.User;
 import com.reddit.repository.PostRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SubredditService {
@@ -38,4 +40,14 @@ public class SubredditService {
         Subreddit subreddit=this.subredditRepository.findSubredditByName(subredditName);
         return subreddit;
     }
+
+
+    public List<Post> getAllPostBySubredditName(Long subredditId){
+        Optional<Subreddit> subredditOptional=this.subredditRepository.findById(subredditId);
+        Subreddit subreddit=subredditOptional.get();
+        String subredditName=subreddit.getName();
+       List<Post> posts=this.subredditRepository.findPostBySubredditName(subredditName); 
+
+        return posts;
+    } 
 }

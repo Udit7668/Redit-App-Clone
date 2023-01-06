@@ -2,6 +2,8 @@ package com.reddit.controller;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -16,10 +18,6 @@ import com.reddit.entity.Post;
 import com.reddit.entity.Subreddit;
 import com.reddit.service.PostService;
 import com.reddit.service.SubredditService;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
-
-import javax.transaction.Transactional;
 
 
 @Controller
