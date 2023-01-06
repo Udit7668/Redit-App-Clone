@@ -62,4 +62,14 @@ public class PostService {
     return posts;
     }
 
+
+    @Transactional
+    public void upVote(Long id){
+      Post post=this.postRepository.findPostById(id);
+       Integer oldCount=  post.getVoteCount();
+      post.setVoteCount(oldCount+1);
+      System.out.println("**************" +(oldCount+1));
+      this.postRepository.save(post);
+    }
+
 }

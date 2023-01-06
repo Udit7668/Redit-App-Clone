@@ -68,4 +68,11 @@ public class PostController {
         model.addAttribute("post",post);
         return "viewPost";
     }
+
+    @GetMapping("/upvote/{viewId}")
+    public String upVote(@PathVariable("viewId") Long id){
+        this.postService.upVote(id);
+     return "redirect:/posts/";
+    }
+  
 }
