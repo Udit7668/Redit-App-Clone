@@ -37,17 +37,18 @@ public class PostController {
         Post post = new Post();
         String username=authentication.getName();
         model.addAttribute("username", username);
-       List<Subreddit> subreddits = subredditService.findAll();
+        List<Subreddit> subreddits = subredditService.findAll();
         model.addAttribute("post", post);
-       model.addAttribute("subreddits", subreddits);
+        model.addAttribute("subreddits", subreddits);
         return "new-post";
     }
 
     @RequestMapping("/savepost")
-    public String saveOrUpdatePost(@RequestParam("title") String title,@RequestParam("content") String content,
-    @RequestParam("subreddit") String subreddit,@RequestParam("username") String username
-    ){
-         
+    public String saveOrUpdatePost(@RequestParam("title") String title,
+                                   @RequestParam("content") String content,
+                                   @RequestParam("subreddit") String subreddit,
+                                   @RequestParam("username") String username){
+
         this.postService.addPost(title,content,subreddit,username);
         return "redirect:/posts/";
     }

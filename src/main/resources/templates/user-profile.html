@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.com">>
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+</head>
+<body>
+Posts:
+<div th:each="post : ${posts}">
+    <span th:text="${post.subreddit.name}"></span>
+    <span th:text="${post.content}"></span>
+</div>
+Comments:
+<div th:each="Comment : ${comments}">
+    <span th:text="${Comment.comment}"></span>
+</div>
+</body>
+</html>

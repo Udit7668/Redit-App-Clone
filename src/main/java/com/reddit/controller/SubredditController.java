@@ -21,10 +21,8 @@ public class SubredditController {
     }
     @PostMapping("/home/addSubreddit")
     public String createSubreddit(@ModelAttribute("subreddit")Subreddit subreddit,
-                                  @RequestParam(name="username") String username,
-                                  @RequestParam(value = "subredditId",
-                                          required = false) Long subredditId){
-        subredditService.createSubreddit(subreddit,subredditId,username);
+                                  @RequestParam(name="username") String username){
+        subredditService.createSubreddit(subreddit,username);
         return "redirect:/home/";
     }
     @CrossOrigin
