@@ -78,4 +78,10 @@ public class PostService {
        post.setVoteCount(oldCount-1);
       this.postRepository.save(post);
     }
+
+
+    public List<Post> sortPostByVoteCount(){
+      List<Post> posts=this.postRepository.sortPostByVoteCount();
+      return posts;
+    }
 }

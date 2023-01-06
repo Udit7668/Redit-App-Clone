@@ -30,6 +30,7 @@ public class Post {
     @Nullable
     @Lob
     private String content;
+    @Column(name="vote_count")
     private Integer voteCount = 0;
     @Column(name="created_at",nullable = false,updatable = false)
     @CreationTimestamp

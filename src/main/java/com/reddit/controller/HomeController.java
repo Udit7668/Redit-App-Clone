@@ -45,7 +45,14 @@ public class HomeController {
    model.addAttribute("posts", posts);
    return "home";
     }
-  
+
+
+    @GetMapping("/topPosts")
+    public String sortPostByVoteCount(Model model){
+        List<Post> posts=this.postService.sortPostByVoteCount();
+        model.addAttribute("posts",posts);
+        return "home";
+    }
 
 
 }
