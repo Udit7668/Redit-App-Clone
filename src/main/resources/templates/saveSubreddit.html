@@ -6,7 +6,7 @@
 </head>
 <body>
 <label>Create Subreddit</label>
-<form th:action="@{/home/addSubreddit}" th:object="${subreddit}" method="post">
+<form th:action="@{/subreddit/addSubreddit}" th:object="${subreddit}" method="post">
     <input type="hidden" th:value="${#authentication.name}" name="username"/>
     <input type="hidden"  th:field="*{id}">
     <input type="text"    th:field="*{name}"      placeholder="Name"/><br><br>
