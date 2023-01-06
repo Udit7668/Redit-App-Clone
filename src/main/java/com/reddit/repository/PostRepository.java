@@ -16,4 +16,8 @@ public interface PostRepository extends JpaRepository<Post,Long> {
   
     @Query(value="select * from post order by created_at desc",nativeQuery = true)
     public List<Post> sortPostByCreatedDate();
+
+
+    @Query(value="select * from post order by vote_count desc",nativeQuery = true)
+    public List<Post> sortPostByVoteCount();
 }

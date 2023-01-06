@@ -19,8 +19,7 @@ public class SubredditService {
     @Autowired
     private UserRepository userRespository;
 
-    public void createSubreddit(Subreddit subreddit, Long subredditId, String username) {
-        subreddit.setCreatedDate(Timestamp.from(Instant.now()));
+    public void createSubreddit(Subreddit subreddit, String username) {
         User user = userRespository.findByUsername(username).get();
         subreddit.getAdmins().add(user);
         subredditRepository.save(subreddit);
