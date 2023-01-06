@@ -41,10 +41,22 @@
     #comment-preview{
       margin: 20px; 
     }
+
+    #logout{
+      margin-top: 40px;
+      text-align: right;
+    }
   </style>
   <body>
     <div id="post-container">
-
+      <div id="logout">
+        <form th:action="@{/logout}" method="POST">
+  
+          <input type="submit" value="Logout" />
+        </form>
+  
+      </div>
+  
       <div id = "post-preview"> 
         <h1><span th:text="${post.title}"></span></h1><br>
         <h3><span th:text="${post.content}"></span></h3><br>
