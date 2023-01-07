@@ -32,12 +32,7 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/search")
-    public String search()
-    {
-  return null;
-    }
-    @GetMapping("/login")
+   @GetMapping("/login")
     public String login(){
         return "redirect:/form/login";
     }
