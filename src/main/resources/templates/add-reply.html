@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add reply</title>
+</head>
+<body>
+<form th:action = "addReply" th:method="post" th:object="${Comment}">
+  <input type="hidden" th:value="${param.parentId}" name="parentId"/>
+  <input type="hidden" th:value="${param.postId}" name="postId"/>
+  <input type="hidden" th:value="${param.username}" name="username"/>
+  Comment:<input type="text" th:field="${Comment.comment}"/><br>
+  <input type=submit>
+</form>
+</body>
+</html>
