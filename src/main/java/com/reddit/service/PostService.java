@@ -13,6 +13,9 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -63,8 +66,9 @@ public class PostService {
     }
 
 
-    public List<Post> getAllPost(){
-      List<Post> posts=this.postRepository.findAll();
+    public Page<Post> getAllPost(Integer pageNumber,Integer pageSize){
+      Pageable pageable= PageRequest.of(pageNumber-1,pageSize);
+      Page<Post> posts=this.postRepository.findAll(pageable);
       return posts;
     }
 

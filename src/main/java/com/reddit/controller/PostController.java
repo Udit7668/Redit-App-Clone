@@ -6,6 +6,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -56,11 +57,22 @@ public class PostController {
     }
 
     @GetMapping("/")
-    public String showAllPost(Model model){
-    List<Post> posts=this.postService.getAllPost();
+   public String showAllPosts(Model model){
+    return showAllPost(1,model);
+   }
+
+    @GetMapping("/page/{pageNumber}")
+    public String showAllPost(@PathVariable("pageNumber") Integer pageNUmber,Model model){
+        Integer pageSize=5;
+    Page<Post> page=this.postService.getAllPost(pageNUmber,pageSize);
+    List<Post> posts=page.getContent();
     model.addAttribute("posts",posts);
     List<Subreddit> subreddits=this.subredditService.findAll();
     model.addAttribute("subreddits", subreddits);
+    model.addAttribute("currentPage", pageNUmber);
+    model.addAttribute("totalPages", page.getTotalPages());
+    model.addAttribute("totalItems", page.getTotalElements());
+
         return "home";
     }
 
