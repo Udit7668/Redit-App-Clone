@@ -38,7 +38,7 @@
     border-bottom: 2px solid black;
    margin-top: 20px;
     float: left;
-    height: 300px;;
+     height: 300px;
     padding: 20px;
     text-align: center;
     
@@ -52,7 +52,7 @@ justify-content: space-between;
 
 .float-container{
     margin-left: 600px;
-
+      word-wrap: break-word;
 }
 
 #subreddit{
@@ -158,7 +158,7 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
       <h3 th:text="${post.title}"></h3>
       <h3 th:text="u+'/  '+${post.user.username}"></h3>
       <h3 th:text="r+'/  '+${post.subreddit.name}"></h3>
-       <h4 th:text="${post.content}"></h4>
+       <h4 th:text="${#strings.substring(post.content,0,60)}"></h4>
        <h5 th:text="${post.createdDate}"></h5>  
            <br>
              <td>
