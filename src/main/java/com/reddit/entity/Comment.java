@@ -8,6 +8,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -21,6 +23,10 @@ public class Comment {
     private Long id;
     @Column(name="comment")
     private String comment;
+    @ManyToOne
+    private Comment parent;
+    @OneToMany(mappedBy = "parent")
+    private List<Comment> children = new ArrayList<>();
     @CreationTimestamp
     @Column(name="created_at", updatable = false, nullable = false)
     private Timestamp createdAt;
