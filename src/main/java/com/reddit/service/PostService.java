@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.reddit.entity.Post;
 import com.reddit.entity.Subreddit;
+import com.reddit.entity.User;
 import com.reddit.repository.PostRepository;
 import com.reddit.repository.SubredditRepository;
 
@@ -131,7 +133,16 @@ public class PostService {
 
 
     public List<Post> searchPost(String searchBy){
-     List<Post> posts=this.postRepository.findPostBySubredditNameOrPostTitle(searchBy);
+      List<User> users=this.userService.findAllUser();
+      List<Post> posts=new ArrayList<>();
+      for(User user:users){
+        if(user.getUsername().equalsIgnoreCase(searchBy)){
+         posts=this.userService.getPosts(searchBy);
+         return posts;
+        }
+      }
+     posts =this.postRepository.findPostBySubredditNameOrPostTitle(searchBy);
+
       return posts;
     }
 }
