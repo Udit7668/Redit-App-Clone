@@ -60,8 +60,12 @@ public class SubredditService {
         String subredditName=subreddit.getName();
         System.out.println(subredditName+"****************************************");
        List<Post> posts=this.postRepository.findPostBySubredditName(subredditName); 
-
         return posts;
+    }
+
+    public List<Post> getPostsByTitleOfASubreddit(long subredditId, String searchKey) {
+        List<Post> posts = this.postRepository.findPostsByTitleWithCommonSubreddit(subredditId, searchKey); 
+        return posts; 
     } 
 
 }
