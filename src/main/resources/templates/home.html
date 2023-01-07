@@ -156,7 +156,7 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
 
         
       <h3 th:text="${post.title}"></h3>
-      <h3 th:text="u+'/  '+${post.user.username}"></h3>
+      <a th:href="@{/user/{username}(username=${post.user.username})}"><h3 th:text="u+'/  '+${post.user.username}"></h3></a>
       <a th:href="@{/subreddit/view/{subredditId}(subredditId=${post.subreddit.id})}"><h3 th:text="r+'/  '+${post.subreddit.name}"></h3></a>
        <h4 th:text="${post.content}"></h4>
        <h5 th:text="${post.createdDate}"></h5>  

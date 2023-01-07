@@ -28,6 +28,8 @@ public class Post {
     @NotBlank(message = "Title cannot be empty or Null")
     private String title;
     
+    private String image;
+    @Column(columnDefinition = "TEXT")
     private String content;
     @Column(name="vote_count")
     private Integer voteCount = 0;

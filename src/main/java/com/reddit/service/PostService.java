@@ -1,17 +1,24 @@
 package com.reddit.service;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.reddit.entity.Post;
 import com.reddit.entity.Subreddit;
 import com.reddit.repository.PostRepository;
 import com.reddit.repository.SubredditRepository;
-import com.reddit.repository.UserRepository;
 
 @Service
 public class PostService {
@@ -29,10 +36,23 @@ public class PostService {
     }
 
     @Transactional
-    public void addPost(String title,String content,String subredditName,String username){
+    public void addPost(String title,String content,String subredditName,String username,MultipartFile file) throws IOException{
       Post post=new Post();
       post.setTitle(title);
       post.setContent(content);
+      if(file.isEmpty()){
+        System.out.println("File is empty");
+      }
+      else{
+        post.setImage(file.getOriginalFilename());
+
+        System.out.println(new ClassPathResource("").getFile().getAbsolutePath());
+        System.out.println("///////////////////////");
+       File saveFile= new ClassPathResource("static/img").getFile();
+      Path path=  Paths.get(saveFile.getAbsolutePath()+File.separator+file.getOriginalFilename());
+       Files.copy(file.getInputStream(), path,StandardCopyOption.REPLACE_EXISTING);
+      }
+
       post.setUser(userService.getUserByUsername(username));
       Subreddit subreddit=this.subredditRepository.findById((long)Integer.parseInt(subredditName)).get();
       post.setSubreddit(subreddit);

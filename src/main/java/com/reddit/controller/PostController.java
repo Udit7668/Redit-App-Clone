@@ -1,5 +1,6 @@
 package com.reddit.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -10,8 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.reddit.entity.Comment;
 import com.reddit.entity.Post;
@@ -41,13 +44,15 @@ public class PostController {
         return "new-post";
     }
 
-    @RequestMapping("/savepost")
+    @PostMapping("/savepost")
     public String saveOrUpdatePost(@RequestParam("title") String title,
                                    @RequestParam("content") String content,
                                    @RequestParam("subreddit") String subreddit,
-                                   @RequestParam("username") String username){
-
-        this.postService.addPost(title,content,subreddit,username);
+                                   @RequestParam("fileprofile") MultipartFile file,
+                                   @RequestParam("username") String username) throws IOException{
+       
+          System.out.println(file.getOriginalFilename()+"***************");
+        this.postService.addPost(title,content,subreddit,username,file);
         return "redirect:/posts/";
     }
 
@@ -116,6 +121,19 @@ public String updatePost(@RequestParam("id") Long postId,
    model.addAttribute("Comment", comment);
    model.addAttribute("post",post);
    return "viewPost";
+}
+
+
+@GetMapping("/file")
+public String image(){
+return "file";
+}
+
+@PostMapping("/image")
+public String file(@RequestParam("fileprofile") MultipartFile file){
+ System.out.println(file.getOriginalFilename()+"*************************");
+ System.out.println("*****************************************");
+ return "";
 }
    
 
