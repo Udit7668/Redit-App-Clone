@@ -51,7 +51,7 @@ justify-content: space-between;
 }
 
 .float-container{
-    margin-left: 600px;
+    margin-left: 400px;
 
 }
 
@@ -60,11 +60,24 @@ width: 200%;
 }
 
 #udit{
+    margin-top: 20px;
 width: 20%;
 padding: 30px;
 float: left;
 margin-left: 20px;
 border: 2px solid black;
+}
+#subredditdis {
+display: flex;
+width: 20%;
+ margin-top:40px;
+ margin-inline-start: auto;
+    margin-right: 30px;
+/*  background: #ccc;*/
+  height: 250px;
+  justify-content: center;
+ padding: 20px;
+ border: 2px solid black;
 }
 
 
@@ -79,7 +92,7 @@ border: 2px solid black;
 <body>
 <nav class="container">
     <ul>
-        <li><img  src="data:image/png;base64,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">Reddit</li>
+        <li><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACECAMAAABmmnOVAAAAflBMVEX/////RQD/QQD/OwD/NgD/LwD/9/P/yrz/KgD/9O//5dz/i2//7un/u6n//vv/3tX/0sb/tqP/6+P/pI3/dFH/w7b/eVb/aUb/Wzf/lHr/URX/TiD/m4P/XS//VzD/YkL/rJj/ZTz/gGH/RhP/dVv/blD/VyP/nYv/loX/hWeGQPdQAAAG7klEQVR4nO1baZeiOhCVVAKyL4qIuOAyzuv//wdfoj0uSQUStKc5c7q+zJmWwE1Sy61KZTL5kR/5kX9WksSPiiLyk+Q7vu5GaTkLF9VuueWy3FWLcFamkfv3EARxXTmUUQByEwD+B6eq4+AvAPC9esUY/7qDCMfC2Kr2/K9E4GZ1w6ePff8BCUBTZ1+1MX6+A9qD4BMHhV3+FctRrAkzQvCJg5F18WYIQd27Dci21O/UUnfWmO2DBIM2s7fphrex2YgnGGzjvQVCNB8K4QpjHr2OoWxgOAQh0JQvQkjqIcogLQatXwotxYa+CkEI3bxgrd6rW/FHoBmsnzEeIYYIIfEwDPn0bRg4imk+BMOMvQ+CEDYbgOFN6nAXsEaRv3kdhDDLHYmn78fgOFMr7fTeZxePQoiFpRbNl2DgKBpjr5VsbJWSCtr7BJyTTU5FlQdhY+rBa1tffcwDb3ZYEvoHCYGDl6blQiVCtDbDUNpigOuLfY5ksT2C4GBXDUxidS2oUUyNrBWCPbzX5Ujm09sfcmVCpDHhF3NrLzXl2uZqeNxemRHM+zF41l6KEDFse2izQkWSq1NivXbqbqytExZ83IwCFWlgnj6rf6aCIJs+9jsgbF1iwnUTeRo4JdX6YdcREL2hLBjgpkAs793FEsIevHOLgCBNdz5i7SK4HPkri8dYQx5UD93dbmdR2KZZ4pPCCZZPu3hfihadFIEu770eQCLgoA6E9qKeLo6B/77WY/CHBE/actd4eh5IoGqzrK10cyJEn7MPYjKQcfQrGT2hjHWkLHp+4+6GZL0iOqe2+kx2Ol+B2XT/6365WIjoE7F+qAyxTwdCMdIavs5K/UF8SphjUlmPJA2umt4gkk/TYXQQ8DBmv6ZcyModpkyA74diZkYg5onOL/YMXGEYggFEghAqfN9hyBoyLIrFViAIUNIsq6oSW3s+8v/alvcYlgmZqwT/It3XZRb4nwQmSNMs/z13KLUAgimFa2hmnLes6hK3r6IMN8wUB6lUpxk5RoPp8cPrYmduGm7NYBBHpd1a908AbtsNxKBIW+SbGwyhu9r5pMrQEtdLvvjh7/9OjqhlAq0NU8lyf6l9AiP75UoXTZmaBs3QlaCL7EpPvD2lC/MaXFI2lNAPjw9OgvaM6jxV+W6IPQizG4F369KqGhmFx9uACHUkl9D3LAvkOQSrDYzHtyPrfMlXngQLhBf2+B5JkOSSVPLSJgirojriMUAQ4yM7GYS/VECoD70gyS/1/UvZ5UVbNX3+/T4MWKQlW9lbISAEl0fF7TiE1S5e/FYQaV0td7jj9NvDKdRYsuoMjUDgaVLMYzinEYBUfbwzj14wxY96kJqNAgJVTGTVs08fTFTT+fMTnLEYqzIFVTFRE1UjzL38o1Z9btOgyBIiVF61PtRZfSjviu4lACYtZnr7CaOPSGhSnRXqttW6fPYAQtqPB3rIlP3wkECquu3eACZPtxOErHHZEQOhBjBNKD89v8+9fYkQSW3Th5+eoSczlGsh4VFDaqZSonTLVxXtS26VIXmKmvIsQmo09E4uOrr763Og2Nfdeh3Jk0Wq+V+moRqfhugqcIOFSDEAY1lxwyk/oY3sQRBH6OBEV0P5qVpSydp1i3gQ8bV27jhr5d0FppYo5dckP5jj6RIscATo9NCMGE8DEWO2Fg9VNzQNxBPi/kJ0v6xxEGggxksD2uKSsSTqcYOjKw1olEJTzLCQzFwltOUieHU/0ICgKxdpCmevJR9S7f2+G5rCma6ESGSnUCx0CaFbzxUPgpdxtIV+Tf0L5pLxrxmsYmyTMp6wbqS/qQT3+lKdvuvKyvKG5FPunPex7JeyE2efU8mvBHg00JeVtQV2OYB4Z/45BmGZfm6sG3jrlYC2kp70UY/d2UCgO2ogRFq8SwsaAThu9xWX/VY0JxJoaknb/BO+w11HDdpDF+LIBlW0jdwUulrLPtA/DTh00R8/ETSaHs6Xc3nGoDnNPCV2BVvdnDqPnzoK/TREVjDxi5RL4GNqVmrLVT2n9h1HknRv1SsVhdoiXt+RZNfhLJmGxv2VSQ762mxvn1HnMTWAGQy/XXWcfxmwg+4Dezh+9PYAF+22s2uw/8C+t3UBoJp1LIcfH47djYsmrQv9TRyETp0wThU+K9zmmfXVts2aOEzaWbhvIs3+Y517mTDRLCvben4+mpw2mLWzmJ4KEnHiQEUOAnD516xAb0rU7FucjMW8xWkUzV7jaHsbRwPgOFohx9EUOo722HE0Co+jZXoczePjaKMfx4WCySiuVkzGcclkMorrNpNxXDyajOIKlpARXEYTMoJreUJGcEHxIt9/VfNTvv3S6qd8//Xdu4iLzFy+6SLzj/zIj/wd+R8PTGlkZN2kRAAAAABJRU5ErkJggg==">Reddit</li>
        
         <li>
             <form th:action="@{/home/}">
@@ -92,11 +105,11 @@ border: 2px solid black;
             <input type="submit" value="Search">
         </form>
         </li>
-        <li>
+        <!-- <li>
             <form th:action="@{/form/login}">
                 <input type="submit" value="Login">
             </form>
-        </li>
+        </li> -->
 
         <li>
             <form th:action="@{/subreddit/add}" method="get">
@@ -110,9 +123,9 @@ border: 2px solid black;
             </form>
         </li>
 
-        <li>  <form th:action="@{/form/register}">
+        <!-- <li>  <form th:action="@{/form/register}">
             <input type="submit" value="Signup">
-        </form> </li>
+        </form> </li> -->
     </ul>
 </nav>
 
@@ -175,6 +188,16 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
 
 </div>
 
+</div>
+<div id="subredditdis">
+    <h3>About Community</h3>
+    <span th:each="subreddit :${thesubreddit}" style="width:100px;">
+        <tr >
+            <td th:text="${subreddit.name}"></td>
+             <td th:text="${subreddit.description}"></td>
+             <td th:text="${subreddit.createdDate}"></td>
+        </tr>
+    </span>
 </div>
 </body>
 </html>

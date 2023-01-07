@@ -27,9 +27,9 @@ public class Post {
     private Long id;
     @NotBlank(message = "Title cannot be empty or Null")
     private String title;
-    @Nullable
-    @Lob
+    
     private String content;
+    @Column(name="vote_count")
     private Integer voteCount = 0;
     @Column(name="created_at",nullable = false,updatable = false)
     @CreationTimestamp
@@ -43,6 +43,6 @@ public class Post {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "subreddit_id")
     private Subreddit subreddit;
-    @OneToMany(fetch = LAZY,mappedBy = "post")
+    @OneToMany(fetch = LAZY,mappedBy = "post",cascade = CascadeType.ALL)
     private List<Comment> comments;
 }

@@ -34,7 +34,7 @@ public class PostService {
       post.setTitle(title);
       post.setContent(content);
       post.setUser(userService.getUserByUsername(username));
-      Subreddit subreddit=this.subredditRepository.findSubredditByName(subredditName);
+      Subreddit subreddit=this.subredditRepository.findById((long)Integer.parseInt(subredditName)).get();
       post.setSubreddit(subreddit);
       this.postRepository.save(post);
       
@@ -62,4 +62,49 @@ public class PostService {
     return posts;
     }
 
+
+    @Transactional
+    public void upVote(Long id){
+      Post post=this.postRepository.findPostById(id);
+       Integer oldCount=  post.getVoteCount();
+      post.setVoteCount(oldCount+1);
+      this.postRepository.save(post);
+    }
+
+    @Transactional
+    public void downVote(Long id){
+      Post post=this.postRepository.findPostById(id);
+       Integer oldCount=  post.getVoteCount();
+       post.setVoteCount(oldCount-1);
+      this.postRepository.save(post);
+    }
+
+
+    public List<Post> sortPostByVoteCount(){
+      List<Post> posts=this.postRepository.sortPostByVoteCount();
+      return posts;
+    }
+
+
+    @Transactional
+    public void deletePost(Long postId){
+    Post post=this.postRepository.findPostById(postId);
+    this.postRepository.delete(post);
+    }
+
+
+    @Transactional
+    public void updatePost(Long postId,String title,String content,String subredditName,String username){
+     Post post=this.postRepository.findPostById(postId);
+     post.setTitle(title);
+     post.setContent(content);
+
+     Subreddit subreddit=this.subredditRepository.findById((long)Integer.parseInt(subredditName)).get();
+     post.setSubreddit(subreddit);
+
+     post.setUser(this.userService.getUserByUsername(username));
+
+     this.postRepository.save(post);
+
+    }
 }

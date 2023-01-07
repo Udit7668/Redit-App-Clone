@@ -1,5 +1,6 @@
 package com.reddit.service;
 
+import com.reddit.entity.Post;
 import com.reddit.entity.Subreddit;
 import com.reddit.entity.User;
 import com.reddit.repository.PostRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SubredditService {
@@ -18,8 +20,8 @@ public class SubredditService {
     private SubredditRepository subredditRepository;
     @Autowired
     private UserRepository userRespository;
-
-
+    @Autowired
+    private PostRepository postRepository;
 
     public void createSubreddit(Subreddit subreddit, Long subredditId) {
         subreddit.setCreatedDate(Timestamp.from(Instant.now()));
@@ -27,6 +29,9 @@ public class SubredditService {
     }
     public void createSubreddit(Subreddit subreddit, Long subredditId, String username) {
         subreddit.setCreatedDate(Timestamp.from(Instant.now()));
+    }
+
+    public void createSubreddit(Subreddit subreddit, String username) {
         User user = userRespository.findByUsername(username).get();
         subreddit.getAdmins().add(user);
         subredditRepository.save(subreddit);
@@ -41,4 +46,22 @@ public class SubredditService {
     public Subreddit findById(Long subredditId) {
         return subredditRepository.findById(subredditId).get();
     }
+
+    
+    public Subreddit findByName(String subredditName){
+        Subreddit subreddit=this.subredditRepository.findSubredditByName(subredditName);
+        return subreddit;
+    }
+
+
+    public List<Post> getAllPostBySubredditName(Long subredditId){
+        Optional<Subreddit> subredditOptional=this.subredditRepository.findById(subredditId);
+        Subreddit subreddit=subredditOptional.get();
+        String subredditName=subreddit.getName();
+        System.out.println(subredditName+"****************************************");
+       List<Post> posts=this.postRepository.findPostBySubredditName(subredditName); 
+
+        return posts;
+    } 
+
 }
