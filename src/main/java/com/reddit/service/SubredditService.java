@@ -49,9 +49,7 @@ public class SubredditService {
         Optional<Subreddit> subredditOptional=this.subredditRepository.findById(subredditId);
         Subreddit subreddit=subredditOptional.get();
         String subredditName=subreddit.getName();
-        System.out.println(subredditName+"****************************************");
        List<Post> posts=this.postRepository.findPostBySubredditName(subredditName); 
-
         return posts;
     } 
 }
