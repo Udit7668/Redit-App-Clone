@@ -65,7 +65,6 @@ public class SubredditController {
         return  subreddit;
     }
 
-
     @GetMapping("view/{viewId}")
     public String viewAllPostBySubreddit(@PathVariable("viewId") Long subredditId,Model model){
         Subreddit subreddit =subredditService.findById(subredditId);
@@ -74,6 +73,20 @@ public class SubredditController {
         List<Subreddit> subreddits=this.subredditService.findAll();
         model.addAttribute("subreddits", subreddits);
         model.addAttribute("thesubreddit",subreddit);
+        System.out.println(">> subreddit name : " + subreddit.getName());
+        return "subreddit-post";
+    }
+
+    @GetMapping("/search")
+    public String searchPosts(@RequestParam("subredditId") String subredditId, @RequestParam("searchKey") String searchKey, Model model){
+        System.out.println(">> subredditId : " + subredditId + " searchKey : " + searchKey);
+        Subreddit subreddit = subredditService.findById(Long.parseLong(subredditId));
+        List<Post> posts = this.subredditService.getPostsByTitleOfASubreddit(Long.parseLong(subredditId),searchKey);
+        List<Subreddit> subreddits = this.subredditService.findAll();
+        model.addAttribute("posts", posts);
+        model.addAttribute("subreddits", subreddits);
+        model.addAttribute("thesubreddit", subreddit);
+        System.out.println(">> subreddit name : " + subreddit.getName());
         return "subreddit-post";
     }
 

@@ -5,90 +5,93 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-   .container ul{
-    overflow: auto;
-    display: flex;
-    justify-content: space-between;
-   }
-
-   ul li{
- list-style-type:none;
- margin: 20px;
-    float: left;
-    color:red;
-
-   }
-
-   img{
-    height:40px;
-   }
-
-   #filter{
-   display:flex;
-   justify-content:center;
-   margin-bottom: 20px;
-   }
-
-   .float-child {
-    width: 60%;
-    border-top: 2px solid black;
-    border-right: 2px solid black;
-    border-left: 2px solid black;
-    border-bottom: 2px solid black;
-   margin-top: 20px;
-    float: left;
-    height: 300px;;
-    padding: 20px;
-    text-align: center;
-    
-} 
-.float-child #votecount{
-margin-top: 10px;
-display: flex;
-justify-content: space-between;
-
-}
-
-.float-container{
-    margin-left: 400px;
-
-}
-
-#subreddit{
-width: 200%;
-}
-
-#udit{
-    margin-top: 20px;
-width: 20%;
-padding: 30px;
-float: left;
-margin-left: 20px;
-border: 2px solid black;
-}
-#subredditdis {
-display: flex;
-width: 20%;
- margin-top:40px;
- margin-inline-start: auto;
-    margin-right: 30px;
-/*  background: #ccc;*/
-  height: 250px;
-  justify-content: center;
- padding: 20px;
- border: 2px solid black;
-}
-
-
-
-
-      </style>
+   
       <link rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
       integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
       crossorigin="anonymous">
 </head>
+<style>
+    .container ul {
+        overflow: auto;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    ul li {
+        list-style-type: none;
+        margin: 20px;
+        float: left;
+        color: red;
+
+    }
+
+    img {
+        height: 40px;
+    }
+
+    #filter {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .float-child {
+        width: 60%;
+        border-top: 2px solid black;
+        border-right: 2px solid black;
+        border-left: 2px solid black;
+        border-bottom: 2px solid black;
+        margin-top: 20px;
+        float: left;
+        height: 300px;
+        ;
+        padding: 20px;
+        text-align: center;
+
+    }
+
+    .float-child #votecount {
+        margin-top: 10px;
+        display: flex;
+        justify-content: space-between;
+
+    }
+
+    .float-container {
+        margin-left: 400px;
+
+    }
+
+    #subreddit {
+        width: 200%;
+    }
+
+    #udit {
+        margin-top: 20px;
+        width: 20%;
+        padding: 30px;
+        float: left;
+        margin-left: 20px;
+        border: 2px solid black;
+    }
+    #subredditdis {
+        display: flex;
+        width: 20%;
+        margin-top: 40px;
+        margin-inline-start: auto;
+        margin-right: 30px;
+        /*  background: #ccc;*/
+        height: 250px;
+        justify-content: center;
+        padding: 20px;
+        border: 2px solid black;
+    }
+    #subreddit-name-heading{
+        text-align:left;
+        margin-left: 10%;
+    }
+</style>
 <body>
 <nav class="container">
     <ul>
@@ -100,8 +103,9 @@ width: 20%;
             </form>
         </li>
 
-        <li>    <form th:action="@{/home/search}">
-            <input type="text" placeholder="Search Here">
+        <li>    <form th:action="@{/subreddit/search}">
+            <input type="hidden" th:name="subredditId" th:value="${thesubreddit.id}">
+            <input type="text"   th:name="searchKey" placeholder="Search Here">
             <input type="submit" value="Search">
         </form>
         </li>
@@ -128,6 +132,8 @@ width: 20%;
         </form> </li> -->
     </ul>
 </nav>
+
+<h1 id="subreddit-name-heading" ><strong><span th:text="${thesubreddit.name}"></strong></h1>
 
 
 

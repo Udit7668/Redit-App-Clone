@@ -25,4 +25,7 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     @Query(value = "select p.* from post p,subreddit s where p.subreddit_id=s.id and s.name like :c",nativeQuery = true)
     public List<Post> findPostBySubredditName(@Param("c") String subredditName);
 
+    @Query(value = "select * from post where subreddit_id = :id and title like %:searchKey%", nativeQuery = true)
+    List<Post> findPostsByTitleWithCommonSubreddit(@Param("id") long subredditId, @Param("searchKey") String searchKey);
+
 }
