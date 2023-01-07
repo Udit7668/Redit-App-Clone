@@ -7,13 +7,20 @@
 <body>
 <label>Create Subreddit</label>
 <form th:action="@{/home/addSubreddit}" th:object="${subreddit}" method="post">
+<<<<<<< HEAD
+=======
+    <input type="hidden" th:value="${#authentication.name}" name="username"/>
+>>>>>>> efb0e0c09663f95ba74f792061c59e543865cc97
     <input type="hidden"  th:field="*{id}">
     <input type="text"    th:field="*{name}"      placeholder="Name"/><br><br>
     <textarea th:field="*{description}" placeholder="Description" rows="5"> </textarea><br><br>
     <input type="submit" value="Create"/>
 </form>
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> efb0e0c09663f95ba74f792061c59e543865cc97
 </body>
 </html>

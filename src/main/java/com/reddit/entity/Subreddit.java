@@ -4,13 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.lang.Nullable;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,12 +22,22 @@ public class Subreddit {
     private Long id;
     @NotBlank(message="Community name is required")
     private String name;
-    @NotBlank(message = "Desciption is required")
+    @NotBlank(message = "Description is required")
     private String description;
     @CreationTimestamp
     private Timestamp createdDate;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "subreddit")
     private List<Post> posts;
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+    @JoinTable(name = "subreddit_user",
+            joinColumns = @JoinColumn(name="subreddit_id"),
+            inverseJoinColumns = @JoinColumn(name="post_id"))
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<User> users;
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+    @JoinTable(name = "subreddit_admins",
+            joinColumns = @JoinColumn(name="subreddit_id"),
+            inverseJoinColumns = @JoinColumn(name="admin_id"))
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<User> admins;
 }

@@ -10,7 +10,6 @@ import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
@@ -38,13 +37,12 @@ public class Post {
     @Column(name = "updated_at")
     @UpdateTimestamp
     private Timestamp updatedDate;
-
-
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "subreddit_id")
     private Subreddit subreddit;
+    @OneToMany(fetch = LAZY,mappedBy = "post")
+    private List<Comment> comments;
 }

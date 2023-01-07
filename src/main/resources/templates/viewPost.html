@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <title>Post</title>
+  </head>
+  <body>
+    <div id="post-container">
+      <h1><span th:text="${post.title}"></span></h1><br>
+      <h4><span th:text="${post.content}"></span></h4><br><br>
+      <input type="button" value="Homepage" onclick="window.location.href='/home/'; return false; "/><br><br>
+    </div>
+    <form th:action = "@{/addComment}" th:method="post" th:object="${Comment}">
+      <input type="hidden" th:value="${#authentication.name}" name="username"/>
+      <input type="hidden" th:value="${post.id}" name="postId"/>
+      Comment:<input type="text" th:field="${Comment.comment}"/><br>
+      <input type=submit value="Add Comment">
+    </form>
+    <div th:each="comment: ${post.comments}">
+      Comment by:<span th:text="${comment.user.username}"></span><br>
+      <span th:text="${comment.comment}"></span>
+      <div th:if="${#authentication.name} == ${comment.user.username}">
+        <form th:action="@{/updateComment}" method="post">
+          <input type="hidden" th:value="${comment.id}" name="commentId"/>
+          <input type="submit" value="Update Comment"/>
+        </form>
+        <form th:action="@{/deleteComment}" method="post">
+          <input type="hidden" th:value="${post.id}" name="postId"/>
+          <input type="hidden" th:value="${comment.id}" name="commentId"/>
+          <input type="submit" value="Delete Comment"/>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

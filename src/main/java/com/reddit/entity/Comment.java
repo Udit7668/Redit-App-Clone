@@ -30,9 +30,6 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "postId")
     private Post post;
-
-
-
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
