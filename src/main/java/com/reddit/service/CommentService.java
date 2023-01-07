@@ -30,6 +30,21 @@ public class CommentService {
             commentRepository.save(comment);
         }
     }
+    public void addReply(String postId, Comment comment,String username,String parentId){
+        Optional<Post> postOptional = postRepository.findById(Long.valueOf(Integer.parseInt(postId)));
+        Optional<Comment> parentOptional = commentRepository.findById(Long.valueOf(Integer.parseInt(parentId)));
+        if(postOptional.isPresent()){
+            if(parentOptional.isPresent()) {
+                User user = userRespository.findByUsername(username).get();
+                Post post = postOptional.get();
+                Comment parent = parentOptional.get();
+                comment.setParent(parent);
+                comment.setPost(post);
+                comment.setUser(user);
+                commentRepository.save(comment);
+            }
+        }
+    }
     public void updateComment(String postId, Comment comment){
         Optional<Post> postOptional = postRepository.findById(Long.valueOf(Integer.parseInt(postId)));
         if(postOptional.isPresent()){
@@ -50,6 +65,11 @@ public class CommentService {
         Comment comment = getComment(commentId);
         if(comment!=null){
             comment.setPost(null);
+            comment.setParent(null);
+            for (Comment child : comment.getChildren()) {
+                child.setParent(null);
+            }
+            comment.setChildren(null);
             commentRepository.delete(comment);
         }
     }

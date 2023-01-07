@@ -68,6 +68,12 @@
     <div th:if="${Comment.parent} == null">
       <h6><span th:text="${Comment.user.username}"></span> | <span th:text="${Comment.createdAt}"></span></h6>
       <h4 th:text="${Comment.comment}">comment</h4>
+      <form th:action="@{/addReplyComment}" method="post">
+        <input type="hidden" th:value="${Comment.id}" name="parentId"/>
+        <input type="hidden" th:value="${#authentication.name}" name="username"/>
+        <input type="hidden" th:value="${post.id}" name="postId"/>
+        <input type="submit" value="Reply" class="button"/>
+      </form>
       <div th:if="${#authentication.name} == ${Comment.user.username}">
         <div class="button-pair">
           <form th:action="@{/updateComment}" method="post">
@@ -85,9 +91,16 @@
         <div th:each="child : ${Comment.children}" th:inline="text" class="child-comment">
           <h6><span th:text="${child.user.username}"></span> | <span th:text="${child.createdAt}"></span></h6>
           <h4 th:text="${child.comment}">comment</h4>
+          <form th:action="@{/addReplyComment}" method="post">
+            <input type="hidden" th:value="${child.id}" name="parentId"/>
+            <input type="hidden" th:value="${#authentication.name}" name="username"/>
+            <input type="hidden" th:value="${post.id}" name="postId"/>
+            <input type="submit" value="Reply" class="button"/>
+          </form>
           <div th:if="${#authentication.name} == ${child.user.username}">
             <div class="button-pair">
-              <form th:action="@{/updateComment}" method="post">
+              <form th:action="@{/updateReply}" method="post">
+                <input type="hidden" th:value="${Comment.id}" name="parentId"/>
                 <input type="hidden" th:value="${child.id}" name="commentId"/>
                 <input type="submit" value="Update" class="button"/>
               </form>
