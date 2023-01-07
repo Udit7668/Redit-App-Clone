@@ -22,17 +22,21 @@
             width: 10%;
         }
     </style>
+    <link href="css/bootstrap.css" rel="stylesheet">
       <link rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
       integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
       crossorigin="anonymous">
 </head>
 <body>
-
     <div id="container">
-    <form th:action="@{/posts/savepost}" th:object="${post}">
-
-
+        <h2>Enter any image</h2>
+    <form th:action="@{/posts/savepost}" enctype="multipart/form-data" method="post" style="margin-top: 20px;">
+        <input type="file" name="fileprofile">    
+   <br>
+    <form th:action="@{/posts/savepost}" th:object="${post}" method="post">
+        <br>
+        
    <h2>Enter the Title of Post</h2>     
    <input type="text" name="title" placeholder="Enter title" th:value="${post.title}">
    <form>
@@ -45,6 +49,7 @@
     <select name="subreddit" id="select">
         <option th:each="subreddit : ${subreddits}" th:value="${subreddit.id}" th:text="${subreddit.name}" placeholder ="Choose Community"></option>
     </select>
+   
    <br><br>
    <h2>Enter the Content of Post</h2>
    <textarea type="text" name="content" placeholder="Enter your Content" th:value="${post.content}" rows="15", cols="60" > </textarea><br><br>
@@ -52,6 +57,7 @@
    <br>
    <br>
 </form>
+    </form>
     </form>
 </form>
 </div>

@@ -38,7 +38,6 @@
     border-bottom: 2px solid black;
    margin-top: 20px;
     float: left;
-     height: 300px;
     padding: 20px;
     text-align: center;
     
@@ -65,6 +64,10 @@ padding: 30px;
 float: left;
 margin-left: 20px;
 border: 2px solid black;
+}
+
+#image{
+    height: 400px;
 }
 
 
@@ -153,12 +156,11 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
 <div class="float-container">
    
     <div class="float-child green" th:each=" post: ${posts}">
-
-        
+        <img  th:src="@{'/img/'+${post.image}}" id="image"/> 
       <h3 th:text="${post.title}"></h3>
-      <h3 th:text="u+'/  '+${post.user.username}"></h3>
-      <h3 th:text="r+'/  '+${post.subreddit.name}"></h3>
-       <h4 th:text="${#strings.substring(post.content,0,60)}"></h4>
+      <a th:href="@{/user/{username}(username=${post.user.username})}"><h3 th:text="u+'/  '+${post.user.username}"></h3></a>
+      <a th:href="@{/subreddit/view/{subredditId}(subredditId=${post.subreddit.id})}"><h3 th:text="r+'/  '+${post.subreddit.name}"></h3></a>
+       <h4 th:text="${post.content}"></h4>
        <h5 th:text="${post.createdDate}"></h5>  
            <br>
              <td>
