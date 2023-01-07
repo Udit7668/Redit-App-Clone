@@ -127,4 +127,11 @@ public class PostService {
      this.postRepository.save(post);
 
     }
+
+
+
+    public List<Post> searchPost(String searchBy){
+     List<Post> posts=this.postRepository.findPostBySubredditNameOrPostTitle(searchBy);
+      return posts;
+    }
 }

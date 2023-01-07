@@ -51,7 +51,6 @@ public class PostController {
                                    @RequestParam("fileprofile") MultipartFile file,
                                    @RequestParam("username") String username) throws IOException{
        
-          System.out.println(file.getOriginalFilename()+"***************");
         this.postService.addPost(title,content,subreddit,username,file);
         return "redirect:/posts/";
     }
@@ -122,19 +121,5 @@ public String updatePost(@RequestParam("id") Long postId,
    model.addAttribute("post",post);
    return "viewPost";
 }
-
-
-@GetMapping("/file")
-public String image(){
-return "file";
-}
-
-@PostMapping("/image")
-public String file(@RequestParam("fileprofile") MultipartFile file){
- System.out.println(file.getOriginalFilename()+"*************************");
- System.out.println("*****************************************");
- return "";
-}
    
-
 }
