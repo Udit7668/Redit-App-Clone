@@ -95,9 +95,21 @@ public class SubredditController {
         return "subreddit-post";
     }
 
-@GetMapping("/topPosts/{subredditname}")
-   public String topPosts(@PathVariable("subredditname") String name,Model model){
+@GetMapping("/newPosts/{subredditname}")
+   public String newPosts(@PathVariable("subredditname") String name,Model model){
     List<Post> posts=this.postService.sortPost(name);
+    Subreddit subreddit=this.subredditService.findByName(name);
+    List<Subreddit> subreddits = this.subredditService.findAll();
+    model.addAttribute("posts", posts);
+    model.addAttribute("subreddits", subreddits);
+    model.addAttribute("thesubreddit", subreddit);
+    return "subreddit-post";
+   }
+
+
+   @GetMapping("/topPosts/{subredditname}")
+   public String topPosts(@PathVariable("subredditname") String name,Model model){
+    List<Post> posts=this.postService.topPost(name);
     Subreddit subreddit=this.subredditService.findByName(name);
     List<Subreddit> subreddits = this.subredditService.findAll();
     model.addAttribute("posts", posts);
