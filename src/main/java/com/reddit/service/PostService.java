@@ -101,15 +101,11 @@ public class PostService {
     if (result != null) {
       user = result.get();
       System.out.println(">> username : " + user.getUsername());
-      if (!post.getUpvotedUser().contains(user)) {
+      if (post.getDownvotedUser().contains(user)) {
+        post.getDownvotedUser().remove(user);
+      } else if (!post.getUpvotedUser().contains(user)) {
         post.getUpvotedUser().add(user);
         System.out.println(">> User added to the upvoted user list : " + post.getUpvotedUser().size());
-        if (post.getDownvotedUser().contains(user)) {
-          post.getDownvotedUser().remove(user);
-        }
-      }
-      else{
-        post.getUpvotedUser().remove(user); 
       }
     }
   }
@@ -122,15 +118,12 @@ public class PostService {
     User user = null;
     if (result != null) {
       user = result.get();
-      System.out.println(">> username : " + user.getUsername());
-      if (!post.getDownvotedUser().contains(user)) {
+      System.out.println(">> username : " +
+          user.getUsername());
+      if (post.getUpvotedUser().contains(user)) {
+        post.getUpvotedUser().remove(user);
+      } else if (!post.getDownvotedUser().contains(user)) {
         post.getDownvotedUser().add(user);
-        System.out.println(">> User added to the upvoted user list : " + post.getUpvotedUser().size());
-        if (post.getUpvotedUser().contains(user)) {
-          post.getUpvotedUser().remove(user);
-        }
-      }else {
-        post.getDownvotedUser().remove(user); 
       }
     }
   }
