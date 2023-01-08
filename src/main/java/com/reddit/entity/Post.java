@@ -5,14 +5,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import java.sql.Timestamp;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -38,8 +31,6 @@ public class Post {
     private String image;
     @Column(columnDefinition = "TEXT")
     private String content;
-    @Column(name="vote_count")
-    private Integer voteCount = 0;
     @Column(name="created_at",nullable = false,updatable = false)
     @CreationTimestamp
     private Timestamp createdDate;
@@ -54,4 +45,15 @@ public class Post {
     private Subreddit subreddit;
     @OneToMany(fetch = LAZY,mappedBy = "post",cascade = CascadeType.ALL)
     private List<Comment> comments;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="upvotes",
+        joinColumns = @JoinColumn(name="post_id"),
+        inverseJoinColumns = @JoinColumn(name="user_id"))
+    List<User> upvotedUser; 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "downvotes", 
+        joinColumns = @JoinColumn(name = "post_id"), 
+        inverseJoinColumns = @JoinColumn(name = "user_id"))
+    List<User> downvotedUser;
+
 }

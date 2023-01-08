@@ -67,14 +67,19 @@
         <h3><span th:text="${post.content}"></span></h3><br>
         <input type="button" value="Homepage" onclick="window.location.href='/home/'; return false; " class="button"/><br><br>
       </div>
-      
-
-  <div id = "post-preview">
-    <h1><span th:text="${post.title}"></span></h1><br>
-    <h3><span th:text="${post.content}"></span></h3><br>
-    <input type="button" value="Homepage" onclick="window.location.href='/home/'; return false; " class="button"/><br><br>
-  </div>
-
+      <div th:if="${#authentication.name} == ${post.user.username}">
+        <div class="button-pair">
+          <form th:action="@{/posts/updatePost}" method="get">
+            <input type="hidden" th:value="${post.id}" name="postId"/>
+            <input type="submit" value="Update" class="button"/>
+          </form>
+          </form>
+          <form th:action="@{/posts/deletePost}" method="get">
+            <input type="hidden" th:value="${post.id}" name="postId"/>
+            <input type="submit" value="Delete" class="button"/>
+          </form><br>
+        </div>
+      </div>
   <div id="comment-form">
     <h6>comment as <span th:text="${#authentication.name}"></h6>
     <form th:action = "@{/addComment}" th:method="post" th:object="${Comment}">
