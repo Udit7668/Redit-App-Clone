@@ -117,5 +117,19 @@ public class SubredditController {
     model.addAttribute("thesubreddit", subreddit);
     return "subreddit-post";
    }
+
+
+   @GetMapping("/upvote")
+   public String upVote(@RequestParam("postId") Long postId, @RequestParam("username") String username,Model model,@RequestParam("name") String name ){
+       System.out.println(">> upvoting : " + postId + " " + username);
+       this.postService.upvotePost(postId, username); 
+       List<Post> posts=this.postService.sortPost(name);
+       Subreddit subreddit=this.subredditService.findByName(name);
+       List<Subreddit> subreddits = this.subredditService.findAll();
+       model.addAttribute("posts", posts);
+       model.addAttribute("subreddits", subreddits);
+       model.addAttribute("thesubreddit", subreddit);
+       return "subreddit-post";
+   }
      
 }
