@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/doLogin")
                 .defaultSuccessUrl("/home/")
                 .and()
-                .logout().logoutSuccessUrl("/home/")
+                .logout().logoutSuccessUrl("/posts/")
                 .permitAll();
 
     }

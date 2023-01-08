@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.reddit.entity.Post;
 import com.reddit.entity.Subreddit;
@@ -31,12 +32,7 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/search")
-    public String search()
-    {
-  return null;
-    }
-    @GetMapping("/login")
+   @GetMapping("/login")
     public String login(){
         return "redirect:/form/login";
     }
@@ -59,6 +55,16 @@ public class HomeController {
     @GetMapping("/topPosts")
     public String sortPostByVoteCount(Model model){
         List<Post> posts=this.postService.sortPostByVoteCount();
+        model.addAttribute("posts",posts);
+        List<Subreddit> subreddits=this.subredditService.findAll();
+        model.addAttribute("subreddits", subreddits);
+        return "home";
+    }
+
+   
+    @GetMapping("/searchpost")
+    public String searchPosts(Model model,@RequestParam("search") String searchBy){
+        List<Post> posts=this.postService.searchPost(searchBy);
         model.addAttribute("posts",posts);
         List<Subreddit> subreddits=this.subredditService.findAll();
         model.addAttribute("subreddits", subreddits);

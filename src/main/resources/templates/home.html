@@ -90,8 +90,8 @@ border: 2px solid black;
             </form>
         </li>
 
-        <li>    <form th:action="@{/home/search}">
-            <input type="text" placeholder="Search Here">
+        <li>    <form th:action="@{/home/searchpost}">
+            <input type="text" placeholder="Search Here" name="search">
             <input type="submit" value="Search">
         </form>
         </li>
@@ -156,7 +156,9 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
 <div class="float-container">
    
     <div class="float-child green" th:each=" post: ${posts}">
+        <div th:if="${post.image}!=null">
         <img  th:src="@{'/img/'+${post.image}}" id="image"/> 
+    </div>
       <h3 th:text="${post.title}"></h3>
       <a th:href="@{/user/{username}(username=${post.user.username})}"><h3 th:text="u+'/  '+${post.user.username}"></h3></a>
       <a th:href="@{/subreddit/view/{subredditId}(subredditId=${post.subreddit.id})}"><h3 th:text="r+'/  '+${post.subreddit.name}"></h3></a>

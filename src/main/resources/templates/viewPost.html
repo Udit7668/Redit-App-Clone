@@ -44,9 +44,35 @@
     #comment-preview{
       margin: 20px;
     }
+
+    img{
+      height: 400px;
+    }
   </style>
+<<<<<<< HEAD
 <body>
 <div id="post-container">
+=======
+  <body>
+    <div id="post-container">
+      <div id="logout">
+        <form th:action="@{/logout}" method="POST">
+  
+          <input type="submit" value="Logout" />
+        </form>
+  
+      </div>
+  
+      <div id = "post-preview"> 
+        <div th:if="${post.image}!=null">
+          <img  th:src="@{'/img/'+${post.image}}" id="image"/> 
+      </div>
+        <h1><span th:text="${post.title}"></span></h1><br>
+        <h3><span th:text="${post.content}"></span></h3><br>
+        <input type="button" value="Homepage" onclick="window.location.href='/home/'; return false; " class="button"/><br><br>
+      </div>
+      
+>>>>>>> postupdate
 
   <div id = "post-preview">
     <h1><span th:text="${post.title}"></span></h1><br>

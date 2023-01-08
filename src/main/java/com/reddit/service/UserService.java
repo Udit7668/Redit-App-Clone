@@ -39,4 +39,8 @@ public class UserService {
         User user = userRepository.findByUsername(username).get();
         return user.getSubreddits();
     }
+  public List<User> findAllUser(){
+   List<User> users= this.userRepository.findAll();
+    return users;
+  }
 }
