@@ -170,6 +170,9 @@ width: 20%;
         text-align:left;
         margin-left: 10%;
     }
+    #image{
+    height: 400px;
+}
 </style>
 <body>
 <nav class="container">
@@ -251,7 +254,9 @@ Filter Posts<a th:href="@{/subreddit/topPosts/{subredditname}(subredditname=${th
 <div class="float-container">
    
     <div class="float-child" th:each=" post: ${posts}">
-
+        <div th:if="${post.image}!=null">
+            <img  th:src="@{'/img/'+${post.image}}" id="image"/> 
+        </div>
         
     <h3 th:text="${post.title}"></h3>
     <h3 th:text="u+'/  '+${post.user.username}"></h3>
