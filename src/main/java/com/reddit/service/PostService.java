@@ -183,4 +183,10 @@ public class PostService {
    posts =this.postRepository.findPostBySubredditNameOrPostTitle(searchBy);
     return posts;
   }
+
+
+  public List<Post> sortPost(String searchBy){
+   List<Post> posts =this.postRepository.findSortBySubredditNameOrPostTitle(searchBy);
+    return posts;
+  }
 }
