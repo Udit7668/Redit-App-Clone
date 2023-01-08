@@ -132,7 +132,6 @@ public class PostService {
     for(String single:id){
     ids.add(Long.parseLong(single));
     }
-    System.out.println(ids+"-------------------------------------------");
     List<Post> posts =new ArrayList<>();
   List<Post> list=  this.postRepository.sortPostByVoteCount();
   for(Post post:list){

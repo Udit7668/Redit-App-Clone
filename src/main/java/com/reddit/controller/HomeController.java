@@ -63,7 +63,6 @@ public class HomeController {
 
     @GetMapping("/filtertoppost")
     public String sortPostByVoteCountAndSearch(Model model,@RequestParam("postId") String postId){
-        System.out.println(postId+"*********************************************");
         List<Post> posts=this.postService.sortPostByVoteCount(postId);
         model.addAttribute("posts",posts);
         String postid = "";
@@ -77,7 +76,6 @@ public class HomeController {
     }
     @GetMapping("/filternewpost")
     public String sortPostByNewPostAndSearch(Model model,@RequestParam("postId") String postId){
-        System.out.println(postId+"*********************************************");
         List<Post> posts=this.postService.sortPostByDate(postId);
         model.addAttribute("posts",posts);
         String postid = "";
