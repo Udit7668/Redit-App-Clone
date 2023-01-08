@@ -75,6 +75,20 @@ public class HomeController {
         model.addAttribute("subreddits", subreddits);
         return "search-dashboard";
     }
+    @GetMapping("/filternewpost")
+    public String sortPostByNewPostAndSearch(Model model,@RequestParam("postId") String postId){
+        System.out.println(postId+"*********************************************");
+        List<Post> posts=this.postService.sortPostByDate(postId);
+        model.addAttribute("posts",posts);
+        String postid = "";
+        for (Post post : posts) {
+            postid = postid + String.valueOf(post.getId()) + ",";
+        }
+        model.addAttribute("postId", postid);
+        List<Subreddit> subreddits=this.subredditService.findAll();
+        model.addAttribute("subreddits", subreddits);
+        return "search-dashboard";
+    }
 
    
     @GetMapping("/searchpost")
