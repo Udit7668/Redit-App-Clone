@@ -40,6 +40,7 @@ public class Post {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    private Integer voteCount=0;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "subreddit_id")
     private Subreddit subreddit;

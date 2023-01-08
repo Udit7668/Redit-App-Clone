@@ -285,6 +285,7 @@ Filter Posts<a th:href="@{/subreddit/topPosts/{subredditname}(subredditname=${th
 <form th:action="@{/subreddit/downvote}" method="get">
     <input type="hidden" name="postId" th:value="${post.id}">
     <input type="hidden" name="username" th:value="${#authentication.name}">
+    <input type="hidden" name="name" th:value="${thesubreddit.name}">
     <input type="submit" value="downvote">
 </form>
 
