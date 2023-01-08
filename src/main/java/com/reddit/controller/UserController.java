@@ -22,6 +22,7 @@ public class UserController {
         List<Post> userPosts = userService.getPosts(username);
         List<Comment> userComments = userService.getComments(username);
         model.addAttribute("posts",userPosts);
+        model.addAttribute("userProfile",username);
         model.addAttribute("comments",userComments);
         return "user-profile";
     }

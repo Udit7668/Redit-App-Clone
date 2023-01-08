@@ -71,7 +71,6 @@ public class CommentService {
                 child.setParent(null);
                 child.setChildren(null);
                 child.setUser(null);
-                commentRepository.delete(child);
             }
             comment.setChildren(null);
             commentRepository.delete(comment);
