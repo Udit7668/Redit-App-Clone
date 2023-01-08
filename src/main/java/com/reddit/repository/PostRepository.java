@@ -4,6 +4,8 @@ import com.reddit.entity.Post;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -34,5 +36,7 @@ public interface PostRepository extends JpaRepository<Post,Long> {
 
     @Query(value = "select distinct p.* from post p,users u where p.id=u.id and u.username like :c",nativeQuery = true)
     public List<Post> findPostByUser(@Param("c") String username);
+
+    public Page<Post> findAll(Pageable pageable);
 
 }
