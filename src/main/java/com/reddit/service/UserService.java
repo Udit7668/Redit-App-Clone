@@ -27,6 +27,12 @@ public class UserService {
      User user=userOptional.get();
      return user;
     }
+    public User getUserByEmail(String email){
+        Optional<User> userOptional=  this.userRepository.findByEmail(email);
+        User user=userOptional.get();
+        return user;
+       }
+       
     public List<Post> getPosts(String username){
         User user = userRepository.findByUsername(username).get();
         return user.getPosts();

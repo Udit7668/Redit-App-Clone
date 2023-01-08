@@ -31,6 +31,9 @@
                 <!-- Login Form -->
                 <form th:action="@{/form/createUser}"
                       method="POST" class="form-horizontal" th:object="${users}">
+                      <div th:if="${Error}" style="color: red; font-size: large;">
+                        <span th:text="${Error}"></span>
+                    </div>
 
                     <!-- Place for messages: error, alert etc ... -->
                     <div class="form-group">
