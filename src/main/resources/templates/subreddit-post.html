@@ -38,7 +38,6 @@
     border-bottom: 2px solid black;
    margin-top: 20px;
     float: left;
-    height: 300px;
     padding: 20px;
     text-align: center;
     word-wrap    : break-word;
@@ -219,8 +218,8 @@ width: 20%;
 
 <div id="filter">
 
-Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-left: 20px; text-decoration: none;" >Top Post</a>
-    <a th:href="@{/home/newPosts}" style="text-decoration: none;">New Post</a>
+Filter Posts<a th:href="@{/subreddit/topPosts/{subredditname}(subredditname=${thesubreddit.name})}" style="margin-right: 20px; margin-left: 20px; text-decoration: none;" >Top Post</a>
+    <a th:href="@{/subreddit/newPosts/{subredditname}(subredditname=${thesubreddit.name})}" style="text-decoration: none;">New Post</a>
 </div >
 
 
@@ -275,16 +274,18 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
 <!-- <span th:text="score+'  '+${post.voteCount}"></span> -->
 <!-- <a th:href="@{/posts/downvote/{viewId}(viewId=${post.id})}">Downvote</a> -->
 
-<form th:action="@{/posts/upvote}" method="get">
+<form th:action="@{/subreddit/upvote}" method="get">
     <input type="hidden" name="postId" th:value="${post.id}">
     <input type="hidden" name="username" th:value="${#authentication.name}">
+    <input type="hidden" name="name" th:value="${thesubreddit.name}">
     <input type="submit" value="Upvote">
 </form>
 <span th:text="score+'  '+${post.upvotedUser.size - post.downvotedUser.size}"></span>
 <!-- <a th:href="@{/posts/downvote/{viewId}(viewId=${post.id})}">Downvote</a> -->
-<form th:action="@{/posts/downvote}" method="get">
+<form th:action="@{/subreddit/downvote}" method="get">
     <input type="hidden" name="postId" th:value="${post.id}">
     <input type="hidden" name="username" th:value="${#authentication.name}">
+    <input type="hidden" name="name" th:value="${thesubreddit.name}">
     <input type="submit" value="downvote">
 </form>
 

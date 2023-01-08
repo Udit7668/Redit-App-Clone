@@ -33,6 +33,13 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     @Query(value = "select distinct p.* from post p,subreddit s where p.subreddit_id=s.id and s.name like :c or p.title like :c or p.content like :c",nativeQuery = true)
     public List<Post> findPostBySubredditNameOrPostTitle(@Param("c") String subredditName);
 
+    @Query(value = "select distinct p.* from post p,subreddit s where p.subreddit_id=s.id and s.name like :c  order by p.created_at desc",nativeQuery = true)
+    public List<Post> findSortBySubredditNameOrPostTitle(@Param("c") String subredditName);
+
+
+    @Query(value = "select distinct p.* from post p,subreddit s where p.subreddit_id=s.id and s.name like :c  order by p.vote_count desc",nativeQuery = true)
+    public List<Post> findTopBySubredditNameOrPostTitle(@Param("c") String subredditName);
+
 
     @Query(value = "select distinct p.* from post p,users u where p.id=u.id and u.username like :c",nativeQuery = true)
     public List<Post> findPostByUser(@Param("c") String username);

@@ -9,12 +9,17 @@ import org.springframework.web.bind.annotation.*;
 
 import com.reddit.entity.Post;
 import com.reddit.entity.Subreddit;
+import com.reddit.service.PostService;
 import com.reddit.service.SubredditService;
 @Controller
 @RequestMapping("/subreddit")
 public class SubredditController {
     @Autowired
     private SubredditService subredditService;
+
+
+    @Autowired
+    private PostService postService;
 
 //    @GetMapping("/home/add")
 //    public String create(Model model){
@@ -90,4 +95,55 @@ public class SubredditController {
         return "subreddit-post";
     }
 
+@GetMapping("/newPosts/{subredditname}")
+   public String newPosts(@PathVariable("subredditname") String name,Model model){
+    List<Post> posts=this.postService.sortPost(name);
+    Subreddit subreddit=this.subredditService.findByName(name);
+    List<Subreddit> subreddits = this.subredditService.findAll();
+    model.addAttribute("posts", posts);
+    model.addAttribute("subreddits", subreddits);
+    model.addAttribute("thesubreddit", subreddit);
+    return "subreddit-post";
+   }
+
+
+   @GetMapping("/topPosts/{subredditname}")
+   public String topPosts(@PathVariable("subredditname") String name,Model model){
+    List<Post> posts=this.postService.topPost(name);
+    Subreddit subreddit=this.subredditService.findByName(name);
+    List<Subreddit> subreddits = this.subredditService.findAll();
+    model.addAttribute("posts", posts);
+    model.addAttribute("subreddits", subreddits);
+    model.addAttribute("thesubreddit", subreddit);
+    return "subreddit-post";
+   }
+
+
+   @GetMapping("/upvote")
+   public String upVote(@RequestParam("postId") Long postId, @RequestParam("username") String username,Model model,@RequestParam("name") String name ){
+       System.out.println(">> upvoting : " + postId + " " + username);
+       this.postService.upvotePost(postId, username); 
+       List<Post> posts=this.postService.sortPost(name);
+       Subreddit subreddit=this.subredditService.findByName(name);
+       List<Subreddit> subreddits = this.subredditService.findAll();
+       model.addAttribute("posts", posts);
+       model.addAttribute("subreddits", subreddits);
+       model.addAttribute("thesubreddit", subreddit);
+       return "subreddit-post";
+   }
+
+
+   @GetMapping("/downvote")
+   public String downVote(@RequestParam("postId") Long postId, @RequestParam("username") String username,Model model,@RequestParam("name") String name ){
+       System.out.println(">> upvoting : " + postId + " " + username);
+       this.postService.downvotePost(postId, username); 
+       List<Post> posts=this.postService.sortPost(name);
+       Subreddit subreddit=this.subredditService.findByName(name);
+       List<Subreddit> subreddits = this.subredditService.findAll();
+       model.addAttribute("posts", posts);
+       model.addAttribute("subreddits", subreddits);
+       model.addAttribute("thesubreddit", subreddit);
+       return "subreddit-post";
+   }
+     
 }

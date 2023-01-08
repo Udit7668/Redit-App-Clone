@@ -135,6 +135,9 @@ public class PostService {
   @Transactional
   public void upvotePost(Long postId, String username) {
     Post post = postRepository.findPostById(postId);
+    Integer oldCount=  post.getVoteCount();
+    post.setVoteCount(oldCount+1);
+    this.postRepository.save(post);
     System.out.println(">> post title : " + post.getTitle());
     Optional<User> result = userRepository.findByUsername(username);
     User user = null;
@@ -155,6 +158,9 @@ public class PostService {
   @Transactional
   public void downvotePost(Long postId, String username) {
     Post post = postRepository.findPostById(postId);
+    Integer oldCount=  post.getVoteCount();
+    post.setVoteCount(oldCount+1);
+    this.postRepository.save(post);
     System.out.println(">> post title : " + post.getTitle());
     Optional<User> result = userRepository.findByUsername(username);
     User user = null;
@@ -183,4 +189,17 @@ public class PostService {
    posts =this.postRepository.findPostBySubredditNameOrPostTitle(searchBy);
     return posts;
   }
+
+
+  public List<Post> sortPost(String searchBy){
+   List<Post> posts =this.postRepository.findSortBySubredditNameOrPostTitle(searchBy);
+    return posts;
+  }
+
+  public List<Post> topPost(String searchBy){
+    List<Post> posts =this.postRepository.findTopBySubredditNameOrPostTitle(searchBy);
+     return posts;
+   }
+ 
+  
 }
