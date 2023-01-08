@@ -29,8 +29,6 @@ public class Post {
     private String title;
     @Column(columnDefinition = "TEXT")
     private String content;
-    @Column(name="vote_count")
-    private Integer voteCount = 0;
     @Column(name="created_at",nullable = false,updatable = false)
     @CreationTimestamp
     private Timestamp createdDate;
@@ -45,4 +43,15 @@ public class Post {
     private Subreddit subreddit;
     @OneToMany(fetch = LAZY,mappedBy = "post",cascade = CascadeType.ALL)
     private List<Comment> comments;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="upvotes",
+        joinColumns = @JoinColumn(name="post_id"),
+        inverseJoinColumns = @JoinColumn(name="user_id"))
+    List<User> upvotedUser; 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "downvotes", 
+        joinColumns = @JoinColumn(name = "post_id"), 
+        inverseJoinColumns = @JoinColumn(name = "user_id"))
+    List<User> downvotedUser;
+
 }

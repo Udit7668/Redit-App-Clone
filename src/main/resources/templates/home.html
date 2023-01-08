@@ -38,7 +38,7 @@
     border-bottom: 2px solid black;
    margin-top: 20px;
     float: left;
-     height: 300px;
+
     padding: 20px;
     text-align: center;
     
@@ -155,26 +155,40 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
     <div class="float-child green" th:each=" post: ${posts}">
 
         
-      <h3 th:text="${post.title}"></h3>
-      <h3 th:text="u+'/  '+${post.user.username}"></h3>
-      <h3 th:text="r+'/  '+${post.subreddit.name}"></h3>
-       <h4 th:text="${#strings.substring(post.content,0,60)}"></h4>
-       <h5 th:text="${post.createdDate}"></h5>  
-           <br>
-             <td>
+    <h3 th:text="${post.title}"></h3>
+    <h3 th:text="u+'/  '+${post.user.username}"></h3>
+    <h3 th:text="r+'/  '+${post.subreddit.name}"></h3>
+    <div th:if= "${#strings.length(post.content) > 60}"  >
+       <h4  th:text="${#strings.substring(post.content,0,60)}"></h4>
+    </div>
+    <div th:unless="${#strings.length(post.content) > 60}">
+        <h4 th:text="${post.content}"></h4>
+    </div>
+       <h5 th:text="${post.createdDate}"></h5> <br>
+            <td>
               <a th:href="@{/posts/view/{viewId}(viewId=${post.id})}" id="view" >View Post</a>
-                 </td>
+            </td>
 
  <div id="votecount">
     
-<a th:href="@{/posts/upvote/{viewId}(viewId=${post.id})}">Upvote</a>
-<span th:text="score+'  '+${post.voteCount}"></span>
-<a th:href="@{/posts/downvote/{viewId}(viewId=${post.id})}">Downvote</a>
+<!-- <a th:href="@{/posts/upvote/{viewId}(viewId=${post.id})}">Upvote</a> -->
+<form th:action="@{/posts/upvote}" method="get">
+    <input type="hidden" name="postId" th:value="${post.id}">
+    <input type="hidden" name="username" th:value="${#authentication.name}">
+    <input type="submit" value="Upvote">
+</form>
+<span th:text="score+'  '+${#lists.size(post.upvotedUser) - #lists.size(post.downvotedUser)}"></span>
+<!-- <a th:href="@{/posts/downvote/{viewId}(viewId=${post.id})}">Downvote</a> -->
+<form th:action="@{/posts/downvote}" method="get">
+    <input type="hidden" name="postId" th:value="${post.id}">
+    <input type="hidden" name="username" th:value="${#authentication.name}">
+    <input type="submit" value="downvote">
+</form>
 
 </div>
 
 </div>
 
 </div>
-</body>
+</body>e
 </html>

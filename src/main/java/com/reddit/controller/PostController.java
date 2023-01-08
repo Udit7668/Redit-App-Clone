@@ -70,16 +70,18 @@ public class PostController {
         return "viewPost";
     }
 
-    @GetMapping("/upvote/{viewId}")
-    public String upVote(@PathVariable("viewId") Long id){
-        this.postService.upVote(id);
-     return "redirect:/posts/";
+    @GetMapping("/upvote")
+    public String upVote(@RequestParam("postId") Long postId, @RequestParam("username") String username ){
+        System.out.println(">> upvoting : " + postId + " " + username);
+        this.postService.upvotePost(postId, username); 
+        return "redirect:/posts/";
     }
 
-    @GetMapping("/downvote/{viewId}")
-    public String downVote(@PathVariable("viewId") Long id){
-        this.postService.downVote(id);
-     return "redirect:/posts/";
+    @GetMapping("/downvote")
+    public String downVote(@RequestParam("postId") Long postId, @RequestParam("username") String username){
+        System.out.println(">> downvoting : " + postId + " " + username);
+        this.postService.downvotePost(postId, username);
+        return "redirect:/posts/";
     }
   
 

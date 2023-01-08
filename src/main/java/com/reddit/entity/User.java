@@ -41,4 +41,14 @@ public class User {
     private List<Post> posts;
     @OneToMany(mappedBy = "user")
     List<Comment> comments;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name="upvotes",
+        joinColumns = @JoinColumn(name="user_id"),
+        inverseJoinColumns = @JoinColumn(name="post_id"))
+    List<Post> upvotedPost; 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "downvotes", 
+        joinColumns = @JoinColumn(name = "user_id"), 
+        inverseJoinColumns = @JoinColumn(name = "post_id"))
+    List<Post> downvotedPost; 
 }
