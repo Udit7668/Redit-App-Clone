@@ -135,10 +135,6 @@ public class PostService {
   @Transactional
   public void upvotePost(Long postId, String username) {
     Post post = postRepository.findPostById(postId);
-    Integer oldCount=  post.getVoteCount();
-    post.setVoteCount(oldCount+1);
-    this.postRepository.save(post);
-    System.out.println(">> post title : " + post.getTitle());
     Optional<User> result = userRepository.findByUsername(username);
     User user = null;
     if (result != null) {
@@ -151,16 +147,16 @@ public class PostService {
         }
       } else {
         post.getUpvotedUser().remove(user);
+        
       }
+      post.setVoteCount(post.getUpvotedUser().size()-post.getDownvotedUser().size());
+      this.postRepository.save(post);
     }
   }
 
   @Transactional
   public void downvotePost(Long postId, String username) {
     Post post = postRepository.findPostById(postId);
-    Integer oldCount=  post.getVoteCount();
-    post.setVoteCount(oldCount+1);
-    this.postRepository.save(post);
     System.out.println(">> post title : " + post.getTitle());
     Optional<User> result = userRepository.findByUsername(username);
     User user = null;
@@ -175,6 +171,8 @@ public class PostService {
       } else {
         post.getDownvotedUser().remove(user);
       }
+      post.setVoteCount(post.getUpvotedUser().size()-post.getDownvotedUser().size());
+      this.postRepository.save(post);
     }
   }
   public List<Post> searchPost(String searchBy){

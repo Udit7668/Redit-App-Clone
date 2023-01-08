@@ -156,19 +156,19 @@ Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-lef
 <div class="float-container">
    
     <div class="float-child green" th:each=" post: ${posts}">
+        <h3 th:text="${post.title}"></h3>
+        posted by <a th:href="@{/user/{username}(username=${post.user.username})}"><span th:text="u+'/  '+${post.user.username}"></span></a>
+        on <a th:href="@{/subreddit/view/{subredditId}(subredditId=${post.subreddit.id})}"><span th:text="r+'/  '+${post.subreddit.name}"></span></a>
+        at <span th:text="${post.createdDate}"></span>
+        <div th:if= "${#strings.length(post.content) > 60}"  >
+            <span  th:text="${#strings.substring(post.content,0,60)}"></span>
+        </div>
+        <div th:unless="${#strings.length(post.content) > 60}">
+            <h4 th:text="${post.content}"></h4>
+        </div>
         <div th:if="${post.image}!=null">
-        <img  th:src="@{'/img/'+${post.image}}" id="image"/> 
-    </div>
-      <h3 th:text="${post.title}"></h3>
-      <a th:href="@{/user/{username}(username=${post.user.username})}"><h3 th:text="u+'/  '+${post.user.username}"></h3></a>
-      <a th:href="@{/subreddit/view/{subredditId}(subredditId=${post.subreddit.id})}"><h3 th:text="r+'/  '+${post.subreddit.name}"></h3></a>
-      <div th:if= "${#strings.length(post.content) > 60}"  >
-        <h4  th:text="${#strings.substring(post.content,0,60)}"></h4>
-     </div>
-     <div th:unless="${#strings.length(post.content) > 60}">
-         <h4 th:text="${post.content}"></h4>
-     </div>
-            <h5 th:text="${post.createdDate}"></h5>  
+            <img  th:src="@{'/img/'+${post.image}}" id="image"/>
+        </div>
            <br>
              <td>
                 <td>
