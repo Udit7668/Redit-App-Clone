@@ -41,6 +41,10 @@
       margin-right: 10px;
 
     }
+    .navs{
+      display: flex;
+      margin-left: 20px;
+    }
     #comment-preview{
       margin: 20px;
     }
@@ -51,10 +55,13 @@
   </style>
   <body>
     <div id="post-container">
-      <div id="logout">
+      <div class="navs">
         <form th:action="@{/logout}" method="POST">
           <input type="submit" value="Logout" class="button" />
         </form>
+        <input type="button" value="Homepage"
+            onclick="window.location.href='/home/'; return false; "
+            class="button"/>
 
       </div>
 
@@ -67,9 +74,6 @@
         <h1><span th:text="${post.title}"></span></h1><br>
         <h3><span th:text="${post.content}"></span></h3><br>
         <div class="button-pair-1">
-          <input type="button" value="Homepage"
-            onclick="window.location.href='/home/'; return false; "
-            class="button"/>
           <div th:if="${#authentication.name} == ${post.user.username}">
             <div class="button-pair-2">
               <form th:action="@{/posts/updatePost}" method="get">
@@ -216,5 +220,5 @@
           </div>
         </div>
       </div>
-    </body>
+    </body>`
   </html>
