@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="UTF-8">
-  <title>Post</title>
-</head>
-<style>
+  <head>
+    <meta charset="UTF-8">
+    <title>Post</title>
+  </head>
+  <style>
     *{
 			margin: 0; 
 			padding: 0; 
@@ -25,7 +25,7 @@
         width : 100%; 
         height: 50px; 
     }
-    .button-pair{
+    .button-pair-1, .button-pair-2{
       display: flex;
     }
     .child-comment{
@@ -41,6 +41,10 @@
       margin-right: 10px;
 
     }
+    .navs{
+      display: flex;
+      margin-left: 20px;
+    }
     #comment-preview{
       margin: 20px;
     }
@@ -51,96 +55,171 @@
   </style>
   <body>
     <div id="post-container">
-      <div id="logout">
+      <div class="navs">
         <form th:action="@{/logout}" method="POST">
-  
-          <input type="submit" value="Logout" />
+          <input type="submit" value="Logout" class="button" />
         </form>
-  
+        <input type="button" value="Homepage"
+          onclick="window.location.href='/home/'; return false; "
+          class="button"/>
+
       </div>
-  
-      <div id = "post-preview"> 
+
+      <div id="post-preview" class="">
         <div th:if="${post.image}!=null">
-          <img  th:src="@{'/img/'+${post.image}}" id="image"/> 
-      </div>
+          <img th:src="@{'/img/'+${post.image}}" id="image"/>
+        </div>
+        <h6><span th:text="Votes+' '+${#lists.size(post.upvotedUsers)
+            - #lists.size(post.downvotedUsers)}"></span></h6>
         <h1><span th:text="${post.title}"></span></h1><br>
         <h3><span th:text="${post.content}"></span></h3><br>
-        <input type="button" value="Homepage" onclick="window.location.href='/home/'; return false; " class="button"/><br><br>
-      </div>
-      <div th:if="${#authentication.name} == ${post.user.username}">
-        <div class="button-pair">
-          <form th:action="@{/posts/updatePost}" method="get">
-            <input type="hidden" th:value="${post.id}" name="postId"/>
-            <input type="submit" value="Update" class="button"/>
-          </form>
-          </form>
-          <form th:action="@{/posts/deletePost}" method="get">
-            <input type="hidden" th:value="${post.id}" name="postId"/>
-            <input type="submit" value="Delete" class="button"/>
-          </form><br>
-        </div>
-      </div>
-  <div id="comment-form">
-    <h6>comment as <span th:text="${#authentication.name}"></h6>
-    <form th:action = "@{/addComment}" th:method="post" th:object="${Comment}">
-      <input type="hidden" th:value="${#authentication.name}" name="username"/>
-      <input type="hidden" th:value="${post.id}" name="postId"/>
-      <textarea th:field="${Comment.comment}" id="comment-text-area" placeholder="What are your thoughts? "></textarea><br>
-      <input type=submit value="Comment" class="button">
-    </form>
-  </div>
-
-  <div th:each="Comment: ${post.comments}" id="comment-preview">
-    <div th:if="${Comment.parent} == null">
-      <h6><span th:text="${Comment.user.username}"></span> | <span th:text="${Comment.createdAt}"></span></h6>
-      <h4 th:text="${Comment.comment}">comment</h4>
-      <form th:action="@{/addReplyComment}" method="post">
-        <input type="hidden" th:value="${Comment.id}" name="parentId"/>
-        <input type="hidden" th:value="${#authentication.name}" name="username"/>
-        <input type="hidden" th:value="${post.id}" name="postId"/>
-        <input type="submit" value="Reply" class="button"/>
-      </form>
-      <div th:if="${#authentication.name} == ${Comment.user.username}">
-        <div class="button-pair">
-          <form th:action="@{/updateComment}" method="post">
-            <input type="hidden" th:value="${Comment.id}" name="commentId"/>
-            <input type="submit" value="Update" class="button"/>
-          </form>
-          <form th:action="@{/deleteComment}" method="post">
-            <input type="hidden" th:value="${post.id}" name="postId"/>
-            <input type="hidden" th:value="${Comment.id}" name="commentId"/>
-            <input type="submit" value="Delete" class="button"/>
-          </form><br>
-        </div>
-      </div>
-      <div th:fragment="f_call(Comment)" th:unless="${#lists.isEmpty(Comment.children)}" >
-        <div th:each="child : ${Comment.children}" th:inline="text" class="child-comment">
-          <h6><span th:text="${child.user.username}"></span> | <span th:text="${child.createdAt}"></span></h6>
-          <h4 th:text="${child.comment}">comment</h4>
-          <form th:action="@{/addReplyComment}" method="post">
-            <input type="hidden" th:value="${child.id}" name="parentId"/>
-            <input type="hidden" th:value="${#authentication.name}" name="username"/>
-            <input type="hidden" th:value="${post.id}" name="postId"/>
-            <input type="submit" value="Reply" class="button"/>
-          </form>
-          <div th:if="${#authentication.name} == ${child.user.username}">
-            <div class="button-pair">
-              <form th:action="@{/updateReply}" method="post">
-                <input type="hidden" th:value="${Comment.id}" name="parentId"/>
-                <input type="hidden" th:value="${child.id}" name="commentId"/>
+        <div class="button-pair-1">
+          <div th:if="${#authentication.name} == ${post.user.username}">
+            <div class="button-pair-2">
+              <form th:action="@{/posts/updatePost}" method="get">
+                <input type="hidden" th:value="${post.id}" name="postId"/>
                 <input type="submit" value="Update" class="button"/>
               </form>
-              <form th:action="@{/deleteComment}" method="post">
-                <input type="hidden" th:value="${post.id}" name="postId"/>
-                <input type="hidden" th:value="${child.id}" name="commentId"/>
-                <input type="submit" value="Delete" class="button"/>
-              </form><br>
+            </form>
+            <form th:action="@{/posts/deletePost}" method="get">
+              <input type="hidden" th:value="${post.id}" name="postId"/>
+              <input type="submit" value="Delete" class="button"/>
+            </form>
+            <form th:action="@{/upvotePost}" method="post">
+              <input type="hidden" name="postId"
+                th:value="${post.id}">
+              <input type="hidden" name="username"
+                th:value="${#authentication.name}">
+              <input type="submit" value="Upvote" class="button">
+            </form>
+            <!-- <a th:href="@{/posts/downvote/{viewId}(viewId=${post.id})}">Downvote</a> -->
+            <form th:action="@{/downvotePost}" method="post">
+              <input type="hidden" name="postId"
+                th:value="${post.id}">
+              <input type="hidden" name="username"
+                th:value="${#authentication.name}">
+              <input type="submit" value="downvote" class="button">
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div id="comment-form">
+      <h6>comment as <span th:text="${#authentication.name}"></span></h6>
+        <form th:action="@{/addComment}" th:method="post"
+          th:object="${Comment}">
+          <input type="hidden" th:value="${#authentication.name}"
+            name="username"/>
+          <input type="hidden" th:value="${post.id}" name="postId"/>
+          <textarea th:field="${Comment.comment}" id="comment-text-area"
+            placeholder="What are your thoughts? "></textarea><br>
+          <input type=submit value="Comment" class="button">
+        </form>
+      </div>
+      <div th:each="Comment: ${post.comments}" id="comment-preview">
+        <div th:if="${Comment.parent} == null">
+          <h6><span th:text="${Comment.user.username}+' '"></span>|
+            <span th:text="Votes+' '+${#lists.size(Comment.upvotedUsers)
+              - #lists.size(Comment.downvotedUsers)}">score</span> | <span
+              th:text="${Comment.createdAt}"></span></h6>
+          <h4 th:text="${Comment.comment}">comment</h4>
+          <div class="button-pair-1">
+            <form th:action="@{/addReplyComment}" method="post">
+              <input type="hidden" th:value="${Comment.id}" name="parentId"/>
+              <input type="hidden" th:value="${#authentication.name}"
+                name="username"/>
+              <input type="hidden" th:value="${post.id}" name="postId"/>
+              <input type="submit" value="Reply" class="button"/>
+            </form>
+            <div th:if="${#authentication.name} == ${Comment.user.username}">
+              <div class="button-pair-2">
+                <form th:action="@{/updateComment}" method="post">
+                  <input type="hidden" th:value="${Comment.id}"
+                    name="commentId"/>
+                  <input type="submit" value="Update" class="button"/>
+                </form>
+                <form th:action="@{/deleteComment}" method="post">
+                  <input type="hidden" th:value="${post.id}" name="postId"/>
+                  <input type="hidden" th:value="${Comment.id}"
+                    name="commentId"/>
+                  <input type="submit" value="Delete" class="button"/>
+                </form>
+                <form th:action="@{/upvoteComment}" method="post">
+                  <input type="hidden" th:value="${#authentication.name}"
+                    name="username"/>
+                  <input type="hidden" th:value="${Comment.id}"
+                    name="commentId"/>
+                  <input type="hidden" th:value="${post.id}" name="postId"/>
+                  <input type="submit" value="Upvote" class="button"/>
+                </form>
+                <form th:action="@{/downvoteComment}" method="post">
+                  <input type="hidden" th:value="${#authentication.name}"
+                    name="username"/>
+                  <input type="hidden" th:value="${Comment.id}"
+                    name="commentId"/>
+                  <input type="hidden" th:value="${post.id}" name="postId"/>
+                  <input type="submit" value="Downvote" class="button"/>
+                </form>
+              </div>
             </div>
           </div>
-          <div th:replace="this::f_call(${child})"></div>
+          <div th:fragment="f_call(Comment)"
+            th:unless="${#lists.isEmpty(Comment.children)}">
+            <div th:each="child : ${Comment.children}" th:inline="text"
+              class="child-comment">
+              <h6><span th:text="${child.user.username}+' '"></span>|
+                <span th:text="Votes+' '+${#lists.size(child.upvotedUsers)
+                  - #lists.size(child.downvotedUsers)}">score</span> | <span
+                  th:text="${child.createdAt}"></span></h6>
+              <h4 th:text="${child.comment}">comment</h4>
+              <div class="button-pair-1">
+                <form th:action="@{/addReplyComment}" method="post">
+                  <input type="hidden" th:value="${child.id}" name="parentId"/>
+                  <input type="hidden" th:value="${#authentication.name}"
+                    name="username"/>
+                  <input type="hidden" th:value="${post.id}" name="postId"/>
+                  <input type="submit" value="Reply" class="button"/>
+                </form>
+                <div th:if="${#authentication.name} == ${child.user.username}">
+                  <div class="button-pair-2">
+                    <form th:action="@{/updateReply}" method="post">
+                      <input type="hidden" th:value="${Comment.id}"
+                        name="parentId"/>
+                      <input type="hidden" th:value="${child.id}"
+                        name="commentId"/>
+                      <input type="submit" value="Update" class="button"/>
+                    </form>
+                    <form th:action="@{/deleteComment}" method="post">
+                      <input type="hidden" th:value="${post.id}" name="postId"/>
+                      <input type="hidden" th:value="${child.id}"
+                        name="commentId"/>
+                      <input type="submit" value="Delete" class="button"/>
+                    </form>
+                    <form th:action="@{/upvoteComment}" method="post">
+                      <input type="hidden" th:value="${#authentication.name}"
+                        name="username"/>
+                      <input type="hidden" th:value="${child.id}"
+                        name="commentId"/>
+                      <input type="hidden" th:value="${post.id}" name="postId"/>
+                      <input type="submit" value="Upvote" class="button"/>
+                    </form>
+                    <form th:action="@{/downvoteComment}" method="post">
+                      <input type="hidden" th:value="${#authentication.name}"
+                        name="username"/>
+                      <input type="hidden" th:value="${child.id}"
+                        name="commentId"/>
+                      <input type="hidden" th:value="${post.id}" name="postId"/>
+                      <input type="submit" value="Downvote" class="button"/>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div th:replace="this::f_call(${child})"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</body>
-</html>
+    </body>
+  </html>

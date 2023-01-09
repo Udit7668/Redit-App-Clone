@@ -165,7 +165,7 @@ border: 2px solid black;
                 <input type="hidden" name="username" th:value="${#authentication.name}">
                 <input type="submit" value="Upvote">
             </form>
-            <span th:text="score+'  '+${#lists.size(post.upvotedUser) - #lists.size(post.downvotedUser)}"></span>
+            <span th:text="score+'  '+${#lists.size(post.upvotedUsers) - #lists.size(post.downvotedUsers)}"></span>
             <form th:action="@{/user/post/downvote}" method="get">
                 <input type="hidden" name="postId" th:value="${post.id}">
                 <input type="hidden" name="profileId" th:value="${post.user.username}">

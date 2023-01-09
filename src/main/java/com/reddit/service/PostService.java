@@ -146,8 +146,8 @@ public class PostService {
   @Transactional
   public void deletePost(Long postId) {
     Post post = this.postRepository.findPostById(postId);
-    post.setDownvotedUser(null);
-    post.setUpvotedUser(null);
+    post.setDownvotedUsers(null);
+    post.setUpvotedUsers(null);
     this.postRepository.delete(post);
   }
 
@@ -174,16 +174,15 @@ public class PostService {
     if (result != null) {
       user = result.get();
       System.out.println(">> username : " + user.getUsername());
-      if (!post.getUpvotedUser().contains(user)) {
-        post.getUpvotedUser().add(user);
-        if (post.getDownvotedUser().contains(user)) {
-          post.getDownvotedUser().remove(user);
+      if (!post.getUpvotedUsers().contains(user)) {
+        post.getUpvotedUsers().add(user);
+        if (post.getDownvotedUsers().contains(user)) {
+          post.getDownvotedUsers().remove(user);
         }
       } else {
-        post.getUpvotedUser().remove(user);
-        
+        post.getUpvotedUsers().remove(user);
       }
-      post.setVoteCount(post.getUpvotedUser().size()-post.getDownvotedUser().size());
+      post.setVoteCount(post.getUpvotedUsers().size()-post.getDownvotedUsers().size());
       this.postRepository.save(post);
     }
   }
@@ -197,15 +196,15 @@ public class PostService {
     if (result != null) {
       user = result.get();
       System.out.println(">> username : " + user.getUsername());
-      if (!post.getDownvotedUser().contains(user)) {
-        post.getDownvotedUser().add(user);
-        if (post.getUpvotedUser().contains(user)) {
-          post.getUpvotedUser().remove(user);
+      if (!post.getDownvotedUsers().contains(user)) {
+        post.getDownvotedUsers().add(user);
+        if (post.getUpvotedUsers().contains(user)) {
+          post.getUpvotedUsers().remove(user);
         }
       } else {
-        post.getDownvotedUser().remove(user);
+        post.getDownvotedUsers().remove(user);
       }
-      post.setVoteCount(post.getUpvotedUser().size()-post.getDownvotedUser().size());
+      post.setVoteCount(post.getUpvotedUsers().size()-post.getDownvotedUsers().size());
       this.postRepository.save(post);
     }
   }

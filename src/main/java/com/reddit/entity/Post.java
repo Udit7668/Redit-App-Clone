@@ -1,4 +1,5 @@
 package com.reddit.entity;
+
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -31,7 +32,7 @@ public class Post {
     private String image;
     @Column(columnDefinition = "TEXT")
     private String content;
-    @Column(name="created_at",nullable = false,updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private Timestamp createdDate;
     @Column(name = "updated_at")
@@ -40,21 +41,17 @@ public class Post {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "user_id")
     private User user;
-    private Integer voteCount=0;
+    private Integer voteCount = 0;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "subreddit_id")
     private Subreddit subreddit;
-    @OneToMany(fetch = LAZY,mappedBy = "post",cascade = CascadeType.ALL)
+    @OneToMany(fetch = LAZY, mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="upvotes",
-        joinColumns = @JoinColumn(name="post_id"),
-        inverseJoinColumns = @JoinColumn(name="user_id"))
-    List<User> upvotedUser; 
+    @JoinTable(name = "post_upvotes", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> upvotedUsers;
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "downvotes", 
-        joinColumns = @JoinColumn(name = "post_id"), 
-        inverseJoinColumns = @JoinColumn(name = "user_id"))
-    List<User> downvotedUser;
+    @JoinTable(name = "post_downvotes", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> downvotedUsers;
 
 }
