@@ -87,9 +87,9 @@ border: 2px solid black;
         </li>
 
         <li>
-            <form th:action="@{/user/searchpost}">
+            <form th:action="@{/userSearch}">
                 <input type="text" placeholder="Search Here" name="search">
-<!--                <input type="hidden" name="profileId" th:value="${post.user.username}">-->
+                <input type="hidden" name="profileId" th:value="${username}">
                 <input type="submit" value="Search">
             </form>
         </li>
@@ -116,9 +116,10 @@ border: 2px solid black;
         </form> </li>
     </ul>
 </nav>
+
 <div id="filter">
-    Filter Posts<a th:href="@{/home/topPosts}" style="margin-right: 20px; margin-left: 20px; text-decoration: none;" >Top Post</a>
-    <a th:href="@{/home/newPosts}" style="text-decoration: none;">New Post</a>
+    Filter Posts<a th:href="@{/user/topPosts/{username}(username=${username})}" style="margin-right: 20px; margin-left: 20px; text-decoration: none;" >Top Post</a>
+    <a th:href="@{/user/newPosts/{username}(username=${username})}" style="text-decoration: none;">New Post</a>
 </div >
 <div id="udit">
     <li style="list-style-type: none;">
@@ -158,14 +159,14 @@ border: 2px solid black;
             <a th:href="@{/posts/view/{viewId}(viewId=${post.id})}" id="view" >View Post</a>
         </td>
         <div id="votecount">
-            <form th:action="@{/posts/upvote}" method="get">
+            <form th:action="@{/user/post/upvote}" method="get">
                 <input type="hidden" name="postId" th:value="${post.id}">
                 <input type="hidden" name="profileId" th:value="${post.user.username}">
                 <input type="hidden" name="username" th:value="${#authentication.name}">
                 <input type="submit" value="Upvote">
             </form>
             <span th:text="score+'  '+${#lists.size(post.upvotedUser) - #lists.size(post.downvotedUser)}"></span>
-            <form th:action="@{/posts/downvote}" method="get">
+            <form th:action="@{/user/post/downvote}" method="get">
                 <input type="hidden" name="postId" th:value="${post.id}">
                 <input type="hidden" name="profileId" th:value="${post.user.username}">
                 <input type="hidden" name="username" th:value="${#authentication.name}">
@@ -175,8 +176,16 @@ border: 2px solid black;
     </div>
 </div>
 <div class="float-container">
-    <div class="float-child green" th:each=" Comment: ${comments}">
-        <span th:text="${Comment.comment}"></span>
+    <div class="float-child green" th:each="Comment: ${comments}">
+        Commented on <a th:href="@{/subreddit/view/{subredditId}(subredditId=${Comment.post.subreddit.id})}"><span th:text="r+'/'+${Comment.post.subreddit.name}"></span></a>
+        at <span th:text="${Comment.createdAt}"></span>
+        <h3 th:text="${Comment.comment}"></h3>
+        <td>
+            <a th:href="@{/posts/view/{viewId}(viewId=${Comment.post.id})}" >View Post</a>
+        </td>
+    <!--    comment Upvote-->
+    <!--    comment Score-->
+    <!--    comment Downvote-->
     </div>
 </div>
 <div th:if = "${totalPages > 1}">

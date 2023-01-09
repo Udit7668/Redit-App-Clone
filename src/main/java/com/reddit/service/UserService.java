@@ -34,8 +34,13 @@ public class UserService {
        }
        
     public List<Post> getPosts(String username){
+        List<Post> userPosts = postRepository.findPostByUser(username);
+        return userPosts;
+    }
+    public List<Post> getSearchPosts(String username, String search){
         User user = userRepository.findByUsername(username).get();
-        return user.getPosts();
+        List<Post> userPosts= postRepository.findPostsByTitleWithCommonUser(user.getId(),search);
+        return userPosts;
     }
     public List<Comment> getComments(String username){
         User user = userRepository.findByUsername(username).get();
@@ -45,8 +50,16 @@ public class UserService {
         User user = userRepository.findByUsername(username).get();
         return user.getSubreddits();
     }
-  public List<User> findAllUser(){
-   List<User> users= this.userRepository.findAll();
+    public List<User> findAllUser(){
+    List<User> users= this.userRepository.findAll();
     return users;
-  }
+    }
+    public List<Post> getSortPostByDate(String username) {
+        List<Post> posts = this.postRepository.UserSortPostByCreatedDate(username);
+        return posts;
+    }
+    public List<Post> getSortPostByVoteCount(String username) {
+        List<Post> posts = this.postRepository.UserSortPostByVoteCount(username);
+        return posts;
+    }
 }

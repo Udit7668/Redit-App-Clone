@@ -66,14 +66,22 @@ public class CommentService {
         if(comment!=null){
             comment.setPost(null);
             comment.setParent(null);
+            comment.setUser(null);
+            deleteChildrenComment(comment);
+        }
+    }
+    public void deleteChildrenComment(Comment comment){
+        System.out.println("comment for deletion - "+comment.getComment());
+        if(comment.getChildren()!=null){
             for (Comment child : comment.getChildren()) {
                 child.setPost(null);
                 child.setParent(null);
-                child.setChildren(null);
                 child.setUser(null);
+                System.out.println("Child - "+child.getComment());
+                deleteChildrenComment(child);
             }
-            comment.setChildren(null);
-            commentRepository.delete(comment);
         }
+        System.out.println("children null for comment - "+comment.getComment());
+        commentRepository.delete(comment);
     }
 }
