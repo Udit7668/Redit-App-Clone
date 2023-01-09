@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Home Page</title>
         <style>
    .container ul{
     overflow: auto;
@@ -97,12 +97,25 @@ border: 2px solid black;
                         <input type="submit" value="Search">
                     </form>
                 </li>
-                <li>
-                    <form th:action="@{/form/login}">
-                        <input type="submit" value="Login">
-                    </form>
-                </li>
-
+                <div th:if="${#authentication.name} == anonymousUser">
+                    <li>
+                        <form th:action="@{/form/login}">
+                            <input type="submit" value="Login">
+                        </form>
+                    </li>
+                    <li>
+                        <form th:action="@{/form/register}">
+                            <input type="submit" value="Signup">
+                        </form>
+                    </li>
+                </div>
+                <div th:unless="${#authentication.name} == anonymousUser">
+                    <li>
+                        <form th:action="@{/logout}" method="post">
+                            <input type="submit" value="Logout">
+                        </form>
+                    </li>
+                </div>
                 <li>
                     <form th:action="@{/subreddit/add}" method="get">
                         <input type="submit" value="Create Subreddit">
@@ -114,10 +127,6 @@ border: 2px solid black;
                         <input type="submit" value="New Post">
                     </form>
                 </li>
-
-                <li> <form th:action="@{/form/register}">
-                        <input type="submit" value="Signup">
-                    </form> </li>
             </ul>
         </nav>
 
@@ -147,12 +156,12 @@ border: 2px solid black;
             </li>
             <br>
 
-            All subreddit
+            Subreddits
             <br>
             <br>
             <div th:each=" subreddit: ${subreddits}" id="subreddit">
                 <a
-                    th:href="@{/subreddit/view/{subredditId}(subredditId=${subreddit.id})}"><span
+                    th:href="@{/subreddit/view/{subredditId}(subredditId=${subreddit.id})}">r/<span
                         th:text="${subreddit.name}"></span></a>
             </div>
 
@@ -178,8 +187,6 @@ border: 2px solid black;
                     <a th:href="@{/posts/view/{viewId}(viewId=${post.id})}" id="view" >View Post</a>
                 </td>
                     <div id="votecount">
-
-                        <!-- <a th:href="@{/posts/upvote/{viewId}(viewId=${post.id})}">Upvote</a> -->
                         <form th:action="@{/posts/upvote}" method="get">
                             <input type="hidden" name="postId"
                                 th:value="${post.id}">
@@ -189,7 +196,6 @@ border: 2px solid black;
                         </form>
                         <span th:text="score+' '+${#lists.size(post.upvotedUsers)
                             - #lists.size(post.downvotedUsers)}"></span>
-                        <!-- <a th:href="@{/posts/downvote/{viewId}(viewId=${post.id})}">Downvote</a> -->
                         <form th:action="@{/posts/downvote}" method="get">
                             <input type="hidden" name="postId"
                                 th:value="${post.id}">
