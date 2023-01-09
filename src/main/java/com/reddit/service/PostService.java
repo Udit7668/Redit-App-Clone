@@ -114,6 +114,8 @@ public class PostService {
   @Transactional
   public void deletePost(Long postId) {
     Post post = this.postRepository.findPostById(postId);
+    post.setDownvotedUsers(null);
+    post.setUpvotedUsers(null);
     this.postRepository.delete(post);
   }
 

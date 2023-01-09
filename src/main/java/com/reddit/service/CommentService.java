@@ -31,9 +31,6 @@ public class CommentService {
             Post post = postOptional.get();
             comment.setPost(post);
             comment.setUser(user);
-            List<User> users = new ArrayList<>();
-            comment.setUpvotedUsers(users);
-            comment.setDownvotedUsers(users);
             commentRepository.save(comment);
         }
     }
@@ -84,6 +81,8 @@ public class CommentService {
                 child.setUser(null);
             }
             comment.setChildren(null);
+            comment.setDownvotedUsers(null);
+            comment.setUpvotedUsers(null);
             commentRepository.delete(comment);
         }
     }
