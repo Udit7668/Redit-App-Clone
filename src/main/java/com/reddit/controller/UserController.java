@@ -39,6 +39,7 @@ public class UserController {
         List<Post> userPosts = userService.getSearchPosts(username,search);
         model.addAttribute("posts",userPosts);
         model.addAttribute("userProfile",username);
+        model.addAttribute("username",username);
         return "user-profile";
     }
     @GetMapping("user/newPosts/{username}")
