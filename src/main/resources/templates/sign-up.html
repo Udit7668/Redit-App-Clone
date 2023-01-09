@@ -18,7 +18,7 @@
 <div>
 
     <div id="loginbox" style="margin-top: 50px;"
-         class="mainbox col-md-3 col-md-offset-2 col-sm-6 col-sm-offset-2">
+         class="mainbox col-md-3 col-md-offset-5 col-sm-6 col-sm-offset-2">
 
         <div class="panel panel-info">
 
@@ -31,6 +31,9 @@
                 <!-- Login Form -->
                 <form th:action="@{/form/createUser}"
                       method="POST" class="form-horizontal" th:object="${users}">
+                      <div th:if="${Error}" style="color: red; font-size: large;">
+                        <span th:text="${Error}"></span>
+                    </div>
 
                     <!-- Place for messages: error, alert etc ... -->
                     <div class="form-group">
