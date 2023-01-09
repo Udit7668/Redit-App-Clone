@@ -1,29 +1,84 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8">
-    <title>Post</title>
-  </head>
+<html lang="en" xmlns:th="www.thymeleaf.com">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post</title>
   <style>
+   .container ul{
+    overflow: auto;
+    display: flex;
+    justify-content: space-between;
+   }
+
+   ul li{
+ list-style-type:none;
+ margin: 20px;
+    float: left;
+    color:red;
+
+   }
+
+   img{
+    height:40px;
+   }
+
+   #filter{
+   display:flex;
+   justify-content:center;
+   margin-bottom: 20px;
+   }
+
+   .float-child {
+    width: 60%;
+    border-top: 2px solid black;
+    border-right: 2px solid black;
+    border-left: 2px solid black;
+    border-bottom: 2px solid black;
+   margin-top: 20px;
+    float: left;
+    padding: 20px;
+    text-align: center;
+
+}
+.float-child #votecount{
+margin-top: 10px;
+display: flex;
+justify-content: space-between;
+
+}
+
+.float-container{
+    margin-left: 600px;
+      word-wrap: break-word;
+}
+
+#subreddit{
+width: 200%;
+}
+
+#udit{
+width: 20%;
+padding: 30px;
+float: left;
+margin-left: 20px;
+border: 2px solid black;
+}
+
+#image{
+    height: 400px;
+}
     *{
-			margin: 0; 
-			padding: 0; 
+			margin: 0;
+			padding: 0;
 		}
-    #post-container{
-      /* border : 1px black solid;  */
-      margin : auto; 
-      width: 50%;
-		}
-    #post-preview{
-      /* border: 1px black solid; */
-      margin: 20px;  
-    }
     #comment-form{
       margin: 20px;
     }
     #comment-text-area{
-        width : 100%; 
-        height: 50px; 
+        width : 100%;
+        height: 50px;
     }
     .button-pair-1, .button-pair-2{
       display: flex;
@@ -48,178 +103,221 @@
     #comment-preview{
       margin: 20px;
     }
-
-    img{
-      height: 400px;
+    .post-commentbox{
+      display: flex;
+      flex-direction: column;
+      justify-content:center;
     }
-  </style>
-  <body>
-    <div id="post-container">
-      <div class="navs">
-        <form th:action="@{/logout}" method="POST">
-          <input type="submit" value="Logout" class="button" />
+    .comment-box{
+      width:60%;
+      margin:0 auto;
+    }
+      </style>
+  <link rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+</head>
+<body>
+<nav class="container">
+  <ul>
+    <li><img
+            src="data:image/png;base64,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">Reddit</li>
+    <li>
+      <form th:action="@{/home/}">
+        <input type="submit" value="Home">
+      </form>
+    </li>
+    </li>
+    <div th:if="${#authentication.name} == anonymousUser">
+      <li>
+        <form th:action="@{/form/login}">
+          <input type="submit" value="Login">
         </form>
-        <input type="button" value="Homepage"
-          onclick="window.location.href='/home/'; return false; "
-          class="button"/>
-
-      </div>
-
-      <div id="post-preview" class="">
-        <div th:if="${post.image}!=null">
-          <img th:src="@{'/img/'+${post.image}}" id="image"/>
-        </div>
-        <h6><span th:text="Votes+' '+${#lists.size(post.upvotedUsers)
-            - #lists.size(post.downvotedUsers)}"></span></h6>
-        <h1><span th:text="${post.title}"></span></h1><br>
-        <h3><span th:text="${post.content}"></span></h3><br>
-        <div class="button-pair-1">
-          <div th:if="${#authentication.name} == ${post.user.username}">
-            <div class="button-pair-2">
-              <form th:action="@{/posts/updatePost}" method="get">
-                <input type="hidden" th:value="${post.id}" name="postId"/>
-                <input type="submit" value="Update" class="button"/>
-              </form>
-            </form>
-            <form th:action="@{/posts/deletePost}" method="get">
-              <input type="hidden" th:value="${post.id}" name="postId"/>
-              <input type="submit" value="Delete" class="button"/>
-            </form>
-            <form th:action="@{/upvotePost}" method="post">
-              <input type="hidden" name="postId"
-                th:value="${post.id}">
-              <input type="hidden" name="username"
-                th:value="${#authentication.name}">
-              <input type="submit" value="Upvote" class="button">
-            </form>
-            <!-- <a th:href="@{/posts/downvote/{viewId}(viewId=${post.id})}">Downvote</a> -->
-            <form th:action="@{/downvotePost}" method="post">
-              <input type="hidden" name="postId"
-                th:value="${post.id}">
-              <input type="hidden" name="username"
-                th:value="${#authentication.name}">
-              <input type="submit" value="downvote" class="button">
-            </form>
-          </div>
-        </div>
-      </div>
-
+      </li>
     </div>
-    <div id="comment-form">
-      <h6>comment as <span th:text="${#authentication.name}"></span></h6>
-        <form th:action="@{/addComment}" th:method="post"
-          th:object="${Comment}">
-          <input type="hidden" th:value="${#authentication.name}"
-            name="username"/>
-          <input type="hidden" th:value="${post.id}" name="postId"/>
-          <textarea th:field="${Comment.comment}" id="comment-text-area"
-            placeholder="What are your thoughts? "></textarea><br>
-          <input type=submit value="Comment" class="button">
+    <div th:unless="${#authentication.name} == anonymousUser">
+      <li>
+        <form th:action="@{/logout}" method="post">
+          <input type="submit" value="Logout">
         </form>
-      </div>
-      <div th:each="Comment: ${post.comments}" id="comment-preview">
-        <div th:if="${Comment.parent} == null">
-          <h6><span th:text="${Comment.user.username}+' '"></span>|
-            <span th:text="Votes+' '+${#lists.size(Comment.upvotedUsers)
-              - #lists.size(Comment.downvotedUsers)}">score</span> | <span
-              th:text="${Comment.createdAt}"></span></h6>
-          <h4 th:text="${Comment.comment}">comment</h4>
-          <div class="button-pair-1">
-            <form th:action="@{/addReplyComment}" method="post">
-              <input type="hidden" th:value="${Comment.id}" name="parentId"/>
-              <input type="hidden" th:value="${#authentication.name}"
-                name="username"/>
-              <input type="hidden" th:value="${post.id}" name="postId"/>
-              <input type="submit" value="Reply" class="button"/>
-            </form>
-            <div th:if="${#authentication.name} == ${Comment.user.username}">
-              <div class="button-pair-2">
-                <form th:action="@{/updateComment}" method="post">
-                  <input type="hidden" th:value="${Comment.id}"
-                    name="commentId"/>
-                  <input type="submit" value="Update" class="button"/>
-                </form>
-                <form th:action="@{/deleteComment}" method="post">
-                  <input type="hidden" th:value="${post.id}" name="postId"/>
-                  <input type="hidden" th:value="${Comment.id}"
-                    name="commentId"/>
-                  <input type="submit" value="Delete" class="button"/>
-                </form>
-                <form th:action="@{/upvoteComment}" method="post">
-                  <input type="hidden" th:value="${#authentication.name}"
-                    name="username"/>
-                  <input type="hidden" th:value="${Comment.id}"
-                    name="commentId"/>
-                  <input type="hidden" th:value="${post.id}" name="postId"/>
-                  <input type="submit" value="Upvote" class="button"/>
-                </form>
-                <form th:action="@{/downvoteComment}" method="post">
-                  <input type="hidden" th:value="${#authentication.name}"
-                    name="username"/>
-                  <input type="hidden" th:value="${Comment.id}"
-                    name="commentId"/>
-                  <input type="hidden" th:value="${post.id}" name="postId"/>
-                  <input type="submit" value="Downvote" class="button"/>
-                </form>
-              </div>
+      </li>
+    </div>
+    <li>
+      <form th:action="@{/posts/newPost}">
+        <input type="submit" value="New Post">
+      </form>
+    </li>
+    <li> <form th:action="@{/form/register}">
+      <input type="submit" value="Signup">
+    </form>
+    </li>
+  </ul>
+</nav>
+    <div class = "post-commentbox">
+      <div class = "post-box">
+        <div class="float-container">
+          <div class="float-child green">
+            <h3 th:text="${post.title}"></h3>
+            posted by <a th:href="@{/user/{username}(username=${post.user.username})}"><span th:text="u+'/'+${post.user.username}"></span></a>
+            on <a th:href="@{/subreddit/view/{subredditId}(subredditId=${post.subreddit.id})}"><span th:text="r+'/'+${post.subreddit.name}"></span></a>
+            at <span th:text="${post.createdDate}"></span>
+            <h4 th:text="${post.content}"></h4>
+            <div th:if="${post.image}!=null">
+              <img  th:src="@{'/img/'+${post.image}}" id="image"/>
             </div>
-          </div>
-          <div th:fragment="f_call(Comment)"
-            th:unless="${#lists.isEmpty(Comment.children)}">
-            <div th:each="child : ${Comment.children}" th:inline="text"
-              class="child-comment">
-              <h6><span th:text="${child.user.username}+' '"></span>|
-                <span th:text="Votes+' '+${#lists.size(child.upvotedUsers)
-                  - #lists.size(child.downvotedUsers)}">score</span> | <span
-                  th:text="${child.createdAt}"></span></h6>
-              <h4 th:text="${child.comment}">comment</h4>
-              <div class="button-pair-1">
-                <form th:action="@{/addReplyComment}" method="post">
-                  <input type="hidden" th:value="${child.id}" name="parentId"/>
-                  <input type="hidden" th:value="${#authentication.name}"
-                    name="username"/>
-                  <input type="hidden" th:value="${post.id}" name="postId"/>
-                  <input type="submit" value="Reply" class="button"/>
-                </form>
-                <div th:if="${#authentication.name} == ${child.user.username}">
-                  <div class="button-pair-2">
-                    <form th:action="@{/updateReply}" method="post">
-                      <input type="hidden" th:value="${Comment.id}"
-                        name="parentId"/>
-                      <input type="hidden" th:value="${child.id}"
-                        name="commentId"/>
-                      <input type="submit" value="Update" class="button"/>
-                    </form>
-                    <form th:action="@{/deleteComment}" method="post">
-                      <input type="hidden" th:value="${post.id}" name="postId"/>
-                      <input type="hidden" th:value="${child.id}"
-                        name="commentId"/>
-                      <input type="submit" value="Delete" class="button"/>
-                    </form>
-                    <form th:action="@{/upvoteComment}" method="post">
-                      <input type="hidden" th:value="${#authentication.name}"
-                        name="username"/>
-                      <input type="hidden" th:value="${child.id}"
-                        name="commentId"/>
-                      <input type="hidden" th:value="${post.id}" name="postId"/>
-                      <input type="submit" value="Upvote" class="button"/>
-                    </form>
-                    <form th:action="@{/downvoteComment}" method="post">
-                      <input type="hidden" th:value="${#authentication.name}"
-                        name="username"/>
-                      <input type="hidden" th:value="${child.id}"
-                        name="commentId"/>
-                      <input type="hidden" th:value="${post.id}" name="postId"/>
-                      <input type="submit" value="Downvote" class="button"/>
-                    </form>
-                  </div>
+            <div class="button-pair-1">
+              <div th:if="${#authentication.name} == ${post.user.username}">
+                <div class="button-pair-2">
+                  <form th:action="@{/posts/updatePost}" method="get">
+                    <input type="hidden" th:value="${post.id}" name="postId"/>
+                    <input type="submit" value="Update" class="button"/>
+                  </form>
+                  <form th:action="@{/posts/deletePost}" method="get">
+                    <input type="hidden" th:value="${post.id}" name="postId"/>
+                    <input type="submit" value="Delete" class="button"/>
+                  </form>
                 </div>
               </div>
-              <div th:replace="this::f_call(${child})"></div>
+            </div>
+            <div id="votecount">
+              <form th:action="@{/upvotePost}" method="post">
+                <input type="hidden" name="postId"
+                       th:value="${post.id}">
+                <input type="hidden" name="username"
+                       th:value="${#authentication.name}">
+                <input type="submit" value="Upvote" class="button">
+              </form>
+              <span th:text="score+' '+${#lists.size(post.upvotedUsers) - #lists.size(post.downvotedUsers)}"></span>
+              <form th:action="@{/downvotePost}" method="post">
+                <input type="hidden" name="postId"
+                       th:value="${post.id}">
+                <input type="hidden" name="username"
+                       th:value="${#authentication.name}">
+                <input type="submit" value="downvote" class="button">
+              </form>
             </div>
           </div>
         </div>
       </div>
+      <div class="comment-box">
+        <div id="comment-form">
+          <h6>comment as <span th:text="${#authentication.name}"></span></h6>
+          <form th:action="@{/addComment}" th:method="post"
+                th:object="${Comment}">
+            <input type="hidden" th:value="${#authentication.name}"
+                   name="username"/>
+            <input type="hidden" th:value="${post.id}" name="postId"/>
+            <textarea th:field="${Comment.comment}" id="comment-text-area"
+                      placeholder="What are your thoughts? "></textarea><br>
+            <input type=submit value="Comment" class="button">
+          </form>
+        </div>
+        <div th:each="Comment: ${post.comments}" id="comment-preview">
+          <div th:if="${Comment.parent} == null">
+            <h6><strong><a th:href="@{/user/{username}(username=${Comment.user.username})}"><span th:text="u+'/'+${Comment.user.username}"></span></a>|
+              <span th:text="Votes+' '+${#lists.size(Comment.upvotedUsers)
+                  - #lists.size(Comment.downvotedUsers)}">score</span> | <span
+                      th:text="${Comment.createdAt}"></span></strong></h6>
+            <h4 th:text="${Comment.comment}">comment</h4>
+            <div class="button-pair-1">
+              <form th:action="@{/addReplyComment}" method="post">
+                <input type="hidden" th:value="${Comment.id}" name="parentId"/>
+                <input type="hidden" th:value="${#authentication.name}"
+                       name="username"/>
+                <input type="hidden" th:value="${post.id}" name="postId"/>
+                <input type="submit" value="Reply" class="button"/>
+              </form>
+              <div th:if="${#authentication.name} == ${Comment.user.username}">
+                <div class="button-pair-2">
+                  <form th:action="@{/updateComment}" method="post">
+                    <input type="hidden" th:value="${Comment.id}"
+                           name="commentId"/>
+                    <input type="submit" value="Update" class="button"/>
+                  </form>
+                  <form th:action="@{/deleteComment}" method="post">
+                    <input type="hidden" th:value="${post.id}" name="postId"/>
+                    <input type="hidden" th:value="${Comment.id}"
+                           name="commentId"/>
+                    <input type="submit" value="Delete" class="button"/>
+                  </form>
+                </div>
+              </div>
+              <form th:action="@{/upvoteComment}" method="post">
+                <input type="hidden" th:value="${#authentication.name}"
+                       name="username"/>
+                <input type="hidden" th:value="${Comment.id}"
+                       name="commentId"/>
+                <input type="hidden" th:value="${post.id}" name="postId"/>
+                <input type="submit" value="Upvote" class="button"/>
+              </form>
+              <form th:action="@{/downvoteComment}" method="post">
+                <input type="hidden" th:value="${#authentication.name}"
+                       name="username"/>
+                <input type="hidden" th:value="${Comment.id}"
+                       name="commentId"/>
+                <input type="hidden" th:value="${post.id}" name="postId"/>
+                <input type="submit" value="Downvote" class="button"/>
+              </form>
+            </div>
+            <div th:fragment="f_call(Comment)"
+                 th:unless="${#lists.isEmpty(Comment.children)}">
+              <div th:each="child : ${Comment.children}" th:inline="text"
+                   class="child-comment">
+                <h6><strong><a th:href="@{/user/{username}(username=${child.user.username})}"><span th:text="u+'/'+${child.user.username}"></span></a>|
+                  <span th:text="Votes+' '+${#lists.size(child.upvotedUsers)
+                      - #lists.size(child.downvotedUsers)}">score</span> | <span
+                          th:text="${child.createdAt}"></span></strong></h6>
+                <h4 th:text="${child.comment}">comment</h4>
+                <div class="button-pair-1">
+                  <form th:action="@{/addReplyComment}" method="post">
+                    <input type="hidden" th:value="${child.id}" name="parentId"/>
+                    <input type="hidden" th:value="${#authentication.name}"
+                           name="username"/>
+                    <input type="hidden" th:value="${post.id}" name="postId"/>
+                    <input type="submit" value="Reply" class="button"/>
+                  </form>
+                  <div th:if="${#authentication.name} == ${child.user.username}">
+                    <div class="button-pair-2">
+                      <form th:action="@{/updateReply}" method="post">
+                        <input type="hidden" th:value="${Comment.id}"
+                               name="parentId"/>
+                        <input type="hidden" th:value="${child.id}"
+                               name="commentId"/>
+                        <input type="submit" value="Update" class="button"/>
+                      </form>
+                      <form th:action="@{/deleteComment}" method="post">
+                        <input type="hidden" th:value="${post.id}" name="postId"/>
+                        <input type="hidden" th:value="${child.id}"
+                               name="commentId"/>
+                        <input type="submit" value="Delete" class="button"/>
+                      </form>
+                    </div>
+                  </div>
+                      <form th:action="@{/upvoteComment}" method="post">
+                        <input type="hidden" th:value="${#authentication.name}"
+                               name="username"/>
+                        <input type="hidden" th:value="${child.id}"
+                               name="commentId"/>
+                        <input type="hidden" th:value="${post.id}" name="postId"/>
+                        <input type="submit" value="Upvote" class="button"/>
+                      </form>
+                      <form th:action="@{/downvoteComment}" method="post">
+                        <input type="hidden" th:value="${#authentication.name}"
+                               name="username"/>
+                        <input type="hidden" th:value="${child.id}"
+                               name="commentId"/>
+                        <input type="hidden" th:value="${post.id}" name="postId"/>
+                        <input type="submit" value="Downvote" class="button"/>
+                      </form>
+                    </div>
+                <div th:replace="this::f_call(${child})"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
     </div>
-    </body>
-  </html>
+  </body>
+</html>

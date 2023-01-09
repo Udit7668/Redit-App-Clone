@@ -30,7 +30,7 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     @Query(value = "select * from post where subreddit_id = :id and title like %:searchKey%", nativeQuery = true)
     List<Post> findPostsByTitleWithCommonSubreddit(@Param("id") long subredditId, @Param("searchKey") String searchKey);
 
-    @Query(value = "select distinct p.* from post p,subreddit s where p.subreddit_id=s.id and s.name like :c or p.title like :c or p.content like :c",nativeQuery = true)
+    @Query(value = "select distinct p.* from post p,subreddit s where p.subreddit_id=s.id and s.name like %:c% or p.title like %:c% or p.content like %:c%",nativeQuery = true)
     public List<Post> findPostBySubredditNameOrPostTitle(@Param("c") String subredditName);
 
     @Query(value = "select distinct p.* from post p,subreddit s where p.subreddit_id=s.id and s.name like :c  order by p.created_at desc",nativeQuery = true)
