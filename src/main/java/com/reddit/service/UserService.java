@@ -33,6 +33,16 @@ public class UserService {
         return user;
        }
        
+       public User findUserByUsername(String username){
+        User user=  this.userRepository.getByUsername(username);
+        return user;
+       }
+
+       public User findUserByEmail(String email){
+        User user=  this.userRepository.getByEmail(email);
+        return user;
+       }
+       
     public List<Post> getPosts(String username){
         List<Post> userPosts = postRepository.findPostByUser(username);
         return userPosts;

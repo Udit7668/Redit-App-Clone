@@ -41,7 +41,13 @@ public class SubredditController {
     }
     @PostMapping("/addSubreddit")
     public String createSubreddit(@ModelAttribute("subreddit")Subreddit subreddit,
-                                  @RequestParam(name="username") String username){
+                                  @RequestParam(name="username") String username,Model model){
+        String subredditName=subreddit.getName();
+         Subreddit name=this.subredditService.findByName(subredditName);
+         if(name!=null){
+        model.addAttribute("error", "Subreddit Already exists");
+         return "saveSubreddit";
+         }                       
         subredditService.createSubreddit(subreddit,username);
         return "redirect:/home/";
     }

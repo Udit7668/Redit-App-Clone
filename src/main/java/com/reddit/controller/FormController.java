@@ -6,7 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.reddit.dto.RegisterRequest;
 import com.reddit.entity.User;
@@ -30,16 +32,16 @@ public class FormController {
 
     @RequestMapping("/createUser")
     public String createUser(@ModelAttribute RegisterRequest registerRequest,Model model){
-      User userName=  this.userService.getUserByUsername(registerRequest.getUsername());
+      User userName=  this.userService.findUserByUsername(registerRequest.getUsername());
       if(userName!=null){
         model.addAttribute("Error", "Username already exists");
             return "sign-up";
       }
-      User userEmail=this.userService.getUserByEmail(registerRequest.getEmail());
+      User userEmail=this.userService.findUserByEmail(registerRequest.getEmail());
       if(userEmail!=null){
         model.addAttribute("Error", "Email already in use");
         return "sign-up";
-    }
+      }
         authService.signUp(registerRequest);
         return "login";
     }
@@ -54,4 +56,6 @@ public class FormController {
         authService.verifyAccount(token);
         return "login";
     }
+
+
 }

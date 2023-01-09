@@ -106,10 +106,42 @@ public class PostService {
     return posts;
   }
 
+  public List<Post> sortPostByDate(String postId) {
+    String id[]=postId.split(",");
+    List<Long> ids=new ArrayList<>();
+    for(String single:id){
+    ids.add(Long.parseLong(single));
+    }
+    List<Post> posts =new ArrayList<>();
+  List<Post> list=  this.postRepository.sortPostByCreatedDate();
+  for(Post post:list){
+    if(ids.contains(post.getId())){
+      posts.add(post);
+    }
+  }
+    return posts;
+  }
+
   public List<Post> sortPostByVoteCount() {
     List<Post> posts = this.postRepository.sortPostByVoteCount();
     return posts;
   }
+  public List<Post> sortPostByVoteCount(String postId) {
+    String id[]=postId.split(",");
+    List<Long> ids=new ArrayList<>();
+    for(String single:id){
+    ids.add(Long.parseLong(single));
+    }
+    List<Post> posts =new ArrayList<>();
+  List<Post> list=  this.postRepository.sortPostByVoteCount();
+  for(Post post:list){
+    if(ids.contains(post.getId())){
+      posts.add(post);
+    }
+  }
+    return posts;
+  }
+  
 
   @Transactional
   public void deletePost(Long postId) {

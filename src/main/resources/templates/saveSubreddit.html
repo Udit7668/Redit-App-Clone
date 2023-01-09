@@ -4,16 +4,27 @@
     <meta charset="UTF-8">
     <title>Subreddit</title>
 </head>
+<style>
+    #container{
+        margin-left: 700px;
+        margin-top: 200px;
+    }
+</style>
 <body>
-<label>Create Subreddit</label>
 
+
+<div id="container">
+    <h3><label>Create Subreddit</label></h3>
 <form th:action="@{/subreddit/addSubreddit}" th:object="${subreddit}" method="post">
+    <div th:if="${error}" style="color: red; font-size: large;">
+        <span th:text="${error}"></span>
+    </div>
     <input type="hidden" th:value="${#authentication.name}" name="username"/>
     <input type="hidden"  th:field="*{id}" />
     <input type="text"    th:field="*{name}"      placeholder="Name"/><br><br>
     <textarea th:field="*{description}" placeholder="Description" rows="5"> </textarea><br><br>
     <input type="submit" value="Create"/>
 </form>
-
+</div>
 </body>
 </html>
