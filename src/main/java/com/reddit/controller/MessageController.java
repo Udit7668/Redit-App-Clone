@@ -1,0 +1,26 @@
+package com.reddit.controller;
+
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import com.reddit.entity.Message;
+
+@Controller
+public class MessageController {
+ 
+    
+    @MessageMapping("/message")
+    @SendTo("/topic/return-to")
+    public Message getContent(@ModelAttribute("message") Message message){
+        try{
+       Thread.sleep(2000);
+        }
+        catch(InterruptedException e){
+       e.printStackTrace();
+        }
+        return message;
+
+    }
+}
