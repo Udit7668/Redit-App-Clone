@@ -21,7 +21,7 @@ public class VerificationToken {
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
     private String token;
-    @OneToOne(fetch = LAZY)
+    @OneToOne(fetch = LAZY,cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
     private User user;
     @Column(name = "token_created_at",updatable = false)
     @CreationTimestamp

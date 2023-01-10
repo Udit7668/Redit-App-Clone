@@ -40,10 +40,10 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "comment_upvotes", joinColumns = @JoinColumn(name = "comment_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> upvotedUsers;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "comment_downvotes", joinColumns = @JoinColumn(name = "comment_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> downvotedUsers;
 }
