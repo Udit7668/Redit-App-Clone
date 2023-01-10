@@ -2,6 +2,8 @@ package com.reddit.controller;
 
 import java.util.List;
 
+import com.reddit.repository.PostRepository;
+import com.reddit.repository.SubredditRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,8 +22,12 @@ public class SubredditController {
 
     @Autowired
     private PostService postService;
+    @Autowired
+    private SubredditRepository subredditRepository;
+    @Autowired
+    private PostRepository postRepository;
 
-//    @GetMapping("/home/add")
+    //    @GetMapping("/home/add")
 //    public String create(Model model){
 //        model.addAttribute("subreddit",new Subreddit());
 //        return "saveSubreddit";
@@ -62,8 +68,16 @@ public class SubredditController {
     }
     @GetMapping("/deleteSubreddit")
     public String deleteSubreddit(@RequestParam("subredditId") Long subredditId){
-        subredditService.deleteSubredditById(subredditId);
-        return "showsubreddit";
+        Subreddit subreddit= subredditService.findById(subredditId);
+        subreddit.setAdmins(null);
+        List<Post> postList=subreddit.getPosts();
+        for(Post post:postList){
+            postRepository.delete(post);
+        }
+        subreddit.setUsers(null);
+        subredditRepository.delete(subreddit);
+        System.out.println(" i am deleting subreddit"+subredditId);
+        return "redirect:/home/";
     }
     @GetMapping("/showSubredditId")
     public Subreddit showSubredditById(@RequestParam("subredditId")Long subredditId,Model model){

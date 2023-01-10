@@ -34,20 +34,20 @@ public class User {
     @JoinTable(name = "subreddit_user", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "subreddit_id"))
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Subreddit> subreddits;
-    @OneToMany(fetch = LAZY, mappedBy = "user")
+    @OneToMany(fetch = LAZY, mappedBy = "user",cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
     private List<Post> posts;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
     List<Comment> comments;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "post_upvotes", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "post_id"))
     List<Post> upvotedPosts;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "post_downvotes", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "post_id"))
     List<Post> downvotedPosts;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "comment_upvotes", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
     List<Comment> upvotedComments;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "comment_downvotes", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "comment_id"))
     List<Comment> downvotedComments;
 }

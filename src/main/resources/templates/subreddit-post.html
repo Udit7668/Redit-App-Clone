@@ -167,7 +167,8 @@ width: 20%;
         margin-left: 10%;
     }
     #image{
-    height: 400px;
+    height: 300px;
+    width:400px
 }
 </style>
 <body>
@@ -197,6 +198,12 @@ width: 20%;
         <li>
             <form th:action="@{/posts/newPost}">
                 <input type="submit" value="New Post">
+            </form>
+        </li>
+        <li>
+            <form th:action="@{/subreddit/deleteSubreddit}" method="get">
+                <input type="hidden" th:name="subredditId" th:value="${thesubreddit.id}">
+                <input type="submit" value="Delete Subreddit">
             </form>
         </li>
     </ul>
