@@ -27,7 +27,9 @@ public class MessageController {
    
     @GetMapping("/message")
     public String sendMessage(Model model,@RequestParam("user") String user,@RequestParam("loginUser") String loginUser) {
-        model.addAttribute("user", user);
+      List<Message> messages=this.messageService.getAllMessage(user, loginUser);
+      model.addAttribute("messages",messages);  
+      model.addAttribute("user", user);
         model.addAttribute("loginUser", loginUser);
        return "message";
     }
@@ -35,6 +37,10 @@ public class MessageController {
     @GetMapping("/chat/{reciever}")
     public String recieveMessage(@PathVariable("reciever") String reciever,Model model,@RequestParam("message") String message,@RequestParam("loginUser") String loginUser){
       this.messageService.addMessage(reciever, loginUser, message); 
-             return null;
+      List<Message> messages=this.messageService.getAllMessage(reciever, loginUser);
+      model.addAttribute("messages",messages);
+      model.addAttribute("user", reciever);
+      model.addAttribute("loginUser", loginUser);
+      return "message";
     }
 }

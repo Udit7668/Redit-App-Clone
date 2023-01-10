@@ -7,6 +7,13 @@
     <title>Document</title>
 </head>
 <body>
+
+    <div th:each=" Message: ${messages}">
+  <h1 th:text="${Message.message}"></h1>
+
+    </div>
+
+
     <form th:action="@{/chat/{reciever}(reciever=${user})}">
     <input type="text" placeholder="Enter your message" name="message">
     <input type="hidden" name="loginUser" th:value="${loginUser}">
