@@ -1,29 +1,40 @@
 package com.reddit.controller;
 
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.reddit.entity.Message;
+import com.reddit.entity.User;
+import com.reddit.service.MessageService;
+import com.reddit.service.UserService;
 
-@RestController
+@Controller
 public class MessageController {
- 
-    
-    @MessageMapping("/message")
-    @SendTo("/topic/return-to")
-    public Message getContent(@RequestBody Message message){
-        try{
-       Thread.sleep(2000);
-        }
-        catch(InterruptedException e){
-       e.printStackTrace();
-        }
-        return message;
 
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired  
+    private MessageService messageService;
+   
+    @GetMapping("/message")
+    public String sendMessage(Model model,@RequestParam("user") String user,@RequestParam("loginUser") String loginUser) {
+        model.addAttribute("user", user);
+        model.addAttribute("loginUser", loginUser);
+       return "message";
     }
 
-
-    
+    @GetMapping("/chat/{reciever}")
+    public String recieveMessage(@PathVariable("reciever") String reciever,Model model,@RequestParam("message") String message,@RequestParam("loginUser") String loginUser){
+      this.messageService.addMessage(reciever, loginUser, message); 
+             return null;
+    }
 }

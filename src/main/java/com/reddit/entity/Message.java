@@ -18,13 +18,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Message {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
 
-    private String content;
+    private String sender;
+    
+    private String reciever;
+    
+    private String message;
 
     @CreationTimestamp
     private Timestamp messageDate;
