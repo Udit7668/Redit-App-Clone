@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="www.thymeleaf.com">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,9 +23,10 @@
 
     <div class="input-group">
 
-<input type="text" placeholder="Enter you name" id="name-value" autofocus
+<input type="text" placeholder="Enter you name" id="name-value" th:value="${user}" autofocus
  clas="form-controller"
 >
+<h1 th:text="${user}"></h1>
   <div class="input-group-append">
    <button class="btn btn-dark" id="login">Enter</button>
   </div>

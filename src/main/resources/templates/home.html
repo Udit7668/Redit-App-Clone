@@ -126,6 +126,14 @@ border: 2px solid black;
                         <input type="submit" value="New Post">
                     </form>
                 </li>
+
+                <li>
+                    <form th:action="@{/index.html}">
+                        <input type="hidden" th:value="${#authentication.name}" name="user">
+                        <input type="submit" value="Chat Now">
+                    </form>
+                </li>
+
             </ul>
         </nav>
 
