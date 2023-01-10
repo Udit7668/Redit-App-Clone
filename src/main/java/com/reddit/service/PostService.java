@@ -231,6 +231,10 @@ public class PostService {
     List<Post> posts =this.postRepository.findTopBySubredditNameOrPostTitle(searchBy);
      return posts;
    }
- 
-  
+
+
+  public List<Post> getPostsFromSubredditsFollowedByUser(String name) {
+    List<Post> posts =this.postRepository.getPostsFromSubredditsFollowedByUser(userRepository.findByUsername(name).get().getId());
+    return posts;
+  }
 }

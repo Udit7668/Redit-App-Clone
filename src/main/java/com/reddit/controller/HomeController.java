@@ -1,8 +1,10 @@
 package com.reddit.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,8 +26,15 @@ public class HomeController {
     private SubredditService subredditService;
     
     @RequestMapping("/")
-    public String getAllPosts(Model model){
-        List<Post> posts=this.postService.getAllPosts();
+    public String getAllPosts(Model model,
+                              Authentication authentication){
+        List<Post> posts = new ArrayList<>();
+        if(authentication==null){
+            posts = this.postService.getAllPosts();
+        }
+        else{
+            posts = this.postService.getPostsFromSubredditsFollowedByUser(authentication.getName());
+        }
         model.addAttribute("posts",posts);
         List<Subreddit> subreddits=this.subredditService.findAll();
         model.addAttribute("subreddits", subreddits);
@@ -44,11 +53,11 @@ public class HomeController {
 
     @GetMapping("/newPosts")
     public String filterPostByNewPosts(Model model){
-   List<Post> posts=this.postService.sortPostByDate(); 
-   model.addAttribute("posts", posts);
-   List<Subreddit> subreddits=this.subredditService.findAll();
-   model.addAttribute("subreddits", subreddits);
-   return "home";
+    List<Post> posts=this.postService.sortPostByDate();
+    model.addAttribute("posts", posts);
+    List<Subreddit> subreddits=this.subredditService.findAll();
+    model.addAttribute("subreddits", subreddits);
+    return "home";
     }
 
 

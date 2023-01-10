@@ -31,7 +31,7 @@ public class User {
     private Timestamp createdAt;
     private boolean enabled;
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
-    @JoinTable(name = "subreddit_user", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "subreddit_id"))
+    @JoinTable(name = "subreddit_users", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "subreddit_id"))
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Subreddit> subreddits;
     @OneToMany(fetch = LAZY, mappedBy = "user")

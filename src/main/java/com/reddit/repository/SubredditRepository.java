@@ -1,6 +1,5 @@
 package com.reddit.repository;
 
-import com.reddit.entity.Post;
 import com.reddit.entity.Subreddit;
 
 import java.util.List;
