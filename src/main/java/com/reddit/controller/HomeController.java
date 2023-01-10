@@ -34,6 +34,9 @@ public class HomeController {
         }
         else{
             posts = this.postService.getPostsFromSubredditsFollowedByUser(authentication.getName());
+            if(posts.size()==0){
+                posts = this.postService.getAllPosts();
+            }
         }
         model.addAttribute("posts",posts);
         List<Subreddit> subreddits=this.subredditService.findAll();
@@ -52,18 +55,36 @@ public class HomeController {
     }
 
     @GetMapping("/newPosts")
-    public String filterPostByNewPosts(Model model){
-    List<Post> posts=this.postService.sortPostByDate();
-    model.addAttribute("posts", posts);
-    List<Subreddit> subreddits=this.subredditService.findAll();
-    model.addAttribute("subreddits", subreddits);
-    return "home";
+    public String filterPostByNewPosts(Model model, Authentication authentication){
+        List<Post> posts = new ArrayList<>();
+        if(authentication==null){
+            posts = this.postService.sortPostByDate();
+        }
+        else{
+            posts = this.postService.sortPostByDateLoggedIn(authentication.getName());
+            if(posts.size()==0){
+                posts = this.postService.sortPostByDate();
+            }
+        }
+        model.addAttribute("posts",posts);
+        List<Subreddit> subreddits=this.subredditService.findAll();
+        model.addAttribute("subreddits", subreddits);
+        return "home";
     }
 
 
     @GetMapping("/topPosts")
-    public String sortPostByVoteCount(Model model){
-        List<Post> posts=this.postService.sortPostByVoteCount();
+    public String sortPostByVoteCount(Model model,Authentication authentication){
+        List<Post> posts = new ArrayList<>();
+        if(authentication==null){
+            posts = this.postService.sortPostByVoteCount();
+        }
+        else{
+            posts = this.postService.sortPostByVoteCountLoggedIn(authentication.getName());
+            if(posts.size()==0){
+                posts = this.postService.sortPostByVoteCount();
+            }
+        }
         model.addAttribute("posts",posts);
         List<Subreddit> subreddits=this.subredditService.findAll();
         model.addAttribute("subreddits", subreddits);
