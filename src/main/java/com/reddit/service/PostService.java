@@ -126,6 +126,14 @@ public class PostService {
     List<Post> posts = this.postRepository.sortPostByVoteCount();
     return posts;
   }
+  public List<Post> sortPostByVoteCountLoggedIn(String username) {
+    List<Post> posts = this.postRepository.sortPostByVoteCount(userRepository.findByUsername(username).get().getId());
+    return posts;
+  }
+  public List<Post> sortPostByDateLoggedIn(String username) {
+    List<Post> posts = this.postRepository.sortPostByCreatedDate(userRepository.findByUsername(username).get().getId());
+    return posts;
+  }
   public List<Post> sortPostByVoteCount(String postId) {
     String id[]=postId.split(",");
     List<Long> ids=new ArrayList<>();
