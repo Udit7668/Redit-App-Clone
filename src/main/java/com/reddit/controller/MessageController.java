@@ -2,8 +2,7 @@ package com.reddit.controller;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.reddit.entity.Message;
@@ -14,7 +13,7 @@ public class MessageController {
     
     @MessageMapping("/message")
     @SendTo("/topic/return-to")
-    public Message getContent(@ModelAttribute("message") Message message){
+    public Message getContent(@RequestBody Message message){
         try{
        Thread.sleep(2000);
         }

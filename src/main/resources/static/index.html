@@ -14,7 +14,7 @@
     <script src="/webjars/stomp-websocket/stomp.min.js"></script>
     <script src="/script.js"></script>
 </head>
-<body>
+<body class="bg-dark">
 <div id="name-form" class="bg-primary d-flex align-items-center" >
 
   <div class="container-fluid">
@@ -36,6 +36,51 @@
     </div>
 
   </div>
+
+</div>
+
+<div id="chat-room" class="d-none">
+   <div class="container-fluid">
+
+    <div class="row">
+
+   <div class="col-md-6 offset-md-3"> 
+    <div class="card">
+
+   <dic class="card-body mt-3">
+
+    <div class="card-header">
+      <h3 id="name-title"></h3>
+    </div>
+    <div class="input-group">
+
+      <input type="text" placeholder="Enter you message" id="message-value" autofocus
+       clas="form-controller"
+      >
+        <div class="input-group-append">
+         <button class="btn btn-dark" id="send-btn">Send</button>
+         <button class="btn btn-dark" id="logout">Logout</button>
+        </div>
+          </div>
+
+        <div class="table-responsive">
+         <table id="message-container-table">
+
+
+
+         </table>
+
+
+        </div>
+   </dic>
+
+    </div>
+
+   </div>
+
+
+    </div>
+   </div>
 
 </div>
 
