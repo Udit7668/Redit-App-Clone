@@ -51,5 +51,6 @@ public interface PostRepository extends JpaRepository<Post,Long> {
     public List<Post> UserSortPostByCreatedDate(@Param("c") String username);
     @Query(value = "select distinct p.* from post p,users u where p.user_id=u.id and u.username like :c order by vote_count desc",nativeQuery = true)
     public List<Post> UserSortPostByVoteCount(@Param("c") String username);
-
+    @Query(value = "select distinct p.* from post p where ((p.subreddit_id in (select subreddit_id from subreddit_users su where su.user_id = :c)))",nativeQuery = true)
+    public List<Post> getPostsFromSubredditsFollowedByUser(@Param("c") Long userId);
 }

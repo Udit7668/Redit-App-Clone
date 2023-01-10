@@ -30,10 +30,10 @@ public class Subreddit {
     private Timestamp createdDate;
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "subreddit",cascade = CascadeType.ALL)
     private List<Post> posts = new ArrayList<>();
-    @ManyToMany
-    @JoinTable(name = "subreddit_user",
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH})
+    @JoinTable(name = "subreddit_users",
             joinColumns = @JoinColumn(name="subreddit_id"),
-            inverseJoinColumns = @JoinColumn(name="post_id"))
+            inverseJoinColumns = @JoinColumn(name="user_id"))
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<User> users = new ArrayList<>();
     @ManyToMany
