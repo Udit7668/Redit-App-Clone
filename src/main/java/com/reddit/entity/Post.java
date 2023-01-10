@@ -47,10 +47,10 @@ public class Post {
     private Subreddit subreddit;
     @OneToMany(fetch = LAZY, mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "post_upvotes", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> upvotedUsers;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "post_downvotes", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> downvotedUsers;
 

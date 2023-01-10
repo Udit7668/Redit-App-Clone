@@ -2,6 +2,8 @@ package com.reddit.controller;
 
 import java.util.List;
 
+import com.reddit.repository.PostRepository;
+import com.reddit.repository.SubredditRepository;
 import com.reddit.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -22,20 +24,12 @@ public class SubredditController {
 
     @Autowired
     private PostService postService;
+    @Autowired
+    private SubredditRepository subredditRepository;
+    @Autowired
+    private PostRepository postRepository;
 
-//    @GetMapping("/home/add")
-//    public String create(Model model){
-//        model.addAttribute("subreddit",new Subreddit());
-//        return "saveSubreddit";
-//<<<<<<< HEAD
-//    }
-//    @PostMapping("/home/addSubreddit")
-//    public String createSubreddit(@ModelAttribute("subreddit")Subreddit subreddit, @RequestParam(value = "subredditId",required = false) Long subredditId){
-//        subredditService.createSubreddit(subreddit,subredditId);
-//        return "redirect:/home/";
-//    }
-//=======
-//    }
+
     @GetMapping("/add")
     public String create(Model model){
         model.addAttribute("subreddit",new Subreddit());
@@ -64,8 +58,16 @@ public class SubredditController {
     }
     @GetMapping("/deleteSubreddit")
     public String deleteSubreddit(@RequestParam("subredditId") Long subredditId){
-        subredditService.deleteSubredditById(subredditId);
-        return "showsubreddit";
+        Subreddit subreddit= subredditService.findById(subredditId);
+        subreddit.setAdmins(null);
+        List<Post> postList=subreddit.getPosts();
+        for(Post post:postList){
+            postRepository.delete(post);
+        }
+        subreddit.setUsers(null);
+        subredditRepository.delete(subreddit);
+        System.out.println(" i am deleting subreddit"+subredditId);
+        return "redirect:/home/";
     }
     @GetMapping("/showSubredditId")
     public Subreddit showSubredditById(@RequestParam("subredditId")Long subredditId,Model model){
