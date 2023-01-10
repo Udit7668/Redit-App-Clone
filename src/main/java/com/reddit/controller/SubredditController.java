@@ -97,6 +97,12 @@ public class SubredditController {
                 break;
             }
         }
+        for (User subredditMods: subreddit.getAdmins()) {
+            if(subredditMods.getUsername().equals(authentication.getName())){
+                model.addAttribute("mod", "yes");
+                break;
+            }
+        }
         System.out.println(">> subreddit name : " + subreddit.getName());
         return "subreddit-post";
     }
