@@ -5,6 +5,7 @@ import java.util.List;
 import com.reddit.entity.User;
 import com.reddit.repository.PostRepository;
 import com.reddit.repository.SubredditRepository;
+import com.reddit.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
