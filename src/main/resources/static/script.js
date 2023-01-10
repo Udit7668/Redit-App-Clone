@@ -45,4 +45,14 @@ $(document).ready(e=>{
    sendMessage()
    })
 
+   $("#logout").click(()=>{
+      localStorage.removeItem("name")
+      if(stompClient!==null){
+         stompClient.disconnect()
+         $("#name-form").removeClass('d-none')
+         $("#chat-room").addClass('d-none')
+         console.log(stompClient)
+      }
+   })
+
 })
