@@ -10,7 +10,7 @@ import com.reddit.entity.Message;
 
 public interface MessageRepository extends JpaRepository<Message,Integer> {
     
-   @Query(value = "select * from message m where m.sender like :c and m.reciever like :d",nativeQuery = true)
+   @Query(value = "select * from message m where m.sender like :c and m.reciever like :d order by message_date asc",nativeQuery = true)
    public List<Message> findBySenderAndReciver(@Param("c") String sender,@Param("d") String reciever);
     
 }

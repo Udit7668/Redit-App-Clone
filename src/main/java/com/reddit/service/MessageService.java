@@ -1,8 +1,10 @@
 package com.reddit.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -32,7 +34,8 @@ public class MessageService {
     public List<Message> getAllMessage(String reciever,String sender){
         List<Message> messagesSender=this.messageRepository.findBySenderAndReciver(sender, reciever);
         List<Message> messagesReciver=this.messageRepository.findBySenderAndReciver(reciever,sender);
-        HashSet<Message> hashSet=new HashSet<>();
+    
+        Set<Message> hashSet=new HashSet<>();
         List<Message> messages=new ArrayList<>();
         for(Message msg:messagesSender){
             hashSet.add(msg);
@@ -42,6 +45,7 @@ public class MessageService {
         }
 
       messages=new ArrayList<>(hashSet);
+      messages.sort(Comparator.comparing(Message::getMessageDate));
    return messages;
 
     }
