@@ -65,6 +65,17 @@ public class SubredditService {
     public List<Post> getPostsByTitleOfASubreddit(long subredditId, String searchKey) {
         List<Post> posts = this.postRepository.findPostsByTitleWithCommonSubreddit(subredditId, searchKey); 
         return posts; 
-    } 
+    }
 
+    public void addFollowUser(String subredditName, String name) {
+        Subreddit subreddit = subredditRepository.findSubredditByName(subredditName);
+        subreddit.getUsers().add(userRespository.getByUsername(name));
+        subredditRepository.save(subreddit);
+    }
+
+    public void removeFollowUser(String subredditName, String name) {
+        Subreddit subreddit = subredditRepository.findSubredditByName(subredditName);
+        subreddit.getUsers().remove(userRespository.getByUsername(name));
+        subredditRepository.save(subreddit);
+    }
 }

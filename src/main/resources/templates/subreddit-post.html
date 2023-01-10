@@ -71,15 +71,14 @@ border: 2px solid black;
 #subredditdis {
 display: flex;
 width: 20%;
- margin-top:40px;
- margin-inline-start: auto;
-   margin-right: 30px;
-  height: 250px;
-   flex-direction: column;
-  justify-content: center;
- padding: 20px;
- border: 2px solid black;
- word-wrap    : break-word;
+margin-top:40px;
+margin-inline-start: auto;
+margin-right: 30px;
+flex-direction: column;
+justify-content: center;
+padding: 20px;
+border: 2px solid black;
+word-wrap    : break-word;
 }
 
 
@@ -280,12 +279,22 @@ width: 20%;
 <div id="subredditdis">
     <h3>About Community</h3>
     <span th:each="subreddit :${thesubreddit}" >
-        <tr >
-            <td th:text="${subreddit.name}"></td>
-            <br>
-             <span th:text="${subreddit.description}"></span>
-             <br>
-             <td th:text="${subreddit.createdDate}"></td>
+        <tr>
+            <h3>r/<span th:text="${subreddit.name}"></span></h3><br>
+            <span th:text="${subreddit.description}"></span><br>
+            <span>Created at : </span><span th:text="${subreddit.createdDate}"></span><br>
+            <div th:if="${followingStatus} == 'yes'">
+                <form th:action="@{/subreddit/unfollow}" method="post">
+                    <input type="hidden" name="subreddit" th:value="${thesubreddit.name}">
+                    <input type="submit" value="Unfollow">
+                </form>
+            </div>
+            <div th:if="${followingStatus} == 'no'">
+                <form th:action="@{/subreddit/follow}" method="post">
+                    <input type="hidden" name="subreddit" th:value="${thesubreddit.name}">
+                    <input type="submit" value="Follow">
+                </form>
+            </div>
         </tr>
     </span>
 </div>
