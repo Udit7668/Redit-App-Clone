@@ -29,11 +29,7 @@ public class MessageController {
 
     @RequestMapping("/chat/{reciever}")
     public String recieveMessage(@PathVariable("reciever") String reciever,Model model,@RequestParam("message") String message,@RequestParam("loginUser") String loginUser){
-      this.messageService.addMessage(reciever, loginUser, message); 
-      List<Message> messages=this.messageService.getAllMessage(reciever, loginUser);
-      model.addAttribute("messages",messages);
-      model.addAttribute("user", reciever);
-      model.addAttribute("loginUser", loginUser);
-      return "message";
+      this.messageService.addMessage(reciever, loginUser, message);
+      return "redirect:/message/?user="+reciever+"&loginUser="+loginUser;
     }
 }
