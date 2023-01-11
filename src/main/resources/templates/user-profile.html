@@ -72,6 +72,19 @@ margin-left: 20px;
 border: 2px solid black;
 }
 
+#subredditdis {
+        display: flex;
+        width: 20%;
+        margin-inline-start: auto;
+        /*  background: #ccc;*/
+        justify-content: center;
+        border: 2px solid black;
+    }
+    #subreddit-name-heading{
+        text-align:left;
+        margin-left: 10%;
+    }
+
 #image{
     height: 400px;
 }
@@ -120,6 +133,15 @@ border: 2px solid black;
         <li>  <form th:action="@{/form/register}">
             <input type="submit" value="Signup">
         </form> </li>
+        <div th:if="${username} != ${#authentication.name}">
+        <li>  <form th:action="@{/message/}">
+            <input type="hidden" name="user" th:value="${username}">
+            <input type="hidden" name="loginUser" th:value="${#authentication.name}">
+            <input type="submit" value="Chat">
+        </form> </li>
+        </div>
+
+
     </ul>
 </nav>
 
@@ -207,6 +229,7 @@ border: 2px solid black;
         </div>
     </div>
 </div>
+
 <div th:if = "${totalPages > 1}">
     <div class = "row col-sm-10">
         <div class = "col-sm-2">

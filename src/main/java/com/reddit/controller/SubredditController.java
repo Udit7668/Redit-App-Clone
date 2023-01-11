@@ -2,6 +2,7 @@ package com.reddit.controller;
 
 import java.util.List;
 
+import com.reddit.entity.User;
 import com.reddit.repository.PostRepository;
 import com.reddit.repository.SubredditRepository;
 import com.reddit.entity.User;
@@ -16,7 +17,6 @@ import com.reddit.entity.Subreddit;
 import com.reddit.service.PostService;
 import com.reddit.service.SubredditService;
 @Controller
-@RequestMapping("/subreddit")
 public class SubredditController {
     @Autowired
     private SubredditService subredditService;
@@ -29,13 +29,25 @@ public class SubredditController {
     @Autowired
     private PostRepository postRepository;
 
-
-    @GetMapping("/add")
+    //    @GetMapping("/home/add")
+//    public String create(Model model){
+//        model.addAttribute("subreddit",new Subreddit());
+//        return "saveSubreddit";
+//<<<<<<< HEAD
+//    }
+//    @PostMapping("/home/addSubreddit")
+//    public String createSubreddit(@ModelAttribute("subreddit")Subreddit subreddit, @RequestParam(value = "subredditId",required = false) Long subredditId){
+//        subredditService.createSubreddit(subreddit,subredditId);
+//        return "redirect:/home/";
+//    }
+//=======
+//    }
+    @GetMapping("/subreddit/add")
     public String create(Model model){
         model.addAttribute("subreddit",new Subreddit());
         return "saveSubreddit";
     }
-    @PostMapping("/addSubreddit")
+    @PostMapping("/subreddit/addSubreddit")
     public String createSubreddit(@ModelAttribute("subreddit")Subreddit subreddit,
                                   @RequestParam(name="username") String username,Model model){
         String subredditName=subreddit.getName();
@@ -49,14 +61,14 @@ public class SubredditController {
     }
 
     @CrossOrigin
-    @GetMapping("/showSubreddit")
+    @GetMapping("/subreddit/showSubreddit")
     public String showSubreddit(Model model){
         List<Subreddit> subredditList= subredditService.findAll();
         System.out.println(subredditList);
         model.addAttribute("allSubreddit",subredditList);
         return "showsubreddit";
     }
-    @GetMapping("/deleteSubreddit")
+    @GetMapping("/subreddit/deleteSubreddit")
     public String deleteSubreddit(@RequestParam("subredditId") Long subredditId){
         Subreddit subreddit= subredditService.findById(subredditId);
         subreddit.setAdmins(null);
@@ -69,7 +81,7 @@ public class SubredditController {
         System.out.println(" i am deleting subreddit"+subredditId);
         return "redirect:/home/";
     }
-    @GetMapping("/showSubredditId")
+    @GetMapping("/subreddit/showSubredditId")
     public Subreddit showSubredditById(@RequestParam("subredditId")Long subredditId,Model model){
         Subreddit subreddit =subredditService.findById(subredditId);
         List<Post> postList=subreddit.getPosts();
@@ -80,12 +92,19 @@ public class SubredditController {
         return  subreddit;
     }
 
-    @GetMapping("view/{viewId}")
+    @GetMapping("/subreddit/view/{viewId}")
     public String viewAllPostBySubreddit(@PathVariable("viewId") Long subredditId,
                                          Model model,
                                          Authentication authentication){
-        Subreddit subreddit =subredditService.findById(subredditId);
-        List<Post> posts=this.subredditService.getAllPostBySubredditName(subredditId);
+        Subreddit subreddit = subredditService.findById(subredditId);
+        return "redirect:/r/"+subreddit.getName();
+    }
+    @GetMapping("r/{subredditName}")
+    public String viewAllPostBySubredditName(@PathVariable("subredditName") String subredditName,
+                                         Model model,
+                                         Authentication authentication){
+        Subreddit subreddit =subredditService.findByName(subredditName);
+        List<Post> posts=this.subredditService.getAllPostBySubredditName(subreddit.getId());
         model.addAttribute("posts", posts);
         List<Subreddit> subreddits=this.subredditService.findAll();
         model.addAttribute("subreddits", subreddits);
@@ -97,11 +116,17 @@ public class SubredditController {
                 break;
             }
         }
+        for (User subredditMods: subreddit.getAdmins()) {
+            if(subredditMods.getUsername().equals(authentication.getName())){
+                model.addAttribute("mod", "yes");
+                break;
+            }
+        }
         System.out.println(">> subreddit name : " + subreddit.getName());
         return "subreddit-post";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/subreddit/search")
     public String searchPosts(@RequestParam("subredditId") String subredditId,
                               @RequestParam("searchKey") String searchKey,
                               Authentication authentication, Model model){
@@ -123,7 +148,7 @@ public class SubredditController {
         return "subreddit-post";
     }
 
-@GetMapping("/newPosts/{subredditname}")
+@GetMapping("/subreddit/newPosts/{subredditname}")
    public String newPosts(@PathVariable("subredditname") String name,
                           Authentication authentication,
                           Model model){
@@ -144,7 +169,7 @@ public class SubredditController {
    }
 
 
-   @GetMapping("/topPosts/{subredditname}")
+   @GetMapping("/subreddit/topPosts/{subredditname}")
    public String topPosts(@PathVariable("subredditname") String name,
                           Authentication authentication,
                           Model model){
@@ -165,7 +190,7 @@ public class SubredditController {
    }
 
 
-   @GetMapping("/upvote")
+   @GetMapping("/subreddit/upvote")
    public String upVote(@RequestParam("postId") Long postId,
                         Authentication authentication,
                         Model model,@RequestParam("name") String name ){
@@ -187,7 +212,7 @@ public class SubredditController {
    }
 
 
-   @GetMapping("/downvote")
+   @GetMapping("/subreddit/downvote")
    public String downVote(@RequestParam("postId") Long postId,
                           Authentication  authentication,
                           Model model,@RequestParam("name") String name){
@@ -207,14 +232,14 @@ public class SubredditController {
        }
        return "subreddit-post";
    }
-   @PostMapping("/follow")
+   @PostMapping("/subreddit/follow")
    public String followSubreddit(@RequestParam("subreddit") String subredditName,
                                  Authentication authentication,
                                  Model model){
         subredditService.addFollowUser(subredditName,authentication.getName());
         return "redirect:/subreddit/view/"+subredditService.findByName(subredditName).getId();
    }
-    @PostMapping("/unfollow")
+    @PostMapping("/subreddit/unfollow")
     public String unFollowSubreddit(@RequestParam("subreddit") String subredditName,
                                   Authentication authentication,
                                   Model model){
