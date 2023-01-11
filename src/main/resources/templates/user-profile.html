@@ -133,13 +133,13 @@ border: 2px solid black;
         <li>  <form th:action="@{/form/register}">
             <input type="submit" value="Signup">
         </form> </li>
-
-
+        <div th:if="${username} != ${#authentication.name}">
         <li>  <form th:action="@{/message/}">
             <input type="hidden" name="user" th:value="${username}">
             <input type="hidden" name="loginUser" th:value="${#authentication.name}">
             <input type="submit" value="Chat">
         </form> </li>
+        </div>
 
 
     </ul>

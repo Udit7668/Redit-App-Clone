@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.reddit.entity.Message;
@@ -26,7 +27,7 @@ public class MessageController {
        return "message";
     }
 
-    @GetMapping("/chat/{reciever}")
+    @RequestMapping("/chat/{reciever}")
     public String recieveMessage(@PathVariable("reciever") String reciever,Model model,@RequestParam("message") String message,@RequestParam("loginUser") String loginUser){
       this.messageService.addMessage(reciever, loginUser, message); 
       List<Message> messages=this.messageService.getAllMessage(reciever, loginUser);

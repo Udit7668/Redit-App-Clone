@@ -17,7 +17,6 @@ import com.reddit.service.PostService;
 import com.reddit.service.SubredditService;
 
 @Controller
-@RequestMapping("/home")
 public class HomeController {
     @Autowired
     private PostService postService;
@@ -43,18 +42,22 @@ public class HomeController {
         model.addAttribute("subreddits", subreddits);
         return "home";
     }
+    @RequestMapping("/home/")
+    public String getAllPostsHome(){
+        return "redirect:/";
+    }
 
-   @GetMapping("/login")
+   @GetMapping("/home/login")
     public String login(){
         return "redirect:/form/login";
     }
 
-    @GetMapping("/register")
+    @GetMapping("/home/register")
     public String register(){
         return "redirect:/form/register";
     }
 
-    @GetMapping("/newPosts")
+    @GetMapping("/home/newPosts")
     public String filterPostByNewPosts(Model model, Authentication authentication){
         List<Post> posts = new ArrayList<>();
         if(authentication==null){
@@ -73,7 +76,7 @@ public class HomeController {
     }
 
 
-    @GetMapping("/topPosts")
+    @GetMapping("/home/topPosts")
     public String sortPostByVoteCount(Model model,Authentication authentication){
         List<Post> posts = new ArrayList<>();
         if(authentication==null){
@@ -91,7 +94,7 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/filtertoppost")
+    @GetMapping("/home/filtertoppost")
     public String sortPostByVoteCountAndSearch(Model model,@RequestParam("postId") String postId){
         List<Post> posts=this.postService.sortPostByVoteCount(postId);
         model.addAttribute("posts",posts);
@@ -104,7 +107,7 @@ public class HomeController {
         model.addAttribute("subreddits", subreddits);
         return "search-dashboard";
     }
-    @GetMapping("/filternewpost")
+    @GetMapping("/home/filternewpost")
     public String sortPostByNewPostAndSearch(Model model,@RequestParam("postId") String postId){
         List<Post> posts=this.postService.sortPostByDate(postId);
         model.addAttribute("posts",posts);
@@ -119,7 +122,7 @@ public class HomeController {
     }
 
    
-    @GetMapping("/searchpost")
+    @GetMapping("/home/searchpost")
     public String searchPosts(Model model,@RequestParam("search") String searchBy){
         List<Post> posts=this.postService.searchPost(searchBy);
         String postid = "";
@@ -135,7 +138,7 @@ public class HomeController {
     }
 
 
-    @GetMapping("/chat")
+    @GetMapping("/home/chat")
     public String chat(){
         return "index";
     }
