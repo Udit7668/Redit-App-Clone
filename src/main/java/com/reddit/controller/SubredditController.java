@@ -110,16 +110,18 @@ public class SubredditController {
         model.addAttribute("subreddits", subreddits);
         model.addAttribute("thesubreddit",subreddit);
         model.addAttribute("followingStatus", "no");
-        for (User subredditUser: subreddit.getUsers()) {
-            if(subredditUser.getUsername().equals(authentication.getName())){
-                model.addAttribute("followingStatus", "yes");
-                break;
+        if(authentication!=null) {
+            for (User subredditUser : subreddit.getUsers()) {
+                if (subredditUser.getUsername().equals(authentication.getName())) {
+                    model.addAttribute("followingStatus", "yes");
+                    break;
+                }
             }
-        }
-        for (User subredditMods: subreddit.getAdmins()) {
-            if(subredditMods.getUsername().equals(authentication.getName())){
-                model.addAttribute("mod", "yes");
-                break;
+            for (User subredditMods : subreddit.getAdmins()) {
+                if (subredditMods.getUsername().equals(authentication.getName())) {
+                    model.addAttribute("mod", "yes");
+                    break;
+                }
             }
         }
         System.out.println(">> subreddit name : " + subreddit.getName());
@@ -138,10 +140,12 @@ public class SubredditController {
         model.addAttribute("subreddits", subreddits);
         model.addAttribute("thesubreddit", subreddit);
         model.addAttribute("followingStatus", "no");
-        for (User subredditUser: subreddit.getUsers()) {
-            if(subredditUser.getUsername().equals(authentication.getName())){
-                model.addAttribute("followingStatus", "yes");
-                break;
+        if(authentication!=null) {
+            for (User subredditUser : subreddit.getUsers()) {
+                if (subredditUser.getUsername().equals(authentication.getName())) {
+                    model.addAttribute("followingStatus", "yes");
+                    break;
+                }
             }
         }
         System.out.println(">> subreddit name : " + subreddit.getName());
@@ -156,10 +160,12 @@ public class SubredditController {
     Subreddit subreddit=this.subredditService.findByName(name);
     List<Subreddit> subreddits = this.subredditService.findAll();
     model.addAttribute("followingStatus", "no");
-    for (User subredditUser: subreddit.getUsers()) {
-        if(subredditUser.getUsername().equals(authentication.getName())){
-            model.addAttribute("followingStatus", "yes");
-            break;
+    if(authentication!=null){
+        for (User subredditUser: subreddit.getUsers()) {
+            if(subredditUser.getUsername().equals(authentication.getName())){
+                model.addAttribute("followingStatus", "yes");
+                break;
+            }
         }
     }
     model.addAttribute("posts", posts);
@@ -178,10 +184,12 @@ public class SubredditController {
         List<Subreddit> subreddits = this.subredditService.findAll();
         model.addAttribute("posts", posts);
        model.addAttribute("followingStatus", "no");
-       for (User subredditUser: subreddit.getUsers()) {
-           if(subredditUser.getUsername().equals(authentication.getName())){
-               model.addAttribute("followingStatus", "yes");
-               break;
+       if(authentication!=null) {
+           for (User subredditUser : subreddit.getUsers()) {
+               if (subredditUser.getUsername().equals(authentication.getName())) {
+                   model.addAttribute("followingStatus", "yes");
+                   break;
+               }
            }
        }
         model.addAttribute("subreddits", subreddits);
@@ -202,10 +210,12 @@ public class SubredditController {
        model.addAttribute("subreddits", subreddits);
        model.addAttribute("thesubreddit", subreddit);
        model.addAttribute("followingStatus", "no");
-       for (User subredditUser: subreddit.getUsers()) {
-           if(subredditUser.getUsername().equals(authentication.getName())){
-               model.addAttribute("followingStatus", "yes");
-               break;
+       if(authentication!=null) {
+           for (User subredditUser : subreddit.getUsers()) {
+               if (subredditUser.getUsername().equals(authentication.getName())) {
+                   model.addAttribute("followingStatus", "yes");
+                   break;
+               }
            }
        }
        return "subreddit-post";
@@ -224,10 +234,12 @@ public class SubredditController {
        model.addAttribute("subreddits", subreddits);
        model.addAttribute("thesubreddit", subreddit);
        model.addAttribute("followingStatus", "no");
-       for (User subredditUser: subreddit.getUsers()) {
-           if(subredditUser.getUsername().equals(authentication.getName())){
-               model.addAttribute("followingStatus", "yes");
-               break;
+       if(authentication==null) {
+           for (User subredditUser : subreddit.getUsers()) {
+               if (subredditUser.getUsername().equals(authentication.getName())) {
+                   model.addAttribute("followingStatus", "yes");
+                   break;
+               }
            }
        }
        return "subreddit-post";
