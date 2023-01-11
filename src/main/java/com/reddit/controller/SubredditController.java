@@ -1,5 +1,6 @@
 package com.reddit.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.reddit.repository.PostRepository;
@@ -15,6 +16,8 @@ import com.reddit.entity.Post;
 import com.reddit.entity.Subreddit;
 import com.reddit.service.PostService;
 import com.reddit.service.SubredditService;
+import org.springframework.web.multipart.MultipartFile;
+
 @Controller
 @RequestMapping("/subreddit")
 public class SubredditController {
@@ -37,14 +40,15 @@ public class SubredditController {
     }
     @PostMapping("/addSubreddit")
     public String createSubreddit(@ModelAttribute("subreddit")Subreddit subreddit,
-                                  @RequestParam(name="username") String username,Model model){
+                                  @RequestParam("fileprofile") MultipartFile file,
+                                  @RequestParam(name="username") String username,Model model) throws IOException {
         String subredditName=subreddit.getName();
          Subreddit name=this.subredditService.findByName(subredditName);
          if(name!=null){
         model.addAttribute("error", "Subreddit Already exists");
          return "saveSubreddit";
          }                       
-        subredditService.createSubreddit(subreddit,username);
+        subredditService.createSubreddit(subreddit,username,file);
         return "redirect:/home/";
     }
 
