@@ -21,9 +21,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().
                 authorizeRequests()
-                .antMatchers("/api/auth/**","/form/**","/addSubreddit","/showSubreddit","/home/**","/img/**")
-                .permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/subreddit/add","/addComment","/addReplyComment","/posts/newPost","/subreddit/follow")
+                .authenticated()
+                .antMatchers("/**").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/form/login")
