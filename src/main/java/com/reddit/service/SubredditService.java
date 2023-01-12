@@ -7,8 +7,16 @@ import com.reddit.repository.PostRepository;
 import com.reddit.repository.SubredditRepository;
 import com.reddit.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
@@ -31,7 +39,19 @@ public class SubredditService {
         subreddit.setCreatedDate(Timestamp.from(Instant.now()));
     }
 
-    public void createSubreddit(Subreddit subreddit, String username) {
+    public void createSubreddit(Subreddit subreddit, String username, MultipartFile file) throws IOException {
+        if(file.isEmpty()){
+            System.out.println("File is empty");
+        }
+        else{
+            subreddit.setImage(file.getOriginalFilename());
+
+            System.out.println(new ClassPathResource("").getFile().getAbsolutePath());
+            System.out.println("///////////////////////");
+            File saveFile= new ClassPathResource("static/img").getFile();
+            Path path=  Paths.get(saveFile.getAbsolutePath()+File.separator+file.getOriginalFilename());
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+        }
         User user = userRespository.findByUsername(username).get();
         subreddit.getAdmins().add(user);
         subredditRepository.save(subreddit);

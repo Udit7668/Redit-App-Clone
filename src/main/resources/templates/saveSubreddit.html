@@ -14,12 +14,15 @@
 
 
 <div id="container">
-    <h3><label>Create Subreddit</label></h3>
-<form th:action="@{/subreddit/addSubreddit}" th:object="${subreddit}" method="post">
+    <h2><label>Create Subreddit</label></h2>
+<form th:action="@{/subreddit/addSubreddit}" enctype="multipart/form-data" th:object="${subreddit}" method="post">
     <div th:if="${error}" style="color: red; font-size: large;">
         <span th:text="${error}"></span>
     </div>
-    <input type="hidden" th:value="${#authentication.name}" name="username"/>
+    <h3>Enter any image</h3>
+        <input type="file" name="fileprofile">
+    <br>
+        <input type="hidden" th:value="${#authentication.name}" name="username"/>
     <input type="hidden"  th:field="*{id}" />
     <input type="text"    th:field="*{name}"      placeholder="Name"/><br><br>
     <textarea th:field="*{description}" placeholder="Description" rows="5"> </textarea><br><br>

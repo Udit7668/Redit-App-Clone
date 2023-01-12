@@ -48,6 +48,12 @@ display: flex;
 justify-content: space-between;
 
 }
+.float-child #comment-votecount{
+margin-top: 10px;
+display: flex;
+justify-content: space-between;
+
+}
 
 .float-container{
     margin-left: 600px;
@@ -65,6 +71,19 @@ float: left;
 margin-left: 20px;
 border: 2px solid black;
 }
+
+#subredditdis {
+        display: flex;
+        width: 20%;
+        margin-inline-start: auto;
+        /*  background: #ccc;*/
+        justify-content: center;
+        border: 2px solid black;
+    }
+    #subreddit-name-heading{
+        text-align:left;
+        margin-left: 10%;
+    }
 
 #image{
     height: 400px;
@@ -114,6 +133,15 @@ border: 2px solid black;
         <li>  <form th:action="@{/form/register}">
             <input type="submit" value="Signup">
         </form> </li>
+        <div th:if="${username} != ${#authentication.name}">
+        <li>  <form th:action="@{/message/}">
+            <input type="hidden" name="user" th:value="${username}">
+            <input type="hidden" name="loginUser" th:value="${#authentication.name}">
+            <input type="submit" value="Chat">
+        </form> </li>
+        </div>
+
+
     </ul>
 </nav>
 
@@ -159,14 +187,14 @@ border: 2px solid black;
             <a th:href="@{/posts/view/{viewId}(viewId=${post.id})}" id="view" >View Post</a>
         </td>
         <div id="votecount">
-            <form th:action="@{/user/post/upvote}" method="get">
+            <form th:action="@{/user/post/upvote}" method="post">
                 <input type="hidden" name="postId" th:value="${post.id}">
                 <input type="hidden" name="profileId" th:value="${post.user.username}">
                 <input type="hidden" name="username" th:value="${#authentication.name}">
                 <input type="submit" value="Upvote">
             </form>
             <span th:text="score+'  '+${#lists.size(post.upvotedUsers) - #lists.size(post.downvotedUsers)}"></span>
-            <form th:action="@{/user/post/downvote}" method="get">
+            <form th:action="@{/user/post/downvote}" method="post">
                 <input type="hidden" name="postId" th:value="${post.id}">
                 <input type="hidden" name="profileId" th:value="${post.user.username}">
                 <input type="hidden" name="username" th:value="${#authentication.name}">
@@ -183,11 +211,25 @@ border: 2px solid black;
         <td>
             <a th:href="@{/posts/view/{viewId}(viewId=${Comment.post.id})}" >View Post</a>
         </td>
-    <!--    comment Upvote-->
-    <!--    comment Score-->
-    <!--    comment Downvote-->
+        <div id="comment-votecount">
+            <form th:action="@{/user/comment/upvote}" method="post">
+                <input type="hidden" th:value="${Comment.id}"
+                       name="commentId"/>
+                <input type="hidden" th:value="${Comment.user.username}" name="profileId"/>
+                <input type="submit" value="Upvote" class="button"/>
+            </form>
+            <span th:text="score+' '+${#lists.size(Comment.upvotedUsers)
+                            - #lists.size(Comment.downvotedUsers)}"></span>
+            <form th:action="@{/user/comment/downvote}" method="post">
+                <input type="hidden" th:value="${Comment.id}"
+                       name="commentId"/>
+                <input type="hidden" th:value="${Comment.user.username}" name="profileId"/>
+                <input type="submit" value="Downvote" class="button"/>
+            </form>
+        </div>
     </div>
 </div>
+
 <div th:if = "${totalPages > 1}">
     <div class = "row col-sm-10">
         <div class = "col-sm-2">

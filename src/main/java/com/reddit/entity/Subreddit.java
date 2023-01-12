@@ -25,6 +25,7 @@ public class Subreddit {
     private String name;
     @NotBlank(message = "Description is required")
     private String description;
+    private  String image;
     @CreationTimestamp
     @Column(nullable = false)
     private Timestamp createdDate;

@@ -80,6 +80,15 @@ padding: 20px;
 border: 2px solid black;
 word-wrap    : break-word;
 }
+#image{
+    height: 300px;
+    max-width:400px;
+}
+#imagesubreddit{
+margin-left:400px;
+width:500px;
+height:200px;
+}
 
 
 
@@ -135,12 +144,6 @@ word-wrap    : break-word;
         justify-content: space-between;
 
     }
-
-    .float-container {
-        margin-left: 500px;
-
-    }
-
     #subreddit {
         width: 200%;
     }
@@ -209,6 +212,9 @@ word-wrap    : break-word;
     </ul>
 </nav>
 
+<div th:if="${thesubreddit.image}!=null">
+    <img  th:src="@{'/img/'+${thesubreddit.image}}" id="imagesubreddit"/>
+</div>
 <div id="filter">
 
     Filter Posts<a th:href="@{/subreddit/topPosts/{subredditname}(subredditname=${thesubreddit.name})}" style="margin-right: 20px; margin-left: 20px; text-decoration: none;" >Top Post</a>
@@ -240,7 +246,6 @@ word-wrap    : break-word;
 
 
 </div>
-
 <div class="float-container">
 
     <div class="float-child" th:each=" post: ${posts}">
@@ -282,8 +287,8 @@ word-wrap    : break-word;
         </div>
 
     </div>
-
 </div>
+
 <div id="subredditdis">
     <h3>About Community</h3>
     <span th:each="subreddit :${thesubreddit}" >

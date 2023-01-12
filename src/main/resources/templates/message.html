@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+      #container{
+        border: 2px solid black;
+        margin-left: 600px;
+        margin-right: 600px;
+        margin-top: 50px;
+      }
+    </style>
+</head>
+<body>
+  <div id="container">
+   <h1 th:text="${user}" style="text-align: center; background-color: cyan; margin-top: 0px;"></h1>
+   <div th:each=" Message: ${messages}">
+  <div th:if="${Message.sender}==${loginUser}" style="text-align: right; margin-right: 10px;">  
+     <span th:text="${Message.message}"></span>
+     <br>
+</div>
+<div th:if="${Message.reciever}==${loginUser}" style="text-align:left; margin-left: 10px;">  
+  <span th:text="${Message.message}"></span>
+</div>
+
+    </div>
+
+    <div style="text-align: center;">
+    <form th:action="@{/chat/{reciever}(reciever=${user})}" method="get">
+    <input type="text" placeholder="Enter your message" name="message" style="width: 400px; height: 25px; margin-bottom: 5px;">
+    <input type="hidden" name="loginUser" th:value="${loginUser}">
+    <input type="submit" value="Send" style="height: 25px;">
+    </form>
+  </div>
+  </div>
+</body>
+</html>

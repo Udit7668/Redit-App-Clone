@@ -1,19 +1,20 @@
 package com.reddit.service;
 
+import java.util.Optional;
+import java.util.UUID;
+
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import com.reddit.dto.RegisterRequest;
 import com.reddit.entity.NotificationEmail;
 import com.reddit.entity.User;
 import com.reddit.entity.VerificationToken;
 import com.reddit.repository.UserRepository;
 import com.reddit.repository.VerificationTokenRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class AuthService {
